@@ -15,9 +15,9 @@ use ReflectionMethod;
  * Adding hooks:
  * 
  * Hooks::instance()
- *        ->add( new WPFilter( 'wp_title',  [ Settings::class, 'filterTitle' ]  ) )
- *        ->add( new WPAction( 'wp_head',   [ Scrits::class, 'headeScripts' ]  ) )
- *        ->add( new WPAction( 'wp_footer', [ Scrits::class, 'footerScripts' ]  ) );
+ *        ->add( new Filter( 'wp_title',  [ Settings::class, 'filterTitle' ]  ) )
+ *        ->add( new Action( 'wp_head',   [ Scrits::class, 'headeScripts' ]  ) )
+ *        ->add( new Action( 'wp_footer', [ Scrits::class, 'footerScripts' ]  ) );
  * 
  * To load the scripts it is necessary to assign the hooks to a class.
  * 
