@@ -2,34 +2,44 @@
 
 namespace AWSM\SystemLayer\WP;
 
-use AWSM\SystemLayer\CallbackInterface;
+require 'HookInterface.php';
 
 /**
  * WordPress Action Callback Interface
  */
-class Action implements CallbackInterface {
+class Action implements HookInterface {
+    protected $type;
     protected $tag;
     protected $callback;
     protected $priority;
     protected $accepted_args;
 
-    public function __construct( $tag, $priority = 10, $accepted_args = 1 )
+    public function __construct( string $tag, array $callback, int $priority = 10, $accepted_args = 1 )
     {
+        $this->type          = 'action';
+
         $this->tag           = $tag;
+        $this->callback      = $callback;
         $this->priority      = $priority;
         $this->accepted_args = $accepted_args;
     }
 
-    public function onCall( $callback ) : void {
-        $this->callback = $callback;
-    }
-
-    public function method() : string
+    public function type() : string
     {
-        return 'add_action';
+        return $this->type;
     }
 
-    public function args() : array {
+    public function callback( array $callback = array() ) : array 
+    {
+        if ( !empty( $callback ) ) {
+            $this->callback = $callback;
+        }
+
+        return $this->callback;
+    }
+
+    public function args() : array 
+    {
         return [
             $this->tag,
             $this->callback,

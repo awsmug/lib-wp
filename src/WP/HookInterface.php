@@ -1,13 +1,14 @@
 <?php
 
-namespace AWSM\SystemLayer;
+namespace AWSM\SystemLayer\WP;
 
 /**
- * Class CallbackInterface.
+ * Class Hook.
  * 
  * @since 1.0.0
  */
-interface CallbackInterface {
+interface HookInterface {
+    public function type() : string;
     public function callback( array $callback = array() ) : array;
     public function args() : array;
 }
