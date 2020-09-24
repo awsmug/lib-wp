@@ -11,7 +11,7 @@ use AWSM\LibFile\PhpFile;
  * 
  * @since 1.0.0
  */
-class Component implements ComponentInterface {
+abstract class Component implements ComponentInterface {
     /**
      * Component setup.
      * 
@@ -42,6 +42,10 @@ class Component implements ComponentInterface {
      * @since 1.0.0
      */
     public function run() {
+        if ( empty ( $this->setup ) ) {
+            $this->setup();
+        }
+        
         PhpFile::use( $this->setup->hooksFile() )->run();
         PhpFile::use( $this->setup->assetsFile() )->run();
         PhpFile::use( $this->setup->entryPoint() )->run();
