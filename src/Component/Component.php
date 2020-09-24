@@ -33,15 +33,7 @@ class Component implements ComponentInterface {
      * @since 1.0.0
      */
     public function setup( string $entryPointFile = '', string $hooksFile = '', string $assetsFile = '' ) {
-        if ( empty( $this->setup ) ) {
-            $this->setup = new ComponentSetup( $entryPointFile, $hooksFile, $assetsFile );
-        } else {
-            $this->setup->entryPoint = ! empty( $entryPointFile ) ? $entryPointFile : $this->setup->entryPoint;
-            $this->setup->hooksFile  = ! empty( $hooksFile ) ? $entryPointFile : $this->setup->hooksFile;
-            $this->setup->assetsFile = ! empty( $assetsFile ) ? $entryPointFile : $this->setup->assetsFile;
-        }
-        
-        return $this->setup;
+        $this->setup = new ComponentSetup( $entryPointFile, $hooksFile, $assetsFile );
     }
 
     /**
@@ -50,8 +42,8 @@ class Component implements ComponentInterface {
      * @since 1.0.0
      */
     public function run() {
-        PhpFile::use( $this->setup->hooks )->run();
-        PhpFile::use( $this->setup->assets )->run();
-        PhpFile::use( $this->setup->entryPoint )->run();
+        PhpFile::use( $this->setup->hooksFile() )->run();
+        PhpFile::use( $this->setup->assetsFile() )->run();
+        PhpFile::use( $this->setup->entryPoint() )->run();
     }
 }

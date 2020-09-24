@@ -3,38 +3,24 @@
 namespace AWSM\LibWP\WP\Hooks;
 
 /**
- * WordPress Filter Callback Interface
+ * WordPress filter callback interface
+ * 
+ * @since 1.0.0
  */
-class Filter implements HookInterface {
-    protected $tag;
-    protected $callback;
-    protected $priority;
-    protected $accepted_args;
-
-    public function __construct( $tag, $priority = 10, $accepted_args = 1 )
+class Filter extends Hook {
+/**
+     * Constructor
+     * 
+     * @param string $tag Hook tag
+     * @param array  $callback Callback
+     * @param int    $priority Priority of hook
+     * @param int    $accepted_args Number of accepted arguments.
+     * 
+     * @since 1.0.0
+     */
+    public function __construct( string $tag, array $callback, int $priority = 10, $accepted_args = 1 )
     {
-        $this->type          = 'filter';
-
-        $this->tag           = $tag;
-        $this->priority      = $priority;
-        $this->accepted_args = $accepted_args;
-    }
-
-    public function callback( $callback ) : void {
-        $this->callback = $callback;
-    }
-
-    public function method() : string
-    {
-        return 'add_action';
-    }
-
-    public function args() : array {
-        return [
-            $this->tag,
-            $this->callback,
-            $this->priority,
-            $this->accepted_args
-        ];
+        $this->type = 'filter';
+        parent::__construct( $tag, $callback, $priority, $accepted_args );
     }
 }

@@ -20,7 +20,7 @@ class ComponentSetup {
      * 
      * @since 1.0.0 
      */
-    public $directory;
+    protected $dir;
 
     /**
      * The entrypoint file path.
@@ -31,7 +31,7 @@ class ComponentSetup {
      * 
      * @since 1.0.0 
      */
-    public $entryPoint;
+    protected $entryPoint;
 
     /**
      * The hooks file path.
@@ -42,7 +42,7 @@ class ComponentSetup {
      * 
      * @since 1.0.0 
      */
-    public $hooks;
+    protected $hooksFile;
 
     /**
      * The assets file path.
@@ -53,7 +53,7 @@ class ComponentSetup {
      * 
      * @since 1.0.0 
      */
-    public $assets;
+    protected $assetsFile;
 
     /**
      * Constructor
@@ -69,8 +69,52 @@ class ComponentSetup {
         $this->dir  = $this->detectDir();
     
         $this->entryPoint = ! empty( $entryPointFile ) ? $this->dir . '/' . $entryPointFile : $this->dir . '/App/Main.php';
-        $this->hooks      = ! empty( $hooksFile ) ? $this->dir . '/' . $hooksFile : $this->dir . '/App/Main.php';
-        $this->assets     = ! empty( $assetsFile ) ? $this->dir . '/' . $assetsFile : $this->dir . '/App/Main.php';
+        $this->hooksFile  = ! empty( $hooksFile ) ? $this->dir . '/' . $hooksFile : $this->dir . '/App/Main.php';
+        $this->assetsFile = ! empty( $assetsFile ) ? $this->dir . '/' . $assetsFile : $this->dir . '/App/Main.php';
+    }
+
+    /**
+     * Get component directory
+     * 
+     * @return string Component directory.
+     * 
+     * @since 1.0.0
+     */
+    public function dir() {
+        return $this->dir;
+    }
+
+    /**
+     * Get component entryPoint
+     * 
+     * @return string Component entryPoint.
+     * 
+     * @since 1.0.0
+     */
+    public function entryPoint() {
+        return $this->entryPoint;
+    }
+
+    /**
+     * Get component hooks file
+     * 
+     * @return string Component hooks file.
+     * 
+     * @since 1.0.0
+     */
+    public function hooksFile() {
+        return $this->hooksFile;
+    }
+
+    /**
+     * Get component assets file
+     * 
+     * @return string Component assets file.
+     * 
+     * @since 1.0.0
+     */
+    public function assetsFile() {
+        return $this->assetsFile;
     }
 
     /**
@@ -84,26 +128,5 @@ class ComponentSetup {
     {
         $file = CallerDetective::detect( 2 )->file();
         return File::use( $file )->dir();
-    }
-
-    /**
-     * Magic setter
-     * 
-     * @param string $variable Variable name.
-     * @param mixed  $value    Value to set.
-     * 
-     * @since 1.0.0
-     */
-    public function __set( $variable, $value ) {
-        switch( $variable ) {
-            case 'entryPoint':
-            case 'hooks':
-            case 'assets':
-                $this->$variable = $this->dir . '/' . $value;
-                break;
-            default:
-                $this->$variable = $value;
-                break;
-        }
     }
 }
