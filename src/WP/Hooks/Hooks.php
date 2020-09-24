@@ -1,6 +1,6 @@
 <?php
 
-namespace AWSM\SystemLayer\WP\Hooks;
+namespace AWSM\WP\WP\Hooks;
 
 use Exception;
 use ReflectionMethod;

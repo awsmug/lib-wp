@@ -1,9 +1,6 @@
 <?php
 
-namespace AWSM\WP\Hooks;
-
-use AWSM\WP\Hooks\HookInterface;
-use AWSM\Tools\CallbackInterface;
+namespace AWSM\WP\WP\Hooks;
 
 /**
  * WordPress Filter Callback Interface
@@ -16,6 +13,8 @@ class Filter implements HookInterface {
 
     public function __construct( $tag, $priority = 10, $accepted_args = 1 )
     {
+        $this->type          = 'filter';
+
         $this->tag           = $tag;
         $this->priority      = $priority;
         $this->accepted_args = $accepted_args;

@@ -1,6 +1,6 @@
 <?php
 
-namespace AWSM\WP\Hooks;
+namespace AWSM\WP\WP\Hooks;
 
 /**
  * WordPress Action Callback Interface

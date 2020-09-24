@@ -4,8 +4,71 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c8e4a55acbb45bf399d2bd607399149",
-    "packages": [],
+    "content-hash": "f3b8a5352b133a5d071915bce6307cd5",
+    "packages": [
+        {
+            "name": "awsm/lib-file",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/awsmug/lib-file.git",
+                "reference": "c91062412408195570227446957e298570856486"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/awsmug/lib-file/zipball/c91062412408195570227446957e298570856486",
+                "reference": "c91062412408195570227446957e298570856486",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/php-code-coverage": "^8.0",
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AWSM\\LibFile\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Awesome file functionality.",
+            "time": "2020-09-22T11:08:51+00:00"
+        },
+        {
+            "name": "awsm/lib-tools",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/awsmug/lib-tools.git",
+                "reference": "ba45d3ddfa1e50325fba8898ca6c9b02abdcf05a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/awsmug/lib-tools/zipball/ba45d3ddfa1e50325fba8898ca6c9b02abdcf05a",
+                "reference": "ba45d3ddfa1e50325fba8898ca6c9b02abdcf05a",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/php-code-coverage": "^8.0",
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AWSM\\LibTools\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Awesome Lib - Tools",
+            "time": "2020-09-24T09:10:48+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",
@@ -1801,7 +1864,10 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "awsm/lib-tools": 20,
+        "awsm/lib-file": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
