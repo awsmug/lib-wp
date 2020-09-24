@@ -102,6 +102,6 @@ class Assets {
      * @since 1.0.0
      */
     private function addAsset( Asset $asset ) {
-        call_user_func_array( 'wp_enqueue_' . $asset->type(), $hook->args() );
+        call_user_func_array( 'wp_enqueue_' . $asset->getType(), $asset->getArgs() );
     }
 }

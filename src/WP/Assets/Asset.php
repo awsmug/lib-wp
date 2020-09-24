@@ -24,6 +24,19 @@ class Asset Extends WebAsset implements AssetInterface {
         return WP::getUrl( $this->path );
     }
 
-    public function getArgs() : array{
+    /**
+     * Get args for enqueue funtion.
+     * 
+     * @return array 
+     */
+    public function getArgs() : array 
+    {
+        return [
+            'handle'  => time(),
+            'src'     => $this->getUrl(),
+            'deps'    => [],
+            'version' => false,
+            'in_footer' => false
+        ];
     } 
 }
