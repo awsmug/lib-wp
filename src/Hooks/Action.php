@@ -1,8 +1,6 @@
 <?php
 
-namespace AWSM\SystemLayer\WP;
-
-require 'HookInterface.php';
+namespace AWSM\WP\Hooks;
 
 /**
  * WordPress Action Callback Interface

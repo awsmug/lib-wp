@@ -1,13 +1,14 @@
 <?php
 
-namespace AWSM\SystemLayer\WP;
+namespace AWSM\WP\Hooks;
 
-use AWSM\SystemLayer\CallbackInterface;
+use AWSM\WP\Hooks\HookInterface;
+use AWSM\Tools\CallbackInterface;
 
 /**
  * WordPress Filter Callback Interface
  */
-class Filter implements CallbackInterface {
+class Filter implements HookInterface {
     protected $tag;
     protected $callback;
     protected $priority;

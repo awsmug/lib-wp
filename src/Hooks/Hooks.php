@@ -1,6 +1,6 @@
 <?php
 
-namespace AWSM\SystemLayer\WP;
+namespace AWSM\SystemLayer\WP\Hooks;
 
 use Exception;
 use ReflectionMethod;
@@ -16,7 +16,7 @@ use ReflectionMethod;
  * 
  * Hooks::instance()
  *        ->add( new Filter( 'wp_title',  [ Settings::class, 'filterTitle' ]  ) )
- *        ->add( new Action( 'wp_head',   [ Scrits::class, 'headeScripts' ]  ) )
+ *        ->add( new Action( 'wp_head',   [ Scrits::class, 'headerScripts' ]  ) )
  *        ->add( new Action( 'wp_footer', [ Scrits::class, 'footerScripts' ]  ) );
  * 
  * To load the scripts it is necessary to assign the hooks to a class.

@@ -1,11 +1,11 @@
 {
-    "name": "awsm/systemlayer",
-    "description": "Awesome system layer",
+    "name": "awsm/lib-wp",
+    "description": "Awesome Lib - WP",
     "version": "1.0.0-beta-1",
     "license": "GPL-2.0-or-later",
     "autoload": {
         "psr-4": {
-            "AWSM\\SystemLayer\\" : "src/"
+            "AWSM\\LibWP\\" : "src/"
         }
     },
     "require-dev": {
