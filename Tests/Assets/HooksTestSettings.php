@@ -1,6 +1,6 @@
 <?php
 
-use AWSM\SystemLayer\WP\Hooks;
+use AWSM\WP\WP\Hooks\Hooks;
 
 class HooksTestSettings {
     public function __construct()

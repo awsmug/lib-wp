@@ -1,6 +1,6 @@
 <?php
 
-namespace AWSM\WP\WP\Hooks;
+namespace AWSM\LibWP\WP\Hooks;
 
 /**
  * Class Hook.

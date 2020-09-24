@@ -1,9 +1,8 @@
 <?php
 
-use AWSM\SystemLayer\WP\Action;
+use AWSM\LibWP\WP\Hooks\Action;
+use AWSM\LibWP\WP\Hooks\Hooks;
 use PHPUnit\Framework\TestCase;
-
-use AWSM\SystemLayer\WP\Hooks;
 
 require 'Assets/HooksTestSettings.php';
 
