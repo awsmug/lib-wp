@@ -18,30 +18,16 @@ abstract class Asset implements AssetInterface {
      * 
      * @since 1.0.0
      */
-    protected $type;
+    private $type;
 
     /**
-     * Path of asset
+     * File of asset
      * 
      * @var string
      * 
      * @since 1.0.0
      */
-    protected $path;
-
-    /**
-     * Constructor
-     * 
-     * @param string $path Path to asset.
-     * 
-     * @since 1.0.0
-     */
-    public function __construct( string $path )
-    {
-        $this->path = $path;
-
-        $this->detectType();
-    }
+    private $file;
 
     /**
      * Get asset url
@@ -55,26 +41,41 @@ abstract class Asset implements AssetInterface {
     abstract public function getUrl() :string;
 
     /**
-     * Get path to asset
+     * Set file
      * 
-     * @return string Path to asset.
+     * @param string $file Asset file.
      * 
      * @since 1.0.0
      */
-    public function getPath() : string 
+    public function setFile( string $file ) {
+        $this->file = $file;
+    }
+
+    /**
+     * Get file to asset
+     * 
+     * @return string file to asset.
+     * 
+     * @since 1.0.0
+     */
+    public function getFile() : string 
     {
-        return $this->path;
+        return $this->file;
     }
 
     /**
      * Get type of asset
      * 
-     * @return string Path to asset.
+     * @return string File to asset.
      * 
      * @since 1.0.0
      */
     public function getType() : string 
     {
+        if ( empty( $this->type ) ) {
+            $this->detectType();
+        }
+
         return $this->type;
     }
 
@@ -82,13 +83,13 @@ abstract class Asset implements AssetInterface {
     /**
      * Detect component directory
      * 
-     * @return string Component directory
+     * @return string Component directory.
      * 
      * @since 1.0.0
      */
     private function detectType() : void
     {
-        $extension = File::use( $this->src )->extension();
+        $extension = File::use( $this->file )->extension();
 
         switch( $extension ) {
             case 'css':

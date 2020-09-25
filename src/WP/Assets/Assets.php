@@ -3,21 +3,21 @@
 namespace AWSM\LibWP\WP\Assets;
 
 use AWSM\LibWP\WP\Assets\Asset AS Asset;
+use AWSM\LibWP\WP\Hooks\Action;
+use AWSM\LibWP\WP\Hooks\HookableHiddenMethodsTrait;
+use AWSM\LibWP\WP\Hooks\Hooks;
 use Exception;
 
 /**
  * Class Assets
  * 
- * This class makes it possible to assign hooks outside of classes. By assigning
- * the hooks in a list outside of the class it is possible make hook lists in 
- * separated scripts for clearer overview.
+ * This class makes it possible to assign scripts and styles outside of classes.
  * 
  * Adding hooks:
  * 
  * Hooks::instance()
- *        ->add( new Filter( 'wp_title',  [ Settings::class, 'filterTitle' ]  ) )
- *        ->add( new Action( 'wp_head',   [ Scrits::class, 'headerScripts' ]  ) )
- *        ->add( new Action( 'wp_footer', [ Scrits::class, 'footerScripts' ]  ) );
+ *        ->add( new JS( 'Assets/Dist/JS/index.js' ) ]  ) )
+ *        ->add( new CSS( 'Assets/Dist/CSS/styles.css'  ) );
  * 
  * To load the scripts it is necessary to assign the hooks to a class.
  * 
@@ -35,6 +35,8 @@ use Exception;
  * @since 1.0.0
  */
 class Assets {
+    use HookableHiddenMethodsTrait;
+
     /**
      * Instance
      * 
@@ -53,6 +55,13 @@ class Assets {
      */
     protected $assets = [];
 
+    private function __construct() {
+        Hooks::instance()->add( new Action( 'plugins_loaded', array( Assets::class, 'loadAssets' ) ) ); // We load it here, to let the core core clean.
+        Hooks::assign( $this );
+        
+        $this->setHookableHiddenMethods( ['loadAssets'] );
+    }
+
     /**
      * Singleton
      * 
@@ -64,7 +73,7 @@ class Assets {
         if ( static::$instance === null ) {
             static::$instance = new self();
         }
-
+    
         return static::$instance;
     }
 
@@ -72,8 +81,9 @@ class Assets {
      * Add Asset
      * 
      * @param Asset
+     * @param 
      * 
-     * @return Hooks
+     * @return Assets
      * 
      * @since 1.0.0
      */
@@ -88,9 +98,9 @@ class Assets {
      * 
      * @since 1.0.0
      */
-    private function addAssets() {
+    private function loadAssets() {
         foreach( $this->assets AS $asset ) {
-            $this->addAsset( $asset );
+            $this->loadAsset( $asset );
         }
     }
 
@@ -101,7 +111,7 @@ class Assets {
      * 
      * @since 1.0.0
      */
-    private function addAsset( Asset $asset ) {
-        call_user_func_array( 'wp_enqueue_' . $asset->getType(), $asset->getArgs() );
+    private function loadAsset( Asset $asset ) {
+//         call_user_func_array( 'wp_enqueue_' . $asset->getType(), $asset->getArgs() );
     }
 }

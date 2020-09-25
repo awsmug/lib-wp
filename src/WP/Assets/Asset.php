@@ -4,14 +4,80 @@ namespace AWSM\LibWP\WP\Assets;
 
 use AWSM\LibWP\Web\Assets\Asset as WebAsset;
 use AWSM\LibWP\WP\Core\WP;
+use AWSM\LibWP\WP\Hooks\Hook;
 
 /**
  * Asset class for WordPress.
  * 
  * @since 1.0.0
  */
-class Asset Extends WebAsset implements AssetInterface {
-    
+abstract class Asset Extends WebAsset implements AssetInterface {
+    /**
+     * Asset depencies
+     * 
+     * @var array
+     * 
+     * @since 1.0.0
+     */
+    private $depencies = [];
+
+    /**
+     * Check callback.
+     * 
+     * @var array
+     * 
+     * @since 1.0.0
+     */
+    private $checkCallback = [];
+
+    /**
+     * Set check callback
+     * 
+     * @param array $callback A callback to determine if an asset will be included or not.
+     *                        This callback have to return true of false. For example isFrontend 
+     *                        to include frontend scripts or styles.
+     * @since 1.0.0
+     */
+    public function setCheckCallback( array $callback ) {
+        $this->checkCallback = $callback;
+    }
+
+    /**
+     * Get check callback
+     * 
+     * @return array $callback A callback to determine if an asset will be included or not.
+     *                         This callback have to return true of false. For example isFrontend 
+     *                         to include frontend scripts or styles.
+     * @since 1.0.0
+     */
+    public function getCheckCallback( array $callback ) {
+        $this->checkCallback = $callback;
+    }
+
+    /**
+     * Set depencies
+     * 
+     * @param array Asset depencies.
+     * 
+     * @since 1.0.0
+     */
+    public function setDepencies( array $depencies ) 
+    {
+        $this->depencies = $depencies;
+    }
+
+    /**
+     * Get depencies
+     * 
+     * @return array Asset depencies.
+     * 
+     * @since 1.0.0
+     */
+    public function getDepencies() 
+    {
+        return $this->depencies;
+    }
+
     /**
      * Get asset url
      * 
@@ -25,18 +91,33 @@ class Asset Extends WebAsset implements AssetInterface {
     }
 
     /**
+     * Get Handle.
+     * 
+     * @return string handle for WordPress
+     * 
+     * @since 1.0.0
+     */
+    protected function getHandle() 
+    {
+        return basename( $this->getFile() );
+    }
+
+    /**
      * Get args for enqueue funtion.
      * 
-     * @return array 
+     * @return array
+     * 
+     * @since 1.0.0
      */
-    public function getArgs() : array 
-    {
-        return [
-            'handle'  => time(),
-            'src'     => $this->getUrl(),
-            'deps'    => [],
-            'version' => false,
-            'in_footer' => false
-        ];
-    } 
+    abstract public function getArgs() : array;
+
+    /**
+     * Get loader hook.
+     * 
+     * @return array
+     * 
+     * @since 1.0.0
+     */
+    abstract public function getLoaderHook() : string;
+
 }

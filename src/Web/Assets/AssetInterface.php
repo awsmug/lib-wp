@@ -3,7 +3,7 @@
 namespace AWSM\LibWP\Web\Assets;
 
 /**
- * Asset Interface.
+ * Asset Interface
  * 
  * @since 1.0.0
  */
@@ -13,20 +13,20 @@ interface AssetInterface {
      * 
      * Depending on system the url of the asset have to be returned.
      * 
-     * @return string $url Asset url
+     * @return string $url Asset url.
      * 
      * @since 1.0.0
      */
     public function getUrl() :string;
 
     /**
-     * Get path to asset
+     * Get asset file
      * 
-     * @return string Path to asset.
+     * @return string Asset file.
      * 
      * @since 1.0.0
      */
-    public function getPath() : string;
+    public function getFile() : string;
 
     /**
      * Get type of asset

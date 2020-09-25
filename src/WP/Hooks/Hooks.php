@@ -89,13 +89,18 @@ class Hooks {
     /**
      * Add Hook
      * 
-     * @param HookInterface
+     * @param HookInterface $hook
+     * @param bool          $check
      * 
      * @return Hooks
      * 
      * @since 1.0.0
      */
-    public function add( HookInterface $hook ) {
+    public function add( HookInterface $hook, bool $check = true ) {
+        if( ! $check ) {
+            return;
+        }
+        
         if ( ! is_array( $hook->callback() ) ) {
             throw new Exception( 'Adding hooks for functions is not allowed' );
         }
