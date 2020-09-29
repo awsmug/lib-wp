@@ -1,8 +1,7 @@
 <?php
 
-use AWSM\SystemLayer\MyClass;
-use AWSM\SystemLayer\WP\Action;
-use AWSM\SystemLayer\WP\Hooks;
+use AWSM\LibWP\WP\Hooks\Action;
+use AWSM\LibWP\WP\Hooks\Hooks;
 
-Hooks::instance()
+Hooks::global()
     ->add( new Action('wp_footer', [ MyClass::class, 'footer' ] ) );

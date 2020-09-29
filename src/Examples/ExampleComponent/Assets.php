@@ -1,8 +1,6 @@
 <?php
 
-use AWSM\SystemLayer\MyClass;
-use AWSM\SystemLayer\WP\Action;
-use AWSM\SystemLayer\WP\Hooks;
+use AWSM\LibWP\WP\Assets\Assets;
 
 Assets::instance()
     ->add( new FrontendAsset( 'Assets/Dist/css/buil.css' ) )
