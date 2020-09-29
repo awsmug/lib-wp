@@ -5,6 +5,8 @@ namespace AWSM\LibWP\WP\Hooks;
 use Exception;
 use ReflectionMethod;
 
+use AWSM\LibTools\Traits\GlobalTrait;
+
 /**
  * Class hooks
  * 
@@ -34,16 +36,10 @@ use ReflectionMethod;
  * 
  * @since 1.0.0
  */
-class Hooks {
-    /**
-     * Instance
-     * 
-     * @var Hooks|null
-     * 
-     * @since 1.0.0
-     */
-    protected static $instance = null;
-
+class Hooks 
+{
+    use GlobalTrait;
+    
     /**
      * Assigned objects
      * 
@@ -70,21 +66,6 @@ class Hooks {
      * @since 1.0.0
      */
     protected $hooks = [];
-
-    /**
-     * Singleton
-     * 
-     * @return Hooks
-     * 
-     * @since 1.0.0
-     */
-    public static function instance() {
-        if ( static::$instance === null ) {
-            static::$instance = new self();
-        }
-
-        return static::$instance;
-    }
 
     /**
      * Add Hook

@@ -2,6 +2,7 @@
 
 namespace AWSM\LibWP\WP\Assets;
 
+use AWSM\LibTools\Traits\SingletonTrait;
 use AWSM\LibWP\WP\Assets\Asset AS Asset;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\HookableHiddenMethodsTrait;
@@ -34,17 +35,9 @@ use Exception;
  * 
  * @since 1.0.0
  */
-class Assets {
-    use HookableHiddenMethodsTrait;
-
-    /**
-     * Instance
-     * 
-     * @var Assets|null
-     * 
-     * @since 1.0.0
-     */
-    protected static $instance = null;
+class Assets 
+{
+    use HookableHiddenMethodsTrait, SingletonTrait;
 
     /**
      * Assets
@@ -60,21 +53,6 @@ class Assets {
         Hooks::assign( $this );
         
         $this->setHookableHiddenMethods( ['loadAssets'] );
-    }
-
-    /**
-     * Singleton
-     * 
-     * @return Assets
-     * 
-     * @since 1.0.0
-     */
-    public static function instance() {
-        if ( static::$instance === null ) {
-            static::$instance = new self();
-        }
-    
-        return static::$instance;
     }
 
     /**
@@ -94,7 +72,7 @@ class Assets {
     }
 
     /**
-     * Running all hooks to assign
+     * Running all assets to be assigned
      * 
      * @since 1.0.0
      */
@@ -105,7 +83,7 @@ class Assets {
     }
 
     /**
-     * Adding hook on assigning
+     * Adding asset
      * 
      * @param HookInterface
      * 
