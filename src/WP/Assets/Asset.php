@@ -11,7 +11,8 @@ use AWSM\LibWP\WP\Hooks\Hook;
  * 
  * @since 1.0.0
  */
-abstract class Asset Extends WebAsset implements AssetInterface {
+abstract class Asset Extends WebAsset implements AssetInterface 
+{
     /**
      * Asset depencies
      * 
