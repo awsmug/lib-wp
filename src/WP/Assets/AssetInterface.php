@@ -11,6 +11,15 @@ use AWSM\LibWP\Web\Assets\AssetInterface as WebAssetInterface;
  */
 interface AssetInterface extends WebAssetInterface{
     /**
+     * Type of asset
+     * 
+     * @return string Asset type (script/style).
+     * 
+     * @since 1.0.0 
+     */
+    public function getType() : string;
+
+    /**
      * Arguments
      * 
      * @var array
