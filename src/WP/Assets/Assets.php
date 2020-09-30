@@ -7,7 +7,6 @@ use AWSM\LibWP\WP\Assets\Asset AS Asset;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\HookableHiddenMethodsTrait;
 use AWSM\LibWP\WP\Hooks\Hooks;
-use Exception;
 
 /**
  * Class Assets

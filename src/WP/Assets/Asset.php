@@ -4,7 +4,6 @@ namespace AWSM\LibWP\WP\Assets;
 
 use AWSM\LibWP\Web\Assets\Asset as WebAsset;
 use AWSM\LibWP\WP\Core\WP;
-use AWSM\LibWP\WP\Hooks\Hook;
 
 /**
  * Asset class for WordPress.
