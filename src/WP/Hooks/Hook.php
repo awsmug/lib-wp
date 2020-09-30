@@ -3,7 +3,9 @@
 namespace AWSM\LibWP\WP\Hooks;
 
 /**
- * WordPress Action Callback Interface
+ * WordPress Hooks
+ * 
+ * @since 1.0.0
  */
 abstract class Hook implements HookInterface {
     /**
