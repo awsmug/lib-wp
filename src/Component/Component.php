@@ -32,7 +32,7 @@ abstract class Component implements ComponentInterface {
      * 
      * @since 1.0.0
      */
-    public function setup( string $entryPointFile = '', string $hooksFile = '', string $assetsFile = '' ) {
+    protected function setup( string $entryPointFile = '', string $hooksFile = '', string $assetsFile = '' ) {
         $this->setup = new ComponentSetup( $entryPointFile, $hooksFile, $assetsFile );
     }
 
@@ -41,7 +41,7 @@ abstract class Component implements ComponentInterface {
      * 
      * @since 1.0.0
      */
-    public function run() {
+    public function start() {
         if ( empty ( $this->setup ) ) {
             $this->setup();
         }

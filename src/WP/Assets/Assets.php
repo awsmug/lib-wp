@@ -2,7 +2,7 @@
 
 namespace AWSM\LibWP\WP\Assets;
 
-use AWSM\LibTools\Traits\SingletonTrait;
+use AWSM\LibTools\Patterns\SingletonTrait;
 use AWSM\LibWP\WP\Assets\Asset AS Asset;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\HookableHiddenMethodsTrait;

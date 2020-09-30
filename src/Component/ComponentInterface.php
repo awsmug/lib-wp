@@ -13,5 +13,5 @@ Interface ComponentInterface {
      * 
      * @since 1.0.0
      */
-    public function run();
+    public function start();
 }

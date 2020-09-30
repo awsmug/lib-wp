@@ -43,12 +43,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/awsmug/lib-tools.git",
-                "reference": "282499807578344c35dd934caf98a9cdb69b2470"
+                "reference": "676874f7722e17fcc5a75d187a3bbe364af265a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/awsmug/lib-tools/zipball/282499807578344c35dd934caf98a9cdb69b2470",
-                "reference": "282499807578344c35dd934caf98a9cdb69b2470",
+                "url": "https://api.github.com/repos/awsmug/lib-tools/zipball/676874f7722e17fcc5a75d187a3bbe364af265a6",
+                "reference": "676874f7722e17fcc5a75d187a3bbe364af265a6",
                 "shasum": ""
             },
             "require-dev": {
@@ -66,7 +66,7 @@
                 "GPL-2.0-or-later"
             ],
             "description": "Awesome Lib - Tools",
-            "time": "2020-09-29T13:41:45+00:00"
+            "time": "2020-09-30T11:53:15+00:00"
         }
     ],
     "packages-dev": [
@@ -1059,16 +1059,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "4.0.4",
+            "version": "4.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "e717aabeafe4eac045d3e947dad3207118664c72"
+                "reference": "7a8ff306445707539c1a6397372a982a1ec55120"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/e717aabeafe4eac045d3e947dad3207118664c72",
-                "reference": "e717aabeafe4eac045d3e947dad3207118664c72",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/7a8ff306445707539c1a6397372a982a1ec55120",
+                "reference": "7a8ff306445707539c1a6397372a982a1ec55120",
                 "shasum": ""
             },
             "require": {
@@ -1125,7 +1125,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-28T05:31:46+00:00"
+            "time": "2020-09-30T06:47:25+00:00"
         },
         {
             "name": "sebastian/diff",

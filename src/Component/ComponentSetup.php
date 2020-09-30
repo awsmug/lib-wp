@@ -3,7 +3,7 @@
 namespace AWSM\LibWP\Component;
 
 use AWSM\LibFile\File;
-use AWSM\LibTools\CallerDetective;
+use AWSM\LibTools\Callbacks\CallerDetective;
 
 /**
  * Component setup.
