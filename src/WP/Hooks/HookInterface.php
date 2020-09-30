@@ -9,29 +9,29 @@ namespace AWSM\LibWP\WP\Hooks;
  */
 interface HookInterface {
     /**
-    * Type of hook (filter/action)
+    * Get type of hook (filter/action)
     * 
     * @return string
     * 
     * @since 1.0.0
     */
-    public function type() : string;
+    public function getType() : string;
 
     /**
-     * Callback
+     * Get callback
      * 
      * @var string
      * 
      * @since 1.0.0
      */
-    public function callback() : array;
+    public function getCallback() : array;
 
     /**
-     * Arguments
+     * Get arguments
      * 
      * @var array
      * 
      * @since 1.0.0
      */
-    public function args() : array;
+    public function getArgs() : array;
 }

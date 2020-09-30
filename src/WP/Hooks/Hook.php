@@ -49,7 +49,7 @@ abstract class Hook implements HookInterface {
      * 
      * @since 1.0.0
      */
-    protected $accepted_args;
+    protected $acceptedArgs;
 
     /**
      * Constructor
@@ -61,52 +61,52 @@ abstract class Hook implements HookInterface {
      * 
      * @since 1.0.0
      */
-    public function __construct( string $tag, array $callback, int $priority = 10, $accepted_args = 1 )
+    public function __construct( string $tag, array $callback, int $priority = 10, $acceptedArgs = 1 )
     {
         $this->tag           = $tag;
         $this->callback      = $callback;
         $this->priority      = $priority;
-        $this->accepted_args = $accepted_args;
+        $this->acceptedArgs = $acceptedArgs;
     }
 
     /**
-    * Type of hook (filter/action)
+    * Get type of hook (filter/action)
     * 
     * @return string
     * 
     * @since 1.0.0
     */
-    public final function type() : string
+    public final function getType() : string
     {
         return $this->type;
     }
 
     /**
-     * Callback
+     * Get callback
      * 
      * @var string
      * 
      * @since 1.0.0
      */
-    public final function callback() : array 
+    public final function getCallback() : array 
     {
         return $this->callback;
     }
 
     /**
-     * Arguments
+     * Get arguments
      * 
      * @var array
      * 
      * @since 1.0.0
      */
-    public final function args() : array 
+    public final function getArgs() : array 
     {
         return [
             $this->tag,
             $this->callback,
             $this->priority,
-            $this->accepted_args
+            $this->acceptedArgs
         ];
     }
 }
