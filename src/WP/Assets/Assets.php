@@ -58,14 +58,18 @@ class Assets
     /**
      * Add Asset
      * 
-     * @param Asset
-     * @param 
+     * @param Asset $asset
+     * @param bool  $check
      * 
      * @return Assets
      * 
      * @since 1.0.0
      */
-    public function add( Asset $asset ) {
+    public function add( Asset $asset, bool $check = true  ) {
+        if( ! $check ) {
+            return;
+        }
+
         $this->assets[] = $asset;
 
         return $this;
