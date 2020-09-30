@@ -5,7 +5,7 @@ namespace AWSM\LibWP\WP\Hooks;
 use Exception;
 use ReflectionMethod;
 
-use AWSM\LibTools\Traits\SingletonTrait;
+use AWSM\LibTools\Patterns\SingletonTrait;
 
 /**
  * Class hooks
