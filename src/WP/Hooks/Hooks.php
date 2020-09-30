@@ -5,7 +5,7 @@ namespace AWSM\LibWP\WP\Hooks;
 use Exception;
 use ReflectionMethod;
 
-use AWSM\LibTools\Traits\GlobalTrait;
+use AWSM\LibTools\Traits\SingletonTrait;
 
 /**
  * Class hooks
@@ -38,16 +38,16 @@ use AWSM\LibTools\Traits\GlobalTrait;
  */
 class Hooks 
 {
-    use GlobalTrait;
+    use SingletonTrait;
     
     /**
      * Assigned objects
      * 
-     * @var array
+     * @var string
      * 
      * @since 1.0.0
      */
-    public $assignedObjects = [];
+    public $assignedObject;
 
     /**
      * Current class
@@ -82,7 +82,7 @@ class Hooks
             return;
         }
         
-        if ( ! is_array( $hook->callback() ) ) {
+        if ( ! is_array( $hook->getCallback() ) ) {
             throw new Exception( 'Adding hooks for functions is not allowed' );
         }
 
@@ -99,8 +99,7 @@ class Hooks
      * @since 1.0.0
      */
     public static function assign( $object ) {
-        self::instance()->assignedObjects[ get_class( $object ) ] = $object;
-        self::instance()->currentClass = get_class( $object );
+        self::instance()->assignedObject = $object;
         self::instance()->addHooks();
     }
 
@@ -123,9 +122,9 @@ class Hooks
      * @since 1.0.0
      */
     private function addHook( HookInterface $hook ) {
-        $callback = $hook->callback();
+        $callback = $hook->getCallback();
 
-        if ( $this->currentClass !== $callback[0] ) {
+        if ( get_class( $this->assignedObject ) !== $callback[0] ) {
             return;
         }
 
@@ -133,10 +132,9 @@ class Hooks
 
         // If method is not static take object for hook callback.
         if ( ! $reflectionMethod->isStatic() ) {
-            $object = $this->assignedObjects[ $callback['0'] ];
-            $hook->callback( [ $object, $callback[1] ] );
+            $hook->getCallback( [ $$this->assignedObject, $callback[1] ] );
         }
 
-        call_user_func_array( 'add_' . $hook->type(), $hook->args() );
+        call_user_func_array( 'add_' . $hook->getType(), $hook->getArgs() );
     }
 }
