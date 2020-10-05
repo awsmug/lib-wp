@@ -19,12 +19,11 @@ require '../../../vendor/autoload.php';
 
 use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\WP\Core\WP;
-use AWSM\LibWP\Examples\Plugin\Components\HelloWorld\App\Main;
 use AWSM\LibWP\WP\WPException;
+use AWSM\LibWP\Examples\Plugin\Components\HelloWorld\HelloWorld;
 
 try {
-    Plugin::init()
-        ->addComponent( Main::class );
+    Plugin::init()->addComponent( HelloWorld::class );
 } catch ( WPException $e ) {
     WP::alert( sprintf( 'Failed to run Plugin: %s', $e->getMessage() ) );
 }
