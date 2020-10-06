@@ -1,7 +1,5 @@
 <?php
 
-<?php
-
 namespace AWSM\LibWP\WP;
 
 use AWSM\LibWP\WP\WPException;
