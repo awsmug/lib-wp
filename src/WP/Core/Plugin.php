@@ -4,7 +4,7 @@ namespace AWSM\LibWP\WP\Core;
 
 use AWSM\LibTools\Callbacks\CallerDetective;
 use AWSM\LibWP\WP\Hooks\HookableHiddenMethodsTrait;
-use AWSM\LibWP\WP\CoreException;
+use AWSM\LibWP\Core\CoreException;
 
 /**
  * Abstract Plugin class.
