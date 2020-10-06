@@ -1,6 +1,6 @@
 <?php
 
-namespace AWSM\LibWP\Core;
+namespace AWSM\LibWP\WP\Core;
 
 use AWSM\LibWP\WP\WPException;
 
