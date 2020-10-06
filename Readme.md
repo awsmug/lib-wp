@@ -1,4 +1,4 @@
-# Awesome Lib - WP - 
+# Awesome Lib - WP (pre alpha)
 **An OOP Layer for WordPress**
 
 This library wraps WordPress functionality and tries to make WordPress easy to use in object orientated PHP. 
@@ -14,7 +14,12 @@ After that the main plugin file have to be created.
 
 ### Plugin Example file
 
-The main work is done in creating a 
+The main work is done in creating a plugin file with the necessary comments. Please take care that 
+the comments section is important for the library. It reads all data like the text domain and 
+domain path from these headers. You do not have load the text domain files by manually.
+
+The Plugin class only gives  ```addComponent()``` function which loads the components of the plugin.
+Nothing more is necessary to do to startup the Plugin.
 
 ```php
 <?php
