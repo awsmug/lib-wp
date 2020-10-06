@@ -8,7 +8,7 @@ We also put a little magic in this for less effort on programming.
 
 At first the Lib WP have to be added by requiring it with composer.
 
-```composer require awsm/lib-wp```
+```composer require awsm/lib-wp:dev-develop```
 
 After that the main plugin file have to be created.
 
