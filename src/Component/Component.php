@@ -33,7 +33,21 @@ abstract class Component implements ComponentInterface {
      * @since 1.0.0
      */
     protected function setup( string $hooksFile = '', string $assetsFile = '' ) {
-        $this->setup = new ComponentSetup( $hooksFile, $assetsFile );
+        $this->setup = new ComponentSetup( $this->getDir(), $hooksFile, $assetsFile );
+    }
+
+    /**
+     * Get directory of component
+     * 
+     * @return string Directory of called class.
+     * 
+     * @since 1.0.0
+     */
+    private function getDir() : string {
+        $calledClass = get_called_class();
+        $reflector   = new \ReflectionClass($calledClass);
+
+        return dirname( $reflector->getFileName() );
     }
 
     /**

@@ -2,9 +2,6 @@
 
 namespace AWSM\LibWP\Component;
 
-use AWSM\LibFile\File;
-use AWSM\LibTools\Callbacks\CallerDetective;
-
 /**
  * Component setup.
  * 
@@ -53,20 +50,34 @@ class ComponentSetup {
      * 
      * @since 1.0.0
      */
-    public function __construct( string $hooksFile = '', string $assetsFile = '' )
+    public function __construct( string $dir, string $hooksFile = '', string $assetsFile = '' )
     {
+        if( ! is_dir( $dir ) ) {
+            throw new ComponentException( sprintf( 'Directory "%s" is not a directory', $dir ) );
+        }
+
+        $this->dir = $dir;
+        
         if( ! empty( $hooksFile ) ) 
         {
-            $this->hooksFile = $this->getDir() . '/' . $hooksFile;
+            $this->hooksFile = $this->dir . '/' . $hooksFile;
         } else {
-            $this->hooksFile = $this->getDir() . '/Hooks.php';
+            $this->hooksFile = $this->dir . '/Hooks.php';
+        }
+
+        if( ! file_exists( $this->hooksFile ) ) {
+            throw new ComponentException( sprintf( 'Hook file "%s" does not exist', $this->hooksFile ) );
         }
 
         if( ! empty( $assetsFile ) ) 
         {
-            $this->assetsFile = $this->getDir() . '/' . $assetsFile;
+            $this->assetsFile = $this->dir . '/' . $assetsFile;
         } else {
-            $this->assetsFile = $this->getDir() . '/Assets.php';
+            $this->assetsFile = $this->dir . '/Assets.php';
+        }
+
+        if( ! file_exists( $this->assetsFile ) ) {
+            throw new ComponentException( sprintf( 'Assets file "%s" does not exist', $this->assetsFile ) );
         }
     }
 
@@ -79,13 +90,6 @@ class ComponentSetup {
      */
     public function getDir() 
     {
-        if( ! empty( $this->dir ) ) 
-        {
-            return $this->dir;
-        }
-
-        $this->dir = $this->detectDir();
-
         return $this->dir;
     }
 
@@ -111,18 +115,5 @@ class ComponentSetup {
     public function getAssetsFile() 
     {
         return $this->assetsFile;
-    }
-
-    /**
-     * Detect component directory
-     * 
-     * @return string Component directory
-     * 
-     * @since 1.0.0
-     */
-    private function detectDir() 
-    {
-        $file = CallerDetective::detect( 2 )->file();
-        return File::use( $file )->dir();
     }
 }
