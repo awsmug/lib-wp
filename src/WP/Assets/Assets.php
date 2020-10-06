@@ -4,9 +4,7 @@ namespace AWSM\LibWP\WP\Assets;
 
 use AWSM\LibTools\Patterns\SingletonTrait;
 use AWSM\LibWP\WP\Assets\Asset AS Asset;
-use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\HookableHiddenMethodsTrait;
-use AWSM\LibWP\WP\Hooks\Hooks;
 
 /**
  * Class Assets
@@ -39,6 +37,15 @@ class Assets
     use HookableHiddenMethodsTrait, SingletonTrait;
 
     /**
+     * Whether assets are already enqueues or not.
+     * 
+     * @var bool
+     * 
+     * @since 1.0.0
+     */
+    private $enqueuedAssets = false;
+
+    /**
      * Assets
      * 
      * @var array
@@ -47,11 +54,14 @@ class Assets
      */
     protected $assets = [];
 
-    private function __construct() {
-        Hooks::instance()->add( new Action( 'plugins_loaded', array( Assets::class, 'loadAssets' ) ) ); // We load it here, to let the core core clean.
-        Hooks::assign( $this );
-        
-        $this->setHookableHiddenMethods( ['loadAssets'] );
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
+    private function __construct() 
+    {      
+        $this->setHookableHiddenMethods( ['loadAssets', 'loadAdminStyles', 'loadAdminScripts', 'loadScripts', 'loadFooterScripts'] );
     }
 
     /**
@@ -64,12 +74,14 @@ class Assets
      * 
      * @since 1.0.0
      */
-    public function add( Asset $asset, bool $check = true  ) {
+    public function add( Asset $asset, bool $check = true  ) 
+    {
         if( ! $check ) {
             return;
         }
 
-        $this->assets[] = $asset;
+        $this->assets[ $asset->getLoaderHook() ][] = $asset;
+        $this->enqueueAssets();
 
         return $this;
     }
@@ -79,20 +91,89 @@ class Assets
      * 
      * @since 1.0.0
      */
-    private function loadAssets() {
-        foreach( $this->assets AS $asset ) {
-            $this->loadAsset( $asset );
+    private function enqueueAssets() 
+    {
+        if( $this->enqueuedAssets ) {
+            return;
+        }
+
+        add_action( 'plugins_loaded', [ $this, 'loadAssets' ] );
+    }
+
+    /**
+     * Add necessary hooks
+     * 
+     * @since 1.0.0 
+     */
+    private function loadAssets() 
+    {
+        $loaderHooks = [
+            'admin_print_styles'    => 'loadAdminStyles',
+            'admin_enqueue_scripts' => 'loadAdminScripts',
+            'wp_enqueue_scripts'    => 'loadScripts',
+            'wp_footer'             => 'loadFooterScripts'
+        ];
+
+        foreach( $loaderHooks AS $hookName => $callbackFunction ) 
+        {
+            if ( array_key_exists( $hookName, $this->assets ) ) 
+            {
+                add_action( $hookName, [ $this, $callbackFunction ] );
+            }
         }
     }
 
     /**
-     * Adding asset
-     * 
-     * @param HookInterface
+     * Load admin style assets
      * 
      * @since 1.0.0
      */
-    private function loadAsset( Asset $asset ) {
-//         call_user_func_array( 'wp_enqueue_' . $asset->getType(), $asset->getArgs() );
+    private function loadAdminStyles() 
+    {
+        $this->loadHookAssets( 'admin_print_styles' );
+    }
+
+    /**
+     * Load admin script assets
+     * 
+     * @since 1.0.0
+     */
+    private function loadAdminScripts() 
+    {
+        $this->loadHookAssets( 'admin_enqueue_scripts' );
+    }
+
+    /**
+     * Load script assets
+     * 
+     * @since 1.0.0
+     */
+    private function loadScripts() 
+    {
+        $this->loadHookAssets( 'wp_enqueue_scripts' );
+    }
+
+    /**
+     * Load admin style
+     * 
+     * @since 1.0.0
+     */
+    private function loadFooterScripts() 
+    {
+        $this->loadHookAssets( 'wp_footer' );
+    }
+    
+    /**
+     * Loading assets for a specific hook
+     * 
+     * @param string $hookName Name of the hook.
+     * 
+     * @since 1.0.0
+     */
+    private function loadHookAssets( string $hookName ) {
+        foreach( $this->assets[ $hookName ] AS $asset ) 
+        {
+            call_user_func_array( 'wp_enqueue_' . $asset->getType(), $asset->getArgs() );
+        }
     }
 }
