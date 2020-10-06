@@ -23,17 +23,6 @@ class ComponentSetup {
     protected $dir;
 
     /**
-     * The entrypoint file path.
-     * 
-     * This path must contain the very first script which have to be loaded which requires all necessary scripts.
-     * 
-     * @var string
-     * 
-     * @since 1.0.0 
-     */
-    protected $entryPoint;
-
-    /**
      * The hooks file path.
      * 
      * This path must contain the hooks file which contains the necessary hooks list.
@@ -64,13 +53,21 @@ class ComponentSetup {
      * 
      * @since 1.0.0
      */
-    public function __construct( string $entryPointFile = '', string $hooksFile = '', string $assetsFile = '' )
+    public function __construct( string $hooksFile = '', string $assetsFile = '' )
     {
-        $this->dir  = $this->detectDir();
-    
-        $this->entryPoint = ! empty( $entryPointFile ) ? $this->dir . '/' . $entryPointFile : $this->dir . '/App/Main.php';
-        $this->hooksFile  = ! empty( $hooksFile ) ? $this->dir . '/' . $hooksFile : $this->dir . '/App/Main.php';
-        $this->assetsFile = ! empty( $assetsFile ) ? $this->dir . '/' . $assetsFile : $this->dir . '/App/Main.php';
+        if( ! empty( $hooksFile ) ) 
+        {
+            $this->hooksFile = $this->getDir() . '/' . $hooksFile;
+        } else {
+            $this->hooksFile = $this->getDir() . '/Hooks.php';
+        }
+
+        if( ! empty( $assetsFile ) ) 
+        {
+            $this->assetsFile = $this->getDir() . '/' . $assetsFile;
+        } else {
+            $this->assetsFile = $this->getDir() . '/Assets.php';
+        }
     }
 
     /**
@@ -80,19 +77,16 @@ class ComponentSetup {
      * 
      * @since 1.0.0
      */
-    public function dir() {
-        return $this->dir;
-    }
+    public function getDir() 
+    {
+        if( ! empty( $this->dir ) ) 
+        {
+            return $this->dir;
+        }
 
-    /**
-     * Get component entryPoint
-     * 
-     * @return string Component entryPoint.
-     * 
-     * @since 1.0.0
-     */
-    public function entryPoint() {
-        return $this->entryPoint;
+        $this->dir = $this->detectDir();
+
+        return $this->dir;
     }
 
     /**
@@ -102,7 +96,8 @@ class ComponentSetup {
      * 
      * @since 1.0.0
      */
-    public function hooksFile() {
+    public function getHooksFile() 
+    {
         return $this->hooksFile;
     }
 
@@ -113,7 +108,8 @@ class ComponentSetup {
      * 
      * @since 1.0.0
      */
-    public function assetsFile() {
+    public function getAssetsFile() 
+    {
         return $this->assetsFile;
     }
 

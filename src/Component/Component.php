@@ -32,8 +32,8 @@ abstract class Component implements ComponentInterface {
      * 
      * @since 1.0.0
      */
-    protected function setup( string $entryPointFile = '', string $hooksFile = '', string $assetsFile = '' ) {
-        $this->setup = new ComponentSetup( $entryPointFile, $hooksFile, $assetsFile );
+    protected function setup( string $hooksFile = '', string $assetsFile = '' ) {
+        $this->setup = new ComponentSetup( $hooksFile, $assetsFile );
     }
 
     /**
@@ -46,8 +46,7 @@ abstract class Component implements ComponentInterface {
             $this->setup();
         }
         
-        PhpFile::use( $this->setup->hooksFile() )->run();
-        PhpFile::use( $this->setup->assetsFile() )->run();
-        PhpFile::use( $this->setup->entryPoint() )->run();
+        PhpFile::use( $this->setup->getHooksFile() )->run();
+        PhpFile::use( $this->setup->getAssetsFile() )->run();
     }
 }
