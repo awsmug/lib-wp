@@ -22,39 +22,6 @@ abstract class Asset Extends WebAsset implements AssetInterface
     private $depencies = [];
 
     /**
-     * Check callback.
-     * 
-     * @var array
-     * 
-     * @since 1.0.0
-     */
-    private $checkCallback = [];
-
-    /**
-     * Set check callback
-     * 
-     * @param array $callback A callback to determine if an asset will be included or not.
-     *                        This callback have to return true of false. For example isFrontend 
-     *                        to include frontend scripts or styles.
-     * @since 1.0.0
-     */
-    public function setCheckCallback( array $callback ) {
-        $this->checkCallback = $callback;
-    }
-
-    /**
-     * Get check callback
-     * 
-     * @return array $callback A callback to determine if an asset will be included or not.
-     *                         This callback have to return true of false. For example isFrontend 
-     *                         to include frontend scripts or styles.
-     * @since 1.0.0
-     */
-    public function getCheckCallback( array $callback ) {
-        $this->checkCallback = $callback;
-    }
-
-    /**
      * Set depencies
      * 
      * @param array Asset depencies.
