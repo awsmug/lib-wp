@@ -35,7 +35,7 @@ class PluginInfo {
      */
     private function load() 
     {
-        $this->pluginData = get_plugin_data( $this->pluginFile->path() );
+        $this->pluginData = $this->getPluginData( $this->pluginFile->path() );
     }
 
     /**
@@ -166,5 +166,73 @@ class PluginInfo {
     public function getRequiredPHPVersion() : string
     {
         return $this->pluginData['RequiresPHP'];
+    }
+
+    /**
+     * Get plugin data (copied and modified form get_pluginData WP function)
+     * 
+     * @param string $plugin_file
+     * 
+     * @since 1.0.0
+     */
+    private function getPluginData( string $pluginFile ) 
+    {
+        $defaultHeaders = array(
+            'Name'        => 'Plugin Name',
+            'PluginURI'   => 'Plugin URI',
+            'Version'     => 'Version',
+            'Description' => 'Description',
+            'Author'      => 'Author',
+            'AuthorURI'   => 'Author URI',
+            'TextDomain'  => 'Text Domain',
+            'DomainPath'  => 'Domain Path',
+            'Network'     => 'Network',
+            'RequiresWP'  => 'Requires at least',
+            'RequiresPHP' => 'Requires PHP'
+        );
+     
+        $pluginData = $this->getFileFata( $pluginFile, $defaultHeaders );
+     
+        $pluginData['Network'] = ( 'true' === strtolower( $pluginData['Network'] ) );
+        unset( $pluginData['_sitewide'] );
+     
+        $pluginData['Title']      = $pluginData['Name'];
+        $pluginData['AuthorName'] = $pluginData['Author'];
+     
+        return $pluginData;
+    }
+
+    /**
+     * Get plugin data (copied and modified form get_pluginData WP function)
+     * 
+     * @param string $file
+     * @param array  $defaultHeaders
+     * 
+     * @since 1.0.0
+     */
+    private function getFileFata( $file, $defaultHeaders ) {
+        // We don't need to write to the file, so just open for reading.
+        $fp = fopen( $file, 'r' );
+     
+        // Pull only the first 8 KB of the file in.
+        $fileData = fread( $fp, 8 * 1024 );
+     
+        // PHP will close file handle, but we are good citizens.
+        fclose( $fp );
+     
+        // Make sure we catch CR-only line endings.
+        $fileData = str_replace( "\r", "\n", $fileData );
+    
+        $allHeaders = $defaultHeaders;
+     
+        foreach ( $allHeaders as $field => $regex ) {
+            if ( preg_match( '/^[ \t\/*#@]*' . preg_quote( $regex, '/' ) . ':(.*)$/mi', $fileData, $match ) && $match[1] ) {
+                $allHeaders[ $field ] = trim( preg_replace( '/\s*(?:\*\/|\?>).*/', '', $match[1] ) );
+            } else {
+                $allHeaders[ $field ] = '';
+            }
+        }
+     
+        return $allHeaders;
     }
 }
