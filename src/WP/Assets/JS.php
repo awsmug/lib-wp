@@ -9,7 +9,7 @@ use AWSM\LibWP\WP\Core\Location;
  * 
  * @since 1.0.0
  */
-final class JS Extends Asset {
+final class JS Extends Asset implements AssetInterface {
     /**
      * Loading script in footer.
      * 
@@ -19,11 +19,10 @@ final class JS Extends Asset {
      */
     private $inFooter = true;
 
-    public function __construct( string $file, array $checkCallback = [], array $depencies = [], bool $inFooter = true )
+    public function __construct( string $file, array $depencies = [], bool $inFooter = true )
     {
         $this->setFile( $file );
         $this->setDepencies( $depencies );
-        $this->setCheckCallback( $checkCallback );
         $this->inFooter = $inFooter;
     }
 
@@ -40,7 +39,7 @@ final class JS Extends Asset {
             $this->getHandle(),
             $this->getUrl(),
             $this->getDepencies(),
-            filetime( $this->getFile() ),
+            fileatime( $this->getFile() ),
             $this->inFooter
         ];
     }

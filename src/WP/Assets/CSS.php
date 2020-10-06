@@ -9,7 +9,7 @@ use AWSM\LibWP\WP\Core\Location;
  * 
  * @since 1.0.0
  */
-final class CSS Extends Asset {
+final class CSS Extends Asset implements AssetInterface {
     /**
      * The media for which this stylesheet has been defined.
      * 
@@ -19,11 +19,10 @@ final class CSS Extends Asset {
      */
     private $media;
 
-    public function __construct( string $file, array $checkCallback = [], array $depencies = [], string $media = '' )
+    public function __construct( string $file, array $depencies = [], string $media = '' )
     {
         $this->setFile( $file );
         $this->setDepencies( $depencies );
-        $this->setCheckCallback( $checkCallback );
         $this->media = $media;
     }
 
@@ -40,7 +39,7 @@ final class CSS Extends Asset {
             $this->getHandle(),
             $this->getUrl(),
             $this->getDepencies(),
-            filetime( $this->getFile() ),
+            fileatime( $this->getFile() ),
             $this->media
         ];
     }
