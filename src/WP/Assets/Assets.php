@@ -77,7 +77,7 @@ class Assets
     public function add( Asset $asset, bool $check = true  ) 
     {
         if( ! $check ) {
-            return;
+            return $this;
         }
 
         $this->assets[ $asset->getLoaderHook() ][] = $asset;
