@@ -59,7 +59,7 @@ class Assets
      * 
      * @since 1.0.0
      */
-    private function __construct() 
+    protected function __construct() 
     {      
         $this->setHookableHiddenMethods( ['loadAssets', 'loadAdminStyles', 'loadAdminScripts', 'loadScripts', 'loadFooterScripts'] );
     }
