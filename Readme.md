@@ -15,11 +15,21 @@ After that the main plugin file have to be created.
 ### Plugin Example file
 
 The main work is done in creating a plugin file with the necessary comments. Please take care that 
-the comments section is important for the library. It reads all data like the text domain and 
-domain path from these headers. You do not have load the text domain files by manually.
+the comments section is important for the library. It reads all data and works with it. 
 
-The Plugin class only gives  ```addComponent()``` function which loads the components of the plugin.
-Nothing more is necessary to do to startup the Plugin.
+#### Text Domain
+Setting this data is needed for loading the textdomain. 
+
+#### Domain Path
+If langauage files are stored within the plugin, you have to add the path to these files here.
+Be sure that the the language files have the syntax \[Textdomain\]_\[language\].mo. For example
+```mytextdomain_de_DE.mo```.
+
+#### Requires at least
+The minimum WordPress version which is needed for the plugin.
+
+#### Requires PHP
+The minumum PHP version which is needed for the Plugin.
 
 ```php
 <?php
@@ -37,22 +47,16 @@ Nothing more is necessary to do to startup the Plugin.
  * Requires PHP: 7.1.0
  */
 
-namespace AWSM\LibWP\Examples\Plugin;
+require dirname( __FILE__ ) . '/vendor/autoload.php';
 
-require '../../../vendor/autoload.php';
 
 use AWSM\LibWP\WP\Core\Plugin;
-use AWSM\LibWP\WP\Core\WP;
-use AWSM\LibWP\WP\WPException;
+use AWSM\ExamplePlugin\HelloWorld\HelloWorld;
+use AWSM\ExamplePlugin\HelloWorld2\HelloWorld2;
 
-use AWSM\LibWP\Examples\Plugin\Components\HelloWorld\HelloWorld;
 
-try {
-    Plugin::init()->addComponent( HelloWorld::class );
-} catch ( WPException $e ) {
-    WP::alert( sprintf( 'Failed to run Plugin: %s', $e->getMessage() ) );
-}
+Plugin::init()
+    ->addComponent( HelloWorld::class )
+    ->addComponent( HelloWorld2::class );
 ```
-
-### 
 
