@@ -78,7 +78,7 @@ class Hooks
      */
     public function add( HookInterface $hook, bool $check = true ) {
         if( ! $check ) {
-            return;
+            return $this;
         }
 
         $this->hooks[] = $hook;
