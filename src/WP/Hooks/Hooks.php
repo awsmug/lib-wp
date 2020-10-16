@@ -3,7 +3,6 @@
 namespace AWSM\LibWP\WP\Hooks;
 
 use Exception;
-use ReflectionMethod;
 
 use AWSM\LibTools\Patterns\SingletonTrait;
 
@@ -121,20 +120,10 @@ class Hooks
      * 
      * @since 1.0.0
      */
-    private function addHook( HookInterface $hook ) {
-        $callback = $hook->getCallback();
-
-        if ( get_class( $this->assignedObject ) !== $callback[0] ) {
+    private function addHook( Hook $hook ) {
+        // Only execute on same object/class
+        if ( get_class( $this->assignedObject ) !== $hook->getCallbackClass() ) {
             return;
-        }
-
-        $reflectionMethod = new ReflectionMethod( $callback[0], $callback[1] );
-
-        // If method is not static take object for hook callback.
-        if ( ! $reflectionMethod->isStatic() ) {
-            $callbackClass = $this->assignedObject; 
-        } else {
-            $callbackClass = $callback[0]; 
         }
 
         call_user_func_array( 'add_' . $hook->getType(), $hook->getArgs() );

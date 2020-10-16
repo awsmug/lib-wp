@@ -2,8 +2,6 @@
 
 namespace AWSM\LibWP\WP\Hooks;
 
-use AWSM\LibWP\WP\WPException;
-
 /**
  * WordPress Hooks
  * 
@@ -94,14 +92,40 @@ abstract class Hook implements HookInterface {
      */
     public final function getCallback() : array 
     {
-        $reflectionMethod = new \ReflectionMethod( $this->callback[0], $this->callback[1] );
+        $reflectionMethod = new \ReflectionMethod( $this->getCallbackClass(), $this->getCallbackMethod() );
 
         // If method is not static take object for hook callback.
         if ( ! $reflectionMethod->isStatic() ) {
-            $this->callback[0] = $this->assignedObject; 
+            $callbackInstance = $this->assignedObject; 
+        } else {
+            $callbackInstance = $this->getCallbackClass(); 
         }
 
-        return $this->callback;
+        return [ $callbackInstance, $this->getCallbackMethod() ];
+    }
+
+    /**
+     * Get callback class
+     * 
+     * @return string Callback class
+     * 
+     * @since 1.0.0
+     */
+    public function getCallbackClass() : string
+    {
+        return $this->callback[0];
+    }
+
+    /**
+     * Get callback method
+     * 
+     * @return string Callback method
+     * 
+     * @since 1.0.0
+     */
+    public function getCallbackMethod() : string
+    {
+        return $this->callback[1];
     }
 
     /**

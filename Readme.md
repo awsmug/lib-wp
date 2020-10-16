@@ -52,11 +52,9 @@ require dirname( __FILE__ ) . '/vendor/autoload.php';
 
 use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\ExamplePlugin\HelloWorld\HelloWorld;
-use AWSM\ExamplePlugin\HelloWorld2\HelloWorld2;
 
 
 Plugin::init()
-    ->addComponent( HelloWorld::class )
-    ->addComponent( HelloWorld2::class );
+    ->addComponent( HelloWorld::class );
 ```
 
