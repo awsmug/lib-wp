@@ -18,13 +18,31 @@ interface HookInterface {
     public function getType() : string;
 
     /**
-     * Get callback
+    * Get tag of hook
+    * 
+    * @return string
+    * 
+    * @since 1.0.0
+    */
+    public function getTag() : string;
+
+    /**
+     * Get callback class
      * 
      * @var string
      * 
      * @since 1.0.0
      */
-    public function getCallback() : array;
+    public function getCallbackClass() : string;
+
+    /**
+     * Get callback method
+     * 
+     * @var string
+     * 
+     * @since 1.0.0
+     */
+    public function getCallbackMethod() : string;
 
     /**
      * Get arguments

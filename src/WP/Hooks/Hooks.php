@@ -126,6 +126,18 @@ class Hooks
             return;
         }
 
-        call_user_func_array( 'add_' . $hook->getType(), $hook->getArgs() );
+        $reflectionMethod = new \ReflectionMethod( $hook->getCallbackClass(), $hook->getCallbackMethod() );
+
+        // If method is not static take object for hook callback.
+        if ( ! $reflectionMethod->isStatic() ) {
+            $callbackInstance = $this->assignedObject; 
+        } else {
+            $callbackInstance = $hook->getCallbackClass(); 
+        }
+
+        $hookMethod = 'add_' . $hook->getType();
+        $hookArgs   = array_merge( $hook->getTag(), [ $callbackInstance, $hook->getCallbackMethod() ], $hook->getArgs() );
+
+        call_user_func_array( $hookMethod, $hookArgs );
     }
 }

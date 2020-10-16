@@ -84,24 +84,15 @@ abstract class Hook implements HookInterface {
     }
 
     /**
-     * Get callback
-     * 
-     * @var string
-     * 
-     * @since 1.0.0
-     */
-    public final function getCallback() : array 
+    * Get tag of hook 
+    * 
+    * @return string
+    * 
+    * @since 1.0.0
+    */
+    public final function getTag() : string
     {
-        $reflectionMethod = new \ReflectionMethod( $this->getCallbackClass(), $this->getCallbackMethod() );
-
-        // If method is not static take object for hook callback.
-        if ( ! $reflectionMethod->isStatic() ) {
-            $callbackInstance = $this->assignedObject; 
-        } else {
-            $callbackInstance = $this->getCallbackClass(); 
-        }
-
-        return [ $callbackInstance, $this->getCallbackMethod() ];
+        return $this->tag;
     }
 
     /**
@@ -138,8 +129,6 @@ abstract class Hook implements HookInterface {
     public final function getArgs() : array 
     {
         return [
-            $this->tag,
-            $this->getCallback(),
             $this->priority,
             $this->acceptedArgs
         ];
