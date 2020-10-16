@@ -11,7 +11,8 @@ use AWSM\LibFile\PhpFile;
  * 
  * @since 1.0.0
  */
-abstract class Component implements ComponentInterface {
+abstract class Component implements ComponentInterface 
+{
     /**
      * Component setup.
      * 
@@ -32,8 +33,11 @@ abstract class Component implements ComponentInterface {
      * 
      * @since 1.0.0
      */
-    protected function setup( string $hooksFile = '', string $assetsFile = '' ) {
+    protected function setup( string $hooksFile = '', string $assetsFile = '' ) 
+    {
         $this->setup = new ComponentSetup( $this->getDir(), $hooksFile, $assetsFile );
+        
+        return $this->setup;
     }
 
     /**
@@ -43,7 +47,8 @@ abstract class Component implements ComponentInterface {
      * 
      * @since 1.0.0
      */
-    private function getDir() : string {
+    private function getDir() : string 
+    {
         $calledClass = get_called_class();
         $reflector   = new \ReflectionClass($calledClass);
 
@@ -55,7 +60,8 @@ abstract class Component implements ComponentInterface {
      * 
      * @since 1.0.0
      */
-    public function start() {
+    public function init() 
+    {
         if ( empty ( $this->setup ) ) {
             $this->setup();
         }

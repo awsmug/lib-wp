@@ -11,7 +11,8 @@ use AWSM\LibWP\WP\Core\CoreException;
  * 
  * @since 1.0.0
  */
-class Plugin {
+class Plugin 
+{
     use HookableHiddenMethodsTrait;
 
     /**
@@ -59,7 +60,8 @@ class Plugin {
      * 
      * @since 1.0.0
      */
-    public static function init() : Plugin {      
+    public static function init() : Plugin 
+    {      
         return new self;
     }
 
@@ -84,7 +86,8 @@ class Plugin {
      */
     private function info() : PluginInfo
     {
-        if ( ! empty( $this->info ) ){
+        if ( ! empty( $this->info ) )
+        {
             return $this->info;
         }
 
@@ -103,7 +106,8 @@ class Plugin {
      */
     public function addComponent( string $className ) : Plugin
     {
-        if( ! class_exists( $className ) ) {
+        if( ! class_exists( $className ) ) 
+        {
             throw new CoreException( sprintf( 'Class %s does not exist.', $className ) );
         }
 
@@ -118,7 +122,8 @@ class Plugin {
      * 
      * @since 1.0.0 
      */
-    private function enqueueComponents() {
+    private function enqueueComponents() 
+    {
         if ( $this->enqueuedComponents ) {
             return;
         }
@@ -133,10 +138,11 @@ class Plugin {
      * 
      * @since 1.0.0
      */
-    private function loadComponents() {
+    private function loadComponents() 
+    {
         foreach( $this->components AS $component ) {
             $component = new $component();
-            $component->start();
+            $component->init();
         }
     }
 
@@ -147,7 +153,8 @@ class Plugin {
      * 
      * @since 1.0.0
      */
-    private function loadTextdomain() {
+    private function loadTextdomain() 
+    {
         $textDomain        = $this->info()->getTextDomain();
         $pluginRelPath = $this->info()->getDomainPath();
 
