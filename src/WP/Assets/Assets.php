@@ -99,7 +99,7 @@ class Assets
 
         $this->enqueuedAssets = true;
 
-        add_action( 'plugins_loaded', [ $this, 'loadAssets' ] );
+        add_action( 'plugins_loaded', [ $this, 'loadAssets' ], 20 );
     }
 
     /**
