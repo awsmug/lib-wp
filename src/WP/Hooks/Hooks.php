@@ -132,7 +132,9 @@ class Hooks
 
         // If method is not static take object for hook callback.
         if ( ! $reflectionMethod->isStatic() ) {
-            $hook->getCallback( [ $$this->assignedObject, $callback[1] ] );
+            $callbackClass = $this->assignedObject; 
+        } else {
+            $callbackClass = $callback[0]; 
         }
 
         call_user_func_array( 'add_' . $hook->getType(), $hook->getArgs() );
