@@ -3,6 +3,7 @@
 namespace AWSM\LibWP\Component;
 
 use AWSM\LibFile\PhpFile;
+use AWSM\LibWP\WP\Hooks\Hooks;
 
 /**
  * Component class.
@@ -50,7 +51,7 @@ abstract class Component implements ComponentInterface
     private function getDir() : string 
     {
         $calledClass = get_called_class();
-        $reflector   = new \ReflectionClass($calledClass);
+        $reflector   = new \ReflectionClass($calledClass); 
 
         return dirname( $reflector->getFileName() );
     }
@@ -68,5 +69,7 @@ abstract class Component implements ComponentInterface
         
         PhpFile::use( $this->setup->getHooksFile() )->run();
         PhpFile::use( $this->setup->getAssetsFile() )->run();
+
+        Hooks::assign( $this );
     }
 }
