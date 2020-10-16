@@ -80,10 +80,6 @@ class Hooks
         if( ! $check ) {
             return;
         }
-        
-        if ( ! is_array( $hook->getCallback() ) ) {
-            throw new Exception( 'Adding hooks for functions is not allowed' );
-        }
 
         $this->hooks[] = $hook;
 
