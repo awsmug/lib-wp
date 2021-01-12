@@ -65,19 +65,30 @@ class Location {
 	 */
 	public static function page() : bool {
 		return is_page();
-	}
+    }
 
 	/**
-	 * Are we on a specifig page?
+	 * Are we on a single post/post-type?
 	 *
-	 * @param int $page_id Page id.
 	 * @return bool True on WordPress page, false if not.
 	 *
 	 * @since 1.0.0
 	 */
-	public static function pageId( int $pageId ) : bool {
+	public static function single() : bool {
+		return is_single();
+	}
+
+	/**
+	 * Are we on a specifig post?
+	 *
+	 * @param int $page_id Post id.
+	 * @return bool True on WordPress page, false if not.
+	 *
+	 * @since 1.0.0
+	 */
+	public static function postId( int $postId ) : bool {
 		global $post;
-		return is_page() && $page_id === $post->ID;
+		return $postId === $post->ID;
 	}
 
 	/**
