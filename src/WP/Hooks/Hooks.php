@@ -118,7 +118,7 @@ class Hooks
      */
     private function loadHook( Hook $hook, object $object ) {
         // Only execute on same object/class
-        if ( get_class( $this->assignedObject ) !== $hook->getCallbackClass() ) {
+        if ( get_class( $object ) !== $hook->getCallbackClass() ) {
             return false;
         }
 
