@@ -2,8 +2,6 @@
 
 namespace AWSM\LibWP\WP\Hooks;
 
-use Exception;
-
 use AWSM\LibTools\Patterns\SingletonTrait;
 
 /**
