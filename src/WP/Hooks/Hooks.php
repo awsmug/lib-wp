@@ -22,7 +22,7 @@ use AWSM\LibTools\Patterns\SingletonTrait;
  * 
  * class Settings {
  *   public function __construct() {
- *     Hooks::assign( $this );
+ *     Hooks::load( $this );
  *   }
  * 
  *   public function filterTitle() {
