@@ -40,21 +40,26 @@ The minumum PHP version which is needed for the Plugin.
  * Author: Sven Wagener
  * Author URI: https://sven-wagener.com
  * Version: 1.2.3
- * Text Domain: myplgin
+ * Text Domain: myplugin
  * Domain Path: /assets/langauges/
  * Network: true
  * Requires at least: 5.4.0
  * Requires PHP: 7.1.0
  */
 
-require dirname( __FILE__ ) . '/vendor/autoload.php';
+namespace AWSM\LibWP\Examples\Plugin;
 
+require '../../../vendor/autoload.php';
 
+use AWSM\LibWP\WP\WPException;
 use AWSM\LibWP\WP\Core\Plugin;
-use AWSM\ExamplePlugin\HelloWorld\HelloWorld;
+use AWSM\LibWP\WP\Core\AdminNotices;
+use AWSM\LibWP\Examples\Plugin\Components\HelloWorld\HelloWorld;
 
-
-Plugin::init()
-    ->addComponent( HelloWorld::class );
+try {
+    Plugin::init()->addComponent( HelloWorld::class );
+} catch ( WPException $e ) {
+    AdminNotices::instance()->add( sprintf( 'Failed to run Plugin: %s', $e->getMessage() ) );
+}
 ```
 
