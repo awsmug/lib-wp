@@ -70,6 +70,6 @@ abstract class Component implements ComponentInterface
         PhpFile::use( $this->setup->getHooksFile() )->run();
         PhpFile::use( $this->setup->getAssetsFile() )->run();
 
-        Hooks::assign( $this );
+        Hooks::instance()->load( $this );
     }
 }
