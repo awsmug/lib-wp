@@ -96,6 +96,18 @@ abstract class Hook implements HookInterface {
     }
 
     /**
+     * Get callback object
+     * 
+     * @return string Callback object
+     * 
+     * @since 1.0.0
+     */
+    public function getCallbackObject() : object
+    {
+        return $this->callback[0];
+    }
+
+    /**
      * Get callback class
      * 
      * @return string Callback class
@@ -104,7 +116,7 @@ abstract class Hook implements HookInterface {
      */
     public function getCallbackClass() : string
     {
-        return $this->callback[0];
+        return get_class( $this->callback[0] );
     }
 
     /**
