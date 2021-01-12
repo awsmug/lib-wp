@@ -75,8 +75,7 @@ class Plugin
     private function setup() {
         // Loading textdomain if exists in plugin header information
         if ( ! empty( $this->info()->getTextDomain() ) && ! empty( $this->info()->getDomainPath() ) ) {
-            Hooks::instance()->add( new Action( 'init', [ $this, 'loadTextdomain' ] ) );
-            Hooks::assign( $this );
+            Hooks::instance()->add( new Action( 'init', [ $this, 'loadTextdomain' ] ) )->load( $this );
         }
     }
 
@@ -133,7 +132,7 @@ class Plugin
 
         $this->enqueuedComponents = true;
 
-        add_action( 'plugins_loaded', [ $this, 'loadComponents'] );
+        Hooks::instance()->add( new Action( 'plugins_loaded', [ $this, 'loadComponents' ] ) )->load( $this );
     }
 
     /**

@@ -45,16 +45,7 @@ class Hooks
      * 
      * @since 1.0.0
      */
-    public $assignedObject;
-
-    /**
-     * Current class
-     * 
-     * @var string
-     * 
-     * @since 1.0.0
-     */
-    public $currentClass;
+    protected $assignedObject;
 
     /**
      * Hooks
@@ -90,35 +81,43 @@ class Hooks
      * 
      * Needs to be executed in class which contains hooks to add.
      * 
+     * @param object Referenced object.
+     * 
      * @since 1.0.0
      */
-    public static function assign( $object ) {
-        self::instance()->assignedObject = $object;
-        self::instance()->addHooks();
+    public function load( object $object ) {
+        $this->loadHooks( $object );
     }
 
     /**
      * Running all hooks to assign
      * 
+     * @param object Referenced object.
+     * 
      * @since 1.0.0
      */
-    private function addHooks() {
-        foreach( $this->hooks AS $hook ) {
-            $this->addHook( $hook );
+    private function loadHooks( object $object ) {
+        foreach( $this->hooks AS $i => $hook ) {
+            if( $this->loadHook( $hook , $object) ) {
+                unset( $this->hooks[ $i ] ); // Load hook only once and remove it after successful load.
+            }
         }
     }
 
     /**
-     * Adding hook on assigning
+     * Load hook if assigned to current class.
      * 
      * @param HookInterface
+     * @param object Referenced object.
+     * 
+     * @return bool True if hook was loaded succesful, false if not.
      * 
      * @since 1.0.0
      */
-    private function addHook( Hook $hook ) {
+    private function loadHook( Hook $hook, object $object ) {
         // Only execute on same object/class
         if ( get_class( $this->assignedObject ) !== $hook->getCallbackClass() ) {
-            return;
+            return false;
         }
 
         $reflectionMethod = new \ReflectionMethod( $hook->getCallbackClass(), $hook->getCallbackMethod() );
@@ -134,5 +133,7 @@ class Hooks
         $hookArgs   = array_merge( [ $hook->getTag() ], [ [ $callbackInstance, $hook->getCallbackMethod() ] ], $hook->getArgs() );
 
         call_user_func_array( $hookMethod, $hookArgs );
+
+        return true;
     }
 }

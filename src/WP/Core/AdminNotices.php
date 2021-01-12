@@ -62,8 +62,7 @@ class AdminNotices {
         $this->notices[] = [ 'message' => $message, 'type' => $type ];
 
         if ( ! $this->hooked ) {
-            Hooks::instance()->add( new Action( 'admin_notices', [ $this, 'showNotices'] ) );
-            Hooks::assign( $this );
+            Hooks::instance()->add( new Action( 'admin_notices', [ $this, 'showNotices'] ) )->load( $this );
         }
 
         self::$hooked = true;
