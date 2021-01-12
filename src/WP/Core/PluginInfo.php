@@ -191,7 +191,7 @@ class PluginInfo {
             'RequiresPHP' => 'Requires PHP'
         );
      
-        $pluginData = $this->getFileFata( $pluginFile, $defaultHeaders );
+        $pluginData = $this->getFileData( $pluginFile, $defaultHeaders );
      
         $pluginData['Network'] = ( 'true' === strtolower( $pluginData['Network'] ) );
         unset( $pluginData['_sitewide'] );
@@ -210,7 +210,7 @@ class PluginInfo {
      * 
      * @since 1.0.0
      */
-    private function getFileFata( $file, $defaultHeaders ) {
+    private function getFileData( $file, $defaultHeaders ) {
         // We don't need to write to the file, so just open for reading.
         $fp = fopen( $file, 'r' );
      
