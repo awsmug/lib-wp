@@ -32,6 +32,7 @@ use AWSM\LibTools\Patterns\SingletonTrait;
  *   }
  * }
  * 
+ * @method Hooks instance() Returns Hooks class instance.
  * 
  * @since 1.0.0
  */
