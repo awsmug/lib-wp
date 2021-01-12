@@ -180,7 +180,7 @@ class Assets
             try {
                 call_user_func_array( 'wp_enqueue_' . $asset->getType(), $asset->getArgs() );
             } catch ( Exception $e ) {
-                AdminNotices::instance()->add( sprintf( 'Failed to run Plugin: %s', $e->getMessage() ), 'error' );
+                AdminNotices::instance()->add( sprintf( 'Cannot load assets of plugin: %s', $e->getMessage() ), 'error' );
             }
         }
     }
