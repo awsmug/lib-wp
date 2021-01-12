@@ -57,7 +57,9 @@ class Hooks
     protected $hooks = [];
 
     /**
-     * Add Hook
+     * Add Hook. 
+     * 
+     * Can be also be used outside of a class for clearer overview.
      * 
      * @param HookInterface $hook
      * @param bool          $check
@@ -77,7 +79,7 @@ class Hooks
     }
 
     /**
-     * Assign Hooks
+     * Load Hooks of an object.
      * 
      * Needs to be executed in class which contains hooks to add.
      * 
@@ -90,7 +92,7 @@ class Hooks
     }
 
     /**
-     * Running all hooks to assign
+     * Loading all hooks of an object.
      * 
      * @param object Referenced object.
      * 
