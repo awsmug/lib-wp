@@ -4,7 +4,9 @@ namespace AWSM\LibWP\WP\Assets;
 
 use AWSM\LibTools\Patterns\SingletonTrait;
 use AWSM\LibWP\WP\Assets\Asset AS Asset;
+use AWSM\LibWP\WP\Core\AdminNotices;
 use AWSM\LibWP\WP\Hooks\HookableHiddenMethodsTrait;
+use Exception;
 
 /**
  * Class Assets
@@ -172,10 +174,14 @@ class Assets
      * 
      * @since 1.0.0
      */
-    private function loadHookAssets( string $hookName ) {
+    private function loadHookAssets( string $hookName ) {        
         foreach( $this->assets[ $hookName ] AS $asset ) 
         {
-            call_user_func_array( 'wp_enqueue_' . $asset->getType(), $asset->getArgs() );
+            try {
+                call_user_func_array( 'wp_enqueue_' . $asset->getType(), $asset->getArgs() );
+            } catch ( Exception $e ) {
+                AdminNotices::instance()->add( sprintf( 'Failed to run Plugin: %s', $e->getMessage() ), 'error' );
+            }
         }
     }
 }
