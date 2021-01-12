@@ -28,11 +28,6 @@ class WP {
         return ABSPATH;
     }
 
-    public static function alert( string $message )
-    {
-        
-    }
-
     /**
      * Get path diff relative to working directory.
      * 
