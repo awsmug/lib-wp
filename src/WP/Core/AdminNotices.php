@@ -65,7 +65,7 @@ class AdminNotices {
             Hooks::instance()->add( new Action( 'admin_notices', [ $this, 'showNotices'] ) )->load( $this );
         }
 
-        self::$hooked = true;
+        $this->hooked = true;
 
         return $this;
     }
