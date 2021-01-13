@@ -53,8 +53,9 @@ abstract class Plugin
      * @since 1.0.0
      */
     public static function init() : Plugin 
-    {      
-        return new self;
+    {
+        $calledClass = get_called_class();      
+        return new $calledClass();
     }
 
     /**
