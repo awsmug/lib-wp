@@ -135,6 +135,18 @@ class PluginInfo {
     }
 
     /**
+     * Get TemplatePath parameter
+     * 
+     * @return string Template relative to the plugin directory.
+     * 
+     * @since 1.0.0
+     */
+    public function getTemplatePath() : string
+    {
+        return $this->pluginData['TemplatePath'];
+    }
+
+    /**
      * Get Network parameter
      * 
      * @return bool Whether the plugin can only be activated network-wide.
@@ -180,17 +192,18 @@ class PluginInfo {
     private function getPluginData( string $pluginFile ) 
     {
         $defaultHeaders = array(
-            'Name'        => 'Plugin Name',
-            'PluginURI'   => 'Plugin URI',
-            'Version'     => 'Version',
-            'Description' => 'Description',
-            'Author'      => 'Author',
-            'AuthorURI'   => 'Author URI',
-            'TextDomain'  => 'Text Domain',
-            'DomainPath'  => 'Domain Path',
-            'Network'     => 'Network',
-            'RequiresWP'  => 'Requires at least',
-            'RequiresPHP' => 'Requires PHP'
+            'Name'         => 'Plugin Name',
+            'PluginURI'    => 'Plugin URI',
+            'Version'      => 'Version',
+            'Description'  => 'Description',
+            'Author'       => 'Author',
+            'AuthorURI'    => 'Author URI',
+            'TextDomain'   => 'Text Domain',
+            'DomainPath'   => 'Domain Path',
+            'TemplatePath' => 'Template Path',
+            'Network'      => 'Network',
+            'RequiresWP'   => 'Requires at least',
+            'RequiresPHP'  => 'Requires PHP'
         );
      
         $pluginData = $this->getFileData( $pluginFile, $defaultHeaders );
