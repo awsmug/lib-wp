@@ -78,13 +78,9 @@ class Assets
      * 
      * @since 1.0.0
      */
-    public function add( Asset $asset, bool $check = true  ) 
+    public function add( Asset $asset, array $callbackArgs = []  ) 
     {
-        if( ! $check ) {
-            return $this;
-        }
-
-        $this->assets[ $asset->getLoaderHook() ][] = $asset;
+        $this->assets[ $asset->getLoaderHook() ][] = [ 'asset' => $asset, 'callbackArgs' => $callbackArgs ];
         $this->enqueueAssets();
 
         return $this;
@@ -179,11 +175,35 @@ class Assets
     private function loadHookAssets( string $hookName ) {        
         foreach( $this->assets[ $hookName ] AS $asset ) 
         {
+            if( ! $this->isEnqueueAllowed( $asset['callbackArgs'] ) ) {
+                continue;
+            }
+
             try {
-                call_user_func_array( 'wp_enqueue_' . $asset->getType(), $asset->getArgs() );
+                call_user_func_array( 'wp_enqueue_' . $asset['asset']->getType(), $asset['asset']->getArgs() );
             } catch ( Exception $e ) {
                 AdminNotices::instance()->add( sprintf( 'Cannot load assets of plugin: %s', $e->getMessage() ), 'error' );
             }
         }
+    }
+    /**
+     * Check is enqueuing is allowed by given callback check.
+     * 
+     * @param array $callbackArgs Array with callback and arguments e.g. [ $callback, $arguments ].
+     * 
+     * @return bool True if check is passed, false if not.
+     * 
+     * @since 1.0.0
+     */
+    private function isEnqueueAllowed( array $callbackArgs ) : bool 
+    {
+        $callback = array_slice( $callbackArgs, 0,1 );
+        $args = array_slice( $callbackArgs, 1 );
+
+        if( is_callable( $callback ) && ! call_user_func_array( $callback, $args ) ) {
+            return false;
+        }
+
+        return true;
     }
 }
