@@ -37,8 +37,6 @@ abstract class Component implements ComponentInterface
     protected function setup( string $hooksFile = '', string $assetsFile = '' ) 
     {
         $this->setup = new ComponentSetup( $this->getDir(), $hooksFile, $assetsFile );
-        
-        return $this->setup;
     }
 
     /**
