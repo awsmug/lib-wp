@@ -5,7 +5,9 @@ namespace AWSM\LibWP\WP\Assets;
 use AWSM\LibTools\Patterns\SingletonTrait;
 use AWSM\LibWP\WP\Assets\Asset AS Asset;
 use AWSM\LibWP\WP\Core\AdminNotices;
+use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\HookableHiddenMethodsTrait;
+use AWSM\LibWP\WP\Hooks\Hooks;
 use Exception;
 
 /**
@@ -101,7 +103,7 @@ class Assets
 
         $this->enqueuedAssets = true;
 
-        add_action( 'plugins_loaded', [ $this, 'loadAssets' ], 20 );
+        Hooks::instance()->add( new Action( 'plugins_loaded', [ $this, 'loadAssets'] ) )->load( $this );
     }
 
     /**
@@ -122,7 +124,7 @@ class Assets
         {
             if ( array_key_exists( $hookName, $this->assets ) ) 
             {
-                add_action( $hookName, [ $this, $callbackFunction ] );
+                Hooks::instance()->add( new Action( $hookName, [ $this, $callbackFunction ] ) )->load( $this );
             }
         }
     }
