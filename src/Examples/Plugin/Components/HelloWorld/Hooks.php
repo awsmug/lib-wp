@@ -2,7 +2,6 @@
 
 namespace AWSM\LibWP\Examples\Plugin\Components\HelloWorld;
 
-use AWSM\LibWP\Examples\App\Main;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\Hooks;
 
