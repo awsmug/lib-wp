@@ -2,7 +2,6 @@
 
 namespace AWSM\LibWP\WP\Core;
 
-use AWSM\LibTools\Callbacks\CallerDetective;
 use AWSM\LibWP\WP\Hooks\HookableHiddenMethodsTrait;
 use AWSM\LibWP\WP\Core\CoreException;
 use AWSM\LibWP\WP\Hooks\Action;
@@ -13,18 +12,9 @@ use AWSM\LibWP\WP\Hooks\Hooks;
  * 
  * @since 1.0.0
  */
-class Plugin 
+abstract class Plugin 
 {
     use HookableHiddenMethodsTrait;
-
-    /**
-     * Plugin informations from plugin header.
-     * 
-     * @var PluginInfo
-     * 
-     * @since 1.0.0
-     */
-    private $info;
 
     /**
      * Components
@@ -74,7 +64,7 @@ class Plugin
      */
     private function setup() {
         // Loading textdomain if exists in plugin header information
-        if ( ! empty( $this->info()->getTextDomain() ) && ! empty( $this->info()->getDomainPath() ) ) {
+        if ( ! empty( self::info()->getTextDomain() ) && ! empty( self::info()->getDomainPath() ) ) {
             Hooks::instance()->add( new Action( 'init', [ $this, 'loadTextdomain' ] ) )->load( $this );
         }
     }
@@ -86,17 +76,12 @@ class Plugin
      * 
      * @since 1.0.0
      */
-    private function info() : PluginInfo
+    public static function info() : PluginInfo
     {
-        if ( ! empty( $this->info ) )
-        {
-            return $this->info;
-        }
+        $calledClass = get_called_class();
+        $reflector   = new \ReflectionClass( $calledClass ); 
 
-        $file       = CallerDetective::detect(2)->file();
-        $this->info = new PluginInfo( $file );
-
-        return $this->info;
+        return new PluginInfo( $reflector->getFileName() );
     }
 
     /**
@@ -157,8 +142,8 @@ class Plugin
      */
     private function loadTextdomain() 
     {
-        $textDomain        = $this->info()->getTextDomain();
-        $pluginRelPath = $this->info()->getDomainPath();
+        $textDomain    = self::info()->getTextDomain();
+        $pluginRelPath = self::info()->getDomainPath();
 
         if( ! load_plugin_textdomain( $textDomain, false, $pluginRelPath ) ) {
             throw new CoreException( 'Textdomain file not found' );
