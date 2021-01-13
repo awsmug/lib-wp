@@ -203,4 +203,15 @@ class PluginInfo {
      
         return $pluginData;
     }
+
+    /**
+     * Get plugin path.
+     * 
+     * @return string Plugin path.
+     * 
+     * @since 1.0.0
+     */
+    public function getPath() {
+        return plugin_dir_path( $this->pluginFile );
+    }
 }
