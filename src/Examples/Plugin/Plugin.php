@@ -18,7 +18,7 @@ namespace AWSM\LibWP\Examples\Plugin;
 
 require '../../../vendor/autoload.php';
 
-use AWSM\LibWP\WP\WPException;
+use AWSM\LibWP\WP\Exception;
 use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\WP\Core\AdminNotices;
 use AWSM\LibWP\Examples\Plugin\Components\HelloWorld\HelloWorld;
@@ -28,6 +28,6 @@ class MyPlugin extends Plugin {}
 try {
     MyPlugin::init()
         ->addComponent( HelloWorld::class );
-} catch ( WPException $e ) {
+} catch ( Exception $e ) {
     AdminNotices::instance()->add( sprintf( 'Failed to run Plugin: %s', $e->getMessage() ) );
 }
