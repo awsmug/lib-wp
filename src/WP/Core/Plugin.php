@@ -3,6 +3,7 @@
 namespace AWSM\LibWP\WP\Core;
 
 use AWSM\LibWP\WP\Core\CoreException;
+use AWSM\LibWP\WP\ExceptionCatcher;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\Hookable;
 use AWSM\LibWP\WP\Hooks\Hooks;
@@ -152,7 +153,7 @@ abstract class Plugin
                 throw new CoreException( sprintf( 'Textdomain %s file not found in %s.', $textDomain, $pluginRelPath ) );
             }
         } catch ( Exception $e ) {
-            AdminNotices::instance()->add( sprintf( 'Could not load textdomain: %s', $e->getMessage() ), 'error' );
+            ExceptionCatcher::error( sprintf( 'Could not load textdomain: %s', $e->getMessage() ) );
         }
         
     }
