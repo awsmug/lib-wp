@@ -47,12 +47,12 @@ trait Hookable {
 	 * @since 1.0.0
 	 */
 	public function __call( $name, $args ) {
-        if( ! substr( $name, 0, 6 ) === '_Hook' ) {
+        if( ! substr( $name, 0, 7 ) === '__hook_' ) {
             return;
         }
 
         $className = get_called_class();
-        $methodName  = substr( $name, 5, strlen( $name ) );
+        $methodName  = substr( $name, 6, strlen( $name ) );
 
         $reflectMethod = new \ReflectionMethod( $className , $methodName );
 
