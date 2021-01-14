@@ -22,6 +22,7 @@ use AWSM\LibWP\WP\Exception;
 use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\WP\Core\AdminNotices;
 use AWSM\LibWP\Examples\Plugin\Components\HelloWorld\HelloWorld;
+use AWSM\LibWP\WP\ExceptionCatcher;
 
 class MyPlugin extends Plugin {}
 
@@ -29,5 +30,5 @@ try {
     MyPlugin::init()
         ->addComponent( HelloWorld::class );
 } catch ( Exception $e ) {
-    AdminNotices::instance()->add( sprintf( 'Failed to run Plugin: %s', $e->getMessage() ) );
+    ExceptionCatcher::error( sprintf( 'Failed to run Plugin: %s', $e->getMessage() ) );
 }

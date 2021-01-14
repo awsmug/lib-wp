@@ -3,6 +3,7 @@
 namespace AWSM\LibWP\WP\Hooks;
 
 use AWSM\LibWP\WP\Core\AdminNotices;
+use AWSM\LibWP\WP\ExceptionCatcher;
 use Exception;
 
 /**
@@ -65,8 +66,8 @@ trait Hookable {
             } else {
                 return call_user_func_array( [ $this, $methodName ], $args  );
             }            
-        } catch ( Exception $e ) {
-            AdminNotices::instance()->add( sprintf( 'Error executing call %s. Error message: %s', $methodName, $e->getMessage() ), 'error' );
+        } catch ( Exception $e ) {            
+            ExceptionCatcher::error( sprintf( 'Error executing call %s. Error message: %s', $methodName, $e->getMessage() ) );
         }
 	}
 }

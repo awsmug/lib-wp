@@ -5,6 +5,7 @@ namespace AWSM\LibWP\WP\Assets;
 use AWSM\LibTools\Patterns\SingletonTrait;
 use AWSM\LibWP\WP\Assets\Asset AS Asset;
 use AWSM\LibWP\WP\Core\AdminNotices;
+use AWSM\LibWP\WP\ExceptionCatcher;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\Hookable;
 use AWSM\LibWP\WP\Hooks\Hooks;
@@ -182,7 +183,7 @@ class Assets
             try {
                 call_user_func_array( 'wp_enqueue_' . $asset['asset']->getType(), $asset['asset']->getArgs() );
             } catch ( Exception $e ) {
-                AdminNotices::instance()->add( sprintf( 'Cannot load assets of plugin: %s', $e->getMessage() ), 'error' );
+                ExceptionCatcher::error( sprintf( 'Cannot load assets of plugin: %s', $e->getMessage() ) );
             }
         }
     }

@@ -59,7 +59,7 @@ use AWSM\LibWP\Examples\Plugin\Components\HelloWorld\HelloWorld;
 try {
     Plugin::init()->addComponent( HelloWorld::class );
 } catch ( Exception $e ) {
-    AdminNotices::instance()->add( sprintf( 'Failed to run Plugin: %s', $e->getMessage() ) );
+    ExceptionCatcher::error( sprintf( 'Error executing call %s. Error message: %s', $methodName, $e->getMessage() ) );
 }
 ```
 
