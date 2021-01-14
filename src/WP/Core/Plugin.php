@@ -2,12 +2,12 @@
 
 namespace AWSM\LibWP\WP\Core;
 
-use AWSM\LibWP\WP\Core\CoreException;
-use AWSM\LibWP\WP\ExceptionCatcher;
+use AWSM\LibTools\Patterns\SingletonTrait;
+
+use AWSM\LibWP\WP\Exception;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\Hookable;
 use AWSM\LibWP\WP\Hooks\Hooks;
-use Exception;
 
 /**
  * Abstract Plugin class.
@@ -16,7 +16,7 @@ use Exception;
  */
 abstract class Plugin 
 {
-    use Hookable;
+    use Hookable, SingletonTrait;
 
     /**
      * Components
@@ -42,22 +42,8 @@ abstract class Plugin
      * @since 1.0.0
      */
     private function __construct()
-    {
-        $this->setHookableHiddenMethods( [ 'loadTextdomain', 'loadComponents' ] );
-        $this->setup();
-    }
-
-    /**
-     * Intitialize the Plugin
-     * 
-     * @return Plugin
-     * 
-     * @since 1.0.0
-     */
-    public static function init() : Plugin 
-    {
-        $calledClass = get_called_class();      
-        return new $calledClass();
+    {        
+        $this->init();
     }
 
     /**
@@ -65,10 +51,29 @@ abstract class Plugin
      * 
      * @since 1.0.0
      */
-    private function setup() {
-        // Loading textdomain if exists in plugin header information
-        if ( ! empty( self::info()->getTextDomain() ) && ! empty( self::info()->getDomainPath() ) ) {
-            Hooks::instance()->add( new Action( 'init', [ $this, 'loadTextdomain' ] ) )->load( $this );
+    private function init() 
+    {
+        $this->setHookableHiddenMethods( [ 'loadComponents' ] );
+
+        $textDomain = self::info()->getTextDomain();
+        $domainPath = self::info()->getDomainPath();
+
+        if ( ! empty( $textDomain ) && ! empty( $domainPath ) ) {
+            $this->loadTextdomain( $textDomain, $domainPath );
+        }
+    }
+
+    /**
+     * Load textdomain.
+     * 
+     * @throws CoreException .mo file was not found.
+     * 
+     * @since 1.0.0
+     */
+    private function loadTextdomain( string $textDomain, string $domainPath ) 
+    {
+        if( ! load_plugin_textdomain( $textDomain, false, $domainPath ) ) {
+            throw new Exception( sprintf( 'Textdomain %s file not found in %s.', $textDomain, $domainPath ) );
         }
     }
 
@@ -88,7 +93,9 @@ abstract class Plugin
     }
 
     /**
-     * Add component
+     * Add component.
+     * 
+     * The components will be added here and loaded at hook plugins_loaded on priority 1.
      * 
      * @throws CoreException Class does not exist. 
      * 
@@ -96,8 +103,7 @@ abstract class Plugin
      */
     public function addComponent( string $className ) : Plugin
     {
-        if( ! class_exists( $className ) ) 
-        {
+        if( ! class_exists( $className ) ) {
             throw new CoreException( sprintf( 'Class %s does not exist.', $className ) );
         }
 
@@ -108,7 +114,7 @@ abstract class Plugin
     }
 
     /**
-     * Enqueue components for loading
+     * Enqueue components for loading.
      * 
      * @since 1.0.0 
      */
@@ -118,44 +124,23 @@ abstract class Plugin
             return;
         }
 
-        $this->enqueuedComponents = true;
+        $this->enqueuedComponents = true;        
 
-        $this->loadComponents();
+        Hooks::instance()->add( new Action( 'plugins_loaded', [ $this, 'loadComponents' ], 1 ) )->load( $this );
     }
 
     /**
-     * Load components
+     * Load components. 
+     * 
+     * Will be executed in plugins_loaded on priority 1.
      * 
      * @since 1.0.0
      */
     private function loadComponents() 
     {
         foreach( $this->components AS $component ) {
-            $component = new $component();
-            $component->init();
+            ( new $component() )->init();
         }
-    }
-
-    /**
-     * Load textdomain
-     * 
-     * @throws CoreException .mo file was not found.
-     * 
-     * @since 1.0.0
-     */
-    private function loadTextdomain() 
-    {
-        $textDomain    = self::info()->getTextDomain();
-        $pluginRelPath = self::info()->getDomainPath();
-
-        try {
-            if( ! load_plugin_textdomain( $textDomain, false, $pluginRelPath ) ) {
-                throw new CoreException( sprintf( 'Textdomain %s file not found in %s.', $textDomain, $pluginRelPath ) );
-            }
-        } catch ( Exception $e ) {
-            ExceptionCatcher::error( sprintf( 'Could not load textdomain: %s', $e->getMessage() ) );
-        }
-        
     }
 }
 

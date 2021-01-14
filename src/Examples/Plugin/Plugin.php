@@ -26,7 +26,7 @@ use AWSM\LibWP\WP\ExceptionCatcher;
 class MyPlugin extends Plugin {}
 
 try {
-    MyPlugin::init()
+    (new MyPlugin)
         ->addComponent( HelloWorld::class );
 } catch ( Exception $e ) {
     ExceptionCatcher::error( sprintf( 'Failed to run Plugin: %s', $e->getMessage() ) );
