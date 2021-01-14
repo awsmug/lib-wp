@@ -52,7 +52,7 @@ trait Hookable {
         }
 
         $className = get_called_class();
-        $methodName  = substr( $name, 6, strlen( $name ) );
+        $methodName  = substr( $name, 7, strlen( $name ) );
 
         $reflectMethod = new \ReflectionMethod( $className , $methodName );
 
