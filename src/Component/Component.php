@@ -50,7 +50,6 @@ abstract class Component implements ComponentInterface
     {
         $calledClass = get_called_class();
         $reflector   = new \ReflectionClass($calledClass); 
-
         return dirname( $reflector->getFileName() );
     }
 
