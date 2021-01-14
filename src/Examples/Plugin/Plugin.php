@@ -20,7 +20,6 @@ require '../../../vendor/autoload.php';
 
 use AWSM\LibWP\WP\Exception;
 use AWSM\LibWP\WP\Core\Plugin;
-use AWSM\LibWP\WP\Core\AdminNotices;
 use AWSM\LibWP\Examples\Plugin\Components\HelloWorld\HelloWorld;
 use AWSM\LibWP\WP\ExceptionCatcher;
 
