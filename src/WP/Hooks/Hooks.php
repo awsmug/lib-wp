@@ -131,8 +131,9 @@ class Hooks
             $callbackInstance = $hook->getCallbackClass(); 
         }
 
-        $hookMethod = 'add_' . $hook->getType();
-        $hookArgs   = array_merge( [ $hook->getTag() ], [ [ $callbackInstance, '__hook_' . $hook->getCallbackMethod() ] ], $hook->getArgs() );
+        $hookMethod     = 'add_' . $hook->getType();
+        $callBackMethod = '__hook_' . $hook->getCallbackMethod();
+        $hookArgs       = array_merge( [ $hook->getTag() ], [ [ $callbackInstance, $callBackMethod ] ], $hook->getArgs() );
 
         call_user_func_array( $hookMethod, $hookArgs );
 
