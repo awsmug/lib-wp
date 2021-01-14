@@ -82,11 +82,11 @@ class ExceptionCatcher {
      * @since 1.0.0
      */
     private static function exceptionLocation() {
-        if( CallerDetective::detect(1)->className() !== '' ) {
+        if( CallerDetective::detect(2)->className() !== '' ) {
             return sprintf ( 'in class "%s->%s of file "%s"',
-                CallerDetective::detect(1)->className(),
-                CallerDetective::detect(1)->functionName(),
-                CallerDetective::detect(1)->file()
+                CallerDetective::detect(2)->className(),
+                CallerDetective::detect(2)->functionName(),
+                CallerDetective::detect(2)->file()
             );
         } else {
             return sprintf ( 'in file "%s"',
