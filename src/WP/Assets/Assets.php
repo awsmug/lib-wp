@@ -6,7 +6,7 @@ use AWSM\LibTools\Patterns\SingletonTrait;
 use AWSM\LibWP\WP\Assets\Asset AS Asset;
 use AWSM\LibWP\WP\Core\AdminNotices;
 use AWSM\LibWP\WP\Hooks\Action;
-use AWSM\LibWP\WP\Hooks\HookableHiddenMethodsTrait;
+use AWSM\LibWP\WP\Hooks\Hookable;
 use AWSM\LibWP\WP\Hooks\Hooks;
 use Exception;
 
@@ -38,7 +38,7 @@ use Exception;
  */
 class Assets 
 {
-    use HookableHiddenMethodsTrait, SingletonTrait;
+    use Hookable, SingletonTrait;
 
     /**
      * Whether assets are already enqueues or not.

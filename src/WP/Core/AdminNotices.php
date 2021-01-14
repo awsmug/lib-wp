@@ -4,7 +4,7 @@ namespace AWSM\LibWP\WP\Core;
 
 use AWSM\LibTools\Patterns\SingletonTrait;
 use AWSM\LibWP\WP\Hooks\Action;
-use AWSM\LibWP\WP\Hooks\HookableHiddenMethodsTrait;
+use AWSM\LibWP\WP\Hooks\Hookable;
 use AWSM\LibWP\WP\Hooks\Hooks;
 
 /**
@@ -17,7 +17,7 @@ use AWSM\LibWP\WP\Hooks\Hooks;
  * @since 1.0.0
  */
 class AdminNotices {
-    use HookableHiddenMethodsTrait, SingletonTrait;
+    use Hookable, SingletonTrait;
 
     /**
      * True if admin notices are already hooked into WP.

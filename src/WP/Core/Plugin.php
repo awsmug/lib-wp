@@ -2,9 +2,9 @@
 
 namespace AWSM\LibWP\WP\Core;
 
-use AWSM\LibWP\WP\Hooks\HookableHiddenMethodsTrait;
 use AWSM\LibWP\WP\Core\CoreException;
 use AWSM\LibWP\WP\Hooks\Action;
+use AWSM\LibWP\WP\Hooks\Hookable;
 use AWSM\LibWP\WP\Hooks\Hooks;
 use Exception;
 
@@ -15,7 +15,7 @@ use Exception;
  */
 abstract class Plugin 
 {
-    use HookableHiddenMethodsTrait;
+    use Hookable;
 
     /**
      * Components
@@ -152,7 +152,7 @@ abstract class Plugin
                 throw new CoreException( sprintf( 'Textdomain %s file not found in %s.', $textDomain, $pluginRelPath ) );
             }
         } catch ( Exception $e ) {
-            AdminNotices::instance()->add( sprintf( 'Could not load textdomain: %s', $e->getMessage() ), 'warning' );
+            AdminNotices::instance()->add( sprintf( 'Could not load textdomain: %s', $e->getMessage() ), 'error' );
         }
         
     }
