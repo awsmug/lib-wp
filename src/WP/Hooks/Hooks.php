@@ -2,7 +2,6 @@
 
 namespace AWSM\LibWP\WP\Hooks;
 
-use AWSM\LibTools\Patterns\SingletonTrait;
 use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\WP\Core\PluginTrait;
 
@@ -117,7 +116,7 @@ class Hooks
     private function loadHooks( object $object ) 
     {
         foreach( $this->hooks AS $i => $hook ) {
-            if( $this->loadHook( $hook , $object) ) {
+            if( $this->loadHook( $hook , $object ) ) {
                 unset( $this->hooks[ $i ] ); // Load hook only once and remove it after successful load.
             }
         }
