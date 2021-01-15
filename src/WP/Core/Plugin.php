@@ -37,6 +37,13 @@ abstract class Plugin
     private $enqueuedComponents = false;
 
     /**
+     * Plugin information.
+     * 
+     * @var PluginInfo
+     */
+    private $info;
+
+    /**
      * Constructor
      * 
      * @since 1.0.0
@@ -44,6 +51,25 @@ abstract class Plugin
     private function __construct()
     {        
         $this->init();
+    }
+
+    /**
+     * Plugin information
+     * 
+     * @return PluginInfo PluginInfo object.
+     * 
+     * @since 1.0.0
+     */
+    public function info() : PluginInfo
+    {
+        if ( empty( $this->info ) ) {
+            $calledClass = get_called_class();
+            $reflector   = new \ReflectionClass( $calledClass ); 
+
+            $this->info = new PluginInfo( $reflector->getFileName() );
+        }
+
+        return $this->info;
     }
 
     /**
@@ -55,8 +81,8 @@ abstract class Plugin
     {
         $this->setHookableHiddenMethods( [ 'loadComponents' ] );
 
-        $textDomain = self::info()->getTextDomain();
-        $domainPath = self::info()->getDomainPath();
+        $textDomain = $this->info()->getTextDomain();
+        $domainPath = $this->info()->getDomainPath();
 
         if ( ! empty( $textDomain ) && ! empty( $domainPath ) ) {
             $this->loadTextdomain( $textDomain, $domainPath );
@@ -75,21 +101,6 @@ abstract class Plugin
         if( ! load_plugin_textdomain( $textDomain, false, $domainPath ) ) {
             throw new Exception( sprintf( 'Textdomain %s file not found in %s.', $textDomain, $domainPath ) );
         }
-    }
-
-    /**
-     * Plugin information
-     * 
-     * @return PluginInfo
-     * 
-     * @since 1.0.0
-     */
-    public static function info() : PluginInfo
-    {
-        $calledClass = get_called_class();
-        $reflector   = new \ReflectionClass( $calledClass ); 
-
-        return new PluginInfo( $reflector->getFileName() );
     }
 
     /**
