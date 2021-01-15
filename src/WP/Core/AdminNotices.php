@@ -2,10 +2,8 @@
 
 namespace AWSM\LibWP\WP\Core;
 
-use AWSM\LibTools\Patterns\SingletonTrait;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\HookableTrait;
-use AWSM\LibWP\WP\Hooks\Hooks;
 
 /**
  * AdminNotices Class
@@ -42,7 +40,7 @@ class AdminNotices {
      * 
      * @since 1.0.0
      */
-    protected function __construct( Plugin $plugin )
+    public function __construct( Plugin $plugin )
     {
         $this->setHookableHiddenMethods( ['showNotices', 'showNotice'] );
         $this->plugin = $plugin;
