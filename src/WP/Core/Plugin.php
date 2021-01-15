@@ -141,7 +141,7 @@ abstract class Plugin
     private function init() 
     {
         $this->setHookableHiddenMethods( [ 'loadComponents' ] );
-        $this->setExceptionCatcher( new ExceptionCatcher() );
+        $this->setExceptionCatcher( ExceptionCatcher::class );
 
         $textDomain = $this->info()->getTextDomain();
         $domainPath = $this->info()->getDomainPath();
@@ -201,13 +201,13 @@ abstract class Plugin
     /**
      * Setting exception catcher.
      * 
-     * @param ExceptionCatcherInterface $exceptionCatcher Exception catcher object.
+     * @param string $exceptionCatcher Exception catcher class.
      * 
      * @since 1.0.0
      */
-    public function setExceptionCatcher( ExceptionCatcherInterface $exceptionCatcher ) 
-    {
-        $this->exceptionCatcher = $exceptionCatcher;
+    public function setExceptionCatcher( string $exceptionCatcherClass ) 
+    {        
+        $this->exceptionCatcher = new $exceptionCatcherClass( $this );
     }
 
     /**
