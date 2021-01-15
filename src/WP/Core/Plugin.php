@@ -88,7 +88,8 @@ abstract class Plugin
     public static function instance() : Plugin 
     {
         if ( self::$instance === null ) {
-            self::$instance = new self();
+            $calledClass = get_called_class();
+            self::$instance = new $calledClass();
         }
     
         return self::$instance;
