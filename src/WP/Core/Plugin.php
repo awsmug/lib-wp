@@ -258,9 +258,9 @@ abstract class Plugin
             return;
         }
 
-        $this->enqueuedComponents = true;        
-
-        Hooks::instance()->add( new Action( 'plugins_loaded', [ $this, 'loadComponents' ], 1 ) )->load( $this );
+        $this->enqueuedComponents = true;
+        
+        $this->hooks()->add( new Action( 'plugins_loaded', [ $this, 'loadComponents' ], 1 ) )->load( $this );
     }
 
     /**
