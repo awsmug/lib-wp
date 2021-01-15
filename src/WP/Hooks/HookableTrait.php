@@ -7,7 +7,7 @@ use AWSM\LibWP\WP\ExceptionCatcher;
 use Exception;
 
 /**
- * Trait Hookable.
+ * Trait HookableTrait.
  *
  * This trait have to be used 
  *
@@ -15,7 +15,7 @@ use Exception;
  *
  * @since 1.0.0
  */
-trait Hookable {
+trait HookableTrait {
     /**
 	 * Hookable hidden methods.
 	 *

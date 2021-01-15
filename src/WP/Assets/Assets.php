@@ -8,7 +8,7 @@ use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\WP\Core\PluginTrait;
 use AWSM\LibWP\WP\ExceptionCatcher;
 use AWSM\LibWP\WP\Hooks\Action;
-use AWSM\LibWP\WP\Hooks\Hookable;
+use AWSM\LibWP\WP\Hooks\HookableTrait;
 use AWSM\LibWP\WP\Hooks\Hooks;
 use Exception;
 
@@ -40,7 +40,7 @@ use Exception;
  */
 class Assets 
 {
-    use Hookable, PluginTrait;    
+    use HookableTrait, PluginTrait;    
 
     /**
      * Whether assets are already enqueues or not.

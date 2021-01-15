@@ -8,7 +8,7 @@ use AWSM\LibWP\WP\Exception;
 use AWSM\LibWP\WP\ExceptionCatcher;
 use AWSM\LibWP\WP\ExceptionCatcherInterface;
 use AWSM\LibWP\WP\Hooks\Action;
-use AWSM\LibWP\WP\Hooks\Hookable;
+use AWSM\LibWP\WP\Hooks\HookableTrait;
 use AWSM\LibWP\WP\Hooks\Hooks;
 
 /**
@@ -18,7 +18,7 @@ use AWSM\LibWP\WP\Hooks\Hooks;
  */
 abstract class Plugin 
 {
-    use Hookable, SingletonTrait;
+    use HookableTrait, SingletonTrait;
 
     /**
      * Components
