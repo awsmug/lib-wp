@@ -5,9 +5,12 @@ namespace AWSM\LibWP\WP\Core;
 use AWSM\LibTools\Patterns\SingletonTrait;
 
 use AWSM\LibWP\WP\Exception;
+use AWSM\LibWP\WP\ExceptionCatcher;
+use AWSM\LibWP\WP\ExceptionCatcherInterface;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\Hookable;
 use AWSM\LibWP\WP\Hooks\Hooks;
+use stdClass;
 
 /**
  * Abstract Plugin class.
@@ -42,6 +45,13 @@ abstract class Plugin
      * @var PluginInfo
      */
     private $info;
+
+    /**
+     * Plugin information.
+     * 
+     * @var ExceptionCatcherInterface
+     */
+    private $exceptionCatcher;
 
     /**
      * Constructor
@@ -80,6 +90,7 @@ abstract class Plugin
     private function init() 
     {
         $this->setHookableHiddenMethods( [ 'loadComponents' ] );
+        $this->exceptionCatcher = new ExceptionCatcher();
 
         $textDomain = $this->info()->getTextDomain();
         $domainPath = $this->info()->getDomainPath();
@@ -90,13 +101,37 @@ abstract class Plugin
     }
 
     /**
+     * Setting exception catcher.
+     * 
+     * @param ExceptionCatcherInterface $exceptionCatcher Exception catcher object.
+     * 
+     * @since 1.0.0
+     */
+    public function setExceptionCatcher( ExceptionCatcherInterface $exceptionCatcher ) 
+    {
+        $this->exceptionCatcher = $exceptionCatcher;
+    }
+
+    /**
+     * Get exception catcher.
+     * 
+     * @return ExceptionCatcherInterface Exception catcher object.
+     * 
+     * @since 1.0.0
+     */
+    public function exceptionCatcher() : ExceptionCatcherInterface 
+    {
+        return $this->exceptionCatcher;
+    }
+
+    /**
      * Load textdomain.
      * 
      * @throws CoreException .mo file was not found.
      * 
      * @since 1.0.0
      */
-    private function loadTextdomain( string $textDomain, string $domainPath ) 
+    private function loadTextdomain( string $textDomain, string $domainPath )
     {
         if( ! load_plugin_textdomain( $textDomain, false, $domainPath ) ) {
             throw new Exception( sprintf( 'Textdomain %s file not found in %s.', $textDomain, $domainPath ) );
