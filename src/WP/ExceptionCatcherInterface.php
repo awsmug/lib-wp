@@ -21,7 +21,7 @@ interface ExceptionCatcherInterface {
      * 
      * @since 1.0.0
      */
-    public static function error( string $message );
+    public function error( string $message );
 
     /**
      * Catching warning.
@@ -30,7 +30,7 @@ interface ExceptionCatcherInterface {
      * 
      * @since 1.0.0
      */
-    public static function warning( string $message );
+    public function warning( string $message );
 
     /**
      * Catching notice.
@@ -39,7 +39,7 @@ interface ExceptionCatcherInterface {
      * 
      * @since 1.0.0
      */
-    public static function notice( string $message ):
+    public function notice( string $message );
 
     /**
      * Catching info.
@@ -48,14 +48,5 @@ interface ExceptionCatcherInterface {
      * 
      * @since 1.0.0
      */
-    public static function info( string $message );
-
-    /**
-     * Get exception location.
-     * 
-     * @return string Description of location where exception happened.
-     * 
-     * @since 1.0.0
-     */
-    private static function exceptionLocation();
+    public function info( string $message );
 }

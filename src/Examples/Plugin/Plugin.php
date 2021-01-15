@@ -21,7 +21,6 @@ require '../../../vendor/autoload.php';
 use AWSM\LibWP\WP\Exception;
 use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\Examples\Plugin\Components\HelloWorld\HelloWorld;
-use AWSM\LibWP\WP\ExceptionCatcher;
 
 class MyPlugin extends Plugin {}
 
@@ -29,5 +28,5 @@ try {
     MyPlugin::instance()
         ->addComponent( HelloWorld::class );
 } catch ( Exception $e ) {
-    ExceptionCatcher::error( sprintf( 'Failed to run Plugin: %s', $e->getMessage() ) );
+    MyPlugin::instance()->exceptionCatcher()->error( sprintf( 'Failed to run Plugin: %s', $e->getMessage() ) );
 }

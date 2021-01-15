@@ -21,7 +21,7 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
      * 
      * @since 1.0.0
      */
-    public static function error( string $message ) {
+    public function error( string $message ) {
         $message = sprintf( 'Error: %s (%s)', $message, self::exceptionLocation() );
 
         if( Location::admin() ) {
@@ -36,7 +36,7 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
      * 
      * @since 1.0.0
      */
-    public static function warning( string $message ) {
+    public function warning( string $message ) {
         $message = sprintf( 'Warning: %s (%s)', $message, self::exceptionLocation() );
 
         if( Location::admin() ) {
@@ -51,7 +51,7 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
      * 
      * @since 1.0.0
      */
-    public static function notice( string $message ) {
+    public function notice( string $message ) {
         $message = sprintf( 'Notice: %s (%s)', $message, self::exceptionLocation() );
 
         if( Location::admin() ) {
@@ -66,7 +66,7 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
      * 
      * @since 1.0.0
      */
-    public static function info( string $message ) {
+    public function info( string $message ) {
         $message = sprintf( 'Info: %s (%s)', $message, self::exceptionLocation() );
 
         if( Location::admin() ) {
@@ -81,7 +81,7 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
      * 
      * @since 1.0.0
      */
-    private static function exceptionLocation() {
+    private function exceptionLocation() {
         return sprintf ( 'in file "%s"',
             CallerDetective::detect(1)->file()
         );
