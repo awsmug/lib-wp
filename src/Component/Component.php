@@ -5,7 +5,6 @@ namespace AWSM\LibWP\Component;
 use AWSM\LibFile\PhpFile;
 use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\WP\Core\PluginTrait;
-use AWSM\LibWP\WP\Hooks\Hooks;
 
 /**
  * Component class.
