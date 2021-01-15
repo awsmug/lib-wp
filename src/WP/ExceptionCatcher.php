@@ -13,7 +13,7 @@ use AWSM\LibWP\WP\Core\Location;
  * 
  * @since 1.0.0
  */
-class ExceptionCatcher {
+class ExceptionCatcher implements ExceptionCatcherInterface {
     /**
      * Catching error.
      * 
