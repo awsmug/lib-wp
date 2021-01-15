@@ -36,7 +36,7 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
      * @since 1.0.0
      */
     public function error( string $message ) {
-        $message = sprintf( 'Error: %s (%s)', $message, self::exceptionLocation() );
+        $message = $this->message( $message, 'Error' );
 
         if( Location::admin() ) {
             $this->plugin()->adminNotices()->add( $message, 'error' );
@@ -51,7 +51,7 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
      * @since 1.0.0
      */
     public function warning( string $message ) {
-        $message = sprintf( 'Warning: %s (%s)', $message, self::exceptionLocation() );
+        $message = $this->message( $message, 'Warning' );
 
         if( Location::admin() ) {
             $this->plugin()->adminNotices()->add( $message, 'warning' );
@@ -66,7 +66,7 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
      * @since 1.0.0
      */
     public function notice( string $message ) {
-        $message = sprintf( 'Notice: %s (%s)', $message, self::exceptionLocation() );
+        $message = $this->message( $message, 'Notice' );
 
         if( Location::admin() ) {
             $this->plugin()->adminNotices()->add( $message, 'notice' );
@@ -81,7 +81,7 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
      * @since 1.0.0
      */
     public function info( string $message ) {
-        $message = sprintf( 'Info: %s (%s)', $message, self::exceptionLocation() );
+        $message = $this->message( $message, 'Info' );
 
         if( Location::admin() ) {
             $this->plugin()->adminNotices()->add( $message, 'info' );
@@ -89,14 +89,17 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
     }
 
     /**
-     * Get exception location.
+     * Formatting message.
      * 
-     * @return string Description of location where exception happened.
+     * @param string $message Message to print.
      * 
      * @since 1.0.0
      */
-    private function exceptionLocation() {
-        return sprintf ( 'in file "%s"',
+    private function message( string $message, string $type ) : string {
+        return  sprintf( '<b>%s</b> - %s: %s (in file %s)', 
+            $this->plugin()->info()->getName(), 
+            $type,
+            $message, 
             CallerDetective::detect(1)->file()
         );
     }
