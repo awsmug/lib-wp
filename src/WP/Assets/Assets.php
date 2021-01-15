@@ -4,7 +4,6 @@ namespace AWSM\LibWP\WP\Assets;
 
 use AWSM\LibTools\Patterns\SingletonTrait;
 use AWSM\LibWP\WP\Assets\Asset AS Asset;
-use AWSM\LibWP\WP\Core\AdminNotices;
 use AWSM\LibWP\WP\ExceptionCatcher;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\Hookable;
@@ -70,10 +69,10 @@ class Assets
     }
 
     /**
-     * Add Asset
+     * Add Asset.
      * 
-     * @param Asset $asset
-     * @param bool  $check
+     * @param Asset $asset 
+     * @param array $callbackArgs
      * 
      * @return Assets
      * 
