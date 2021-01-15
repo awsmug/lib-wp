@@ -170,6 +170,25 @@ abstract class Plugin
     }
 
     /**
+     * Load template.
+     * 
+     * @param string $templateFile Template file relative to the given template path. First lookup is made in theme directory, second in plugin dirctory template path.
+     * @param array  $variables    Variable array to pass to template.
+     * 
+     * @since 1.0.0
+     */
+    public function loadTemplate( string $templateFile, array $variables ) {
+        $templateFileInTheme = get_called_class() . '/' . $templateFile;
+        $templateLocation    = locate_template( $templateFileInTheme );
+
+        if ( empty ( $templateLocation ) ) {
+            $templateLocation = $this->info()->getTemplatePath() . '/' . $templateFile;
+        }
+
+        require( $templateLocation );
+    }
+
+    /**
      * Setting exception catcher.
      * 
      * @param ExceptionCatcherInterface $exceptionCatcher Exception catcher object.
