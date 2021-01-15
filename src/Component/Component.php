@@ -83,6 +83,6 @@ abstract class Component implements ComponentInterface
         PhpFile::use( $this->setup->getHooksFile() )->run( [ 'plugin' => $this->plugin() ]  );
         PhpFile::use( $this->setup->getAssetsFile() )->run( [ 'plugin' => $this->plugin() ] );
 
-        Hooks::instance()->load( $this );
+        $this->plugin()->hooks()->load( $this );
     }
 }
