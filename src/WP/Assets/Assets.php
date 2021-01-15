@@ -50,7 +50,7 @@ class Assets
      * 
      * @since 1.0.0
      */
-    protected function __construct( Plugin $plugin ) 
+    public function __construct( Plugin $plugin ) 
     {      
         $this->setHookableHiddenMethods( ['loadAssets', 'loadAdminStyles', 'loadAdminScripts', 'loadScripts', 'loadFooterScripts'] );
         $this->plugin = $plugin;
