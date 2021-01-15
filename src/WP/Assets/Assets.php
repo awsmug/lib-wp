@@ -2,11 +2,9 @@
 
 namespace AWSM\LibWP\WP\Assets;
 
-use AWSM\LibTools\Patterns\SingletonTrait;
 use AWSM\LibWP\WP\Assets\Asset AS Asset;
 use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\WP\Core\PluginTrait;
-use AWSM\LibWP\WP\ExceptionCatcher;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\HookableTrait;
 use AWSM\LibWP\WP\Hooks\Hooks;
@@ -40,7 +38,7 @@ use Exception;
  */
 class Assets 
 {
-    use HookableTrait, PluginTrait;    
+    use HookableTrait, PluginTrait;
 
     /**
      * Whether assets are already enqueues or not.

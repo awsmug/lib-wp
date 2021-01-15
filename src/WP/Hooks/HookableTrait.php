@@ -2,7 +2,7 @@
 
 namespace AWSM\LibWP\WP\Hooks;
 
-use AWSM\LibWP\WP\Core\AdminNotices;
+use AWSM\LibWP\WP\Core\PluginTrait;
 use AWSM\LibWP\WP\ExceptionCatcher;
 use Exception;
 
@@ -16,6 +16,8 @@ use Exception;
  * @since 1.0.0
  */
 trait HookableTrait {
+    use PluginTrait;
+
     /**
 	 * Hookable hidden methods.
 	 *
