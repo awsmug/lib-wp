@@ -240,6 +240,6 @@ class PluginInfo {
      * @since 1.0.0
      */
     public function getPath() {
-        return $this->pluginFile->path();
+        return plugin_dir_path( $this->pluginFile->path() );
     }
 }
