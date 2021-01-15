@@ -36,9 +36,7 @@ use AWSM\LibWP\WP\Core\PluginTrait;
  * @since 1.0.0
  */
 class Hooks 
-{   
-    use PluginTrait;
-
+{
     /**
      * Assigned objects.
      * 
@@ -64,9 +62,8 @@ class Hooks
      * 
      * @since 1.0.0
      */
-    public function __construct( Plugin $plugin )
+    public function __construct()
     {
-        $this->plugin = $plugin;
     }
 
     /**

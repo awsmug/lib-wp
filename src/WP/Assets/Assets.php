@@ -4,7 +4,6 @@ namespace AWSM\LibWP\WP\Assets;
 
 use AWSM\LibWP\WP\Assets\Asset AS Asset;
 use AWSM\LibWP\WP\Core\Plugin;
-use AWSM\LibWP\WP\Core\PluginTrait;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\HookableTrait;
 use AWSM\LibWP\WP\Hooks\Hooks;
@@ -38,7 +37,7 @@ use Exception;
  */
 class Assets 
 {
-    use HookableTrait, PluginTrait;
+    use HookableTrait;
 
     /**
      * Whether assets are already enqueues or not.
@@ -63,10 +62,9 @@ class Assets
      * 
      * @since 1.0.0
      */
-    protected function __construct( Plugin $plugin ) 
+    protected function __construct() 
     {      
         $this->setHookableHiddenMethods( ['loadAssets', 'loadAdminStyles', 'loadAdminScripts', 'loadScripts', 'loadFooterScripts'] );
-        $this->plugin = $plugin;
     }
 
     /**
@@ -180,11 +178,7 @@ class Assets
                 continue;
             }
 
-            try {
-                call_user_func_array( 'wp_enqueue_' . $asset['asset']->getType(), $asset['asset']->getArgs() );
-            } catch ( Exception $e ) {
-                $this->plugin()->exceptionCatcher()::error( sprintf( 'Cannot load assets of plugin: %s', $e->getMessage() ) );
-            }
+            call_user_func_array( 'wp_enqueue_' . $asset['asset']->getType(), $asset['asset']->getArgs() );
         }
     }
     /**
