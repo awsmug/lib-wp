@@ -181,7 +181,7 @@ abstract class Plugin
         $templateLocation    = locate_template( $templateFileInTheme );
 
         if ( empty ( $templateLocation ) ) {
-            $templateLocation = $this->info()->getTemplatePath() . '/' . $templateFile;
+            $templateLocation = $this->info()->getPath() . $this->info()->getTemplatePath() . $templateFile;
         }
 
         require( $templateLocation );

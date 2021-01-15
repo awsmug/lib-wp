@@ -14,7 +14,22 @@ use AWSM\LibFile\File;
 class PluginInfo {
     use FileInfoTrait;
 
+    /**
+     * Plugin file.
+     * 
+     * @var string
+     * 
+     * @since 1.0.0
+     */
     private $pluginFile;
+
+    /**
+     * Plugin data.
+     * 
+     * @var array
+     * 
+     * @since 1.0.0
+     */
     private $pluginData = [];
 
     /**
@@ -143,7 +158,7 @@ class PluginInfo {
      */
     public function getTemplatePath() : string
     {
-        return $this->pluginData['TemplatePath'];
+        return trainlingslashit( $this->pluginData['TemplatePath'] );
     }
 
     /**
