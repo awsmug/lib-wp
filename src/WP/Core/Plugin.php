@@ -10,7 +10,6 @@ use AWSM\LibWP\WP\ExceptionCatcherInterface;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\Hookable;
 use AWSM\LibWP\WP\Hooks\Hooks;
-use stdClass;
 
 /**
  * Abstract Plugin class.
