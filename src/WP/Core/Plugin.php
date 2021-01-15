@@ -18,7 +18,16 @@ use AWSM\LibWP\WP\Hooks\Hooks;
  */
 abstract class Plugin 
 {
-    use HookableTrait, SingletonTrait;
+    use HookableTrait;
+
+    /**
+     * Instance
+     * 
+     * @var self
+     * 
+     * @since 1.0.0
+     */
+    private static $instance;    
 
     /**
      * Components
@@ -53,7 +62,23 @@ abstract class Plugin
     private $exceptionCatcher;
 
     /**
-     * Constructor
+     * Create an instance of plugin.
+     * 
+     * @return Plugin Plugin object.
+     * 
+     * @since 1.0.0
+     */
+    public static function instance() : Plugin 
+    {
+        if ( self::$instance === null ) {
+            self::$instance = new self();
+        }
+    
+        return self::$instance;
+    }
+
+    /**
+     * Constructor.
      * 
      * @since 1.0.0
      */
