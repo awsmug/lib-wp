@@ -5,6 +5,7 @@ namespace AWSM\LibWP\Component;
 use AWSM\LibFile\PhpFile;
 use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\WP\Core\PluginTrait;
+use AWSM\LibWP\WP\Hooks\HookableTrait;
 
 /**
  * Component class.
@@ -15,7 +16,7 @@ use AWSM\LibWP\WP\Core\PluginTrait;
  */
 abstract class Component implements ComponentInterface 
 {
-    use PluginTrait;
+    use PluginTrait, HookableTrait;
 
     /**
      * Component setup.
