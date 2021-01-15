@@ -139,7 +139,7 @@ abstract class Plugin
     private function loadComponents() 
     {
         foreach( $this->components AS $component ) {
-            ( new $component() )->init();
+            ( new $component( $this ) )->init();
         }
     }
 }

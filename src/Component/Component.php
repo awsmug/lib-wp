@@ -3,6 +3,7 @@
 namespace AWSM\LibWP\Component;
 
 use AWSM\LibFile\PhpFile;
+use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\WP\Hooks\Hooks;
 
 /**
@@ -15,6 +16,13 @@ use AWSM\LibWP\WP\Hooks\Hooks;
 abstract class Component implements ComponentInterface 
 {
     /**
+     * Plugin object.
+     * 
+     * @var Plugin
+     */
+    private $plugin;
+
+    /**
      * Component setup.
      * 
      * @var ComponentSetup
@@ -22,6 +30,29 @@ abstract class Component implements ComponentInterface
      * @since 1.0.0
      */
     private $setup;
+
+    /**
+     * Constructor.
+     * 
+     * @param Plugin $plugin Plugin object.
+     * 
+     * @since 1.0.0
+     */
+    public function __construct( Plugin $plugin )
+    {
+        $this->plugin = $plugin;
+    }
+
+    /**
+     * Plugin access.
+     * 
+     * @return Plugin Plugin object.
+     * 
+     * @since 1.0.0
+     */
+    public function plugin() {
+        return $this->plugin;
+    }
 
     /**
      * Setup the component.
