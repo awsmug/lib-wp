@@ -66,8 +66,8 @@ trait HookableTrait {
             } else {
                 return call_user_func_array( [ $this, $methodName ], $args  );
             }            
-        } catch ( Exception $e ) {            
-            ExceptionCatcher::error( sprintf( 'Error executing call %s. Error message: %s', $methodName, $e->getMessage() ) );
+        } catch ( Exception $e ) {      
+            $this->plugin()->exceptionCatcher()::error( sprintf( 'Error executing call %s. Error message: %s', $methodName, $e->getMessage() ) );
         }
 	}
 }

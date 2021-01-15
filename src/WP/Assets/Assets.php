@@ -185,7 +185,7 @@ class Assets
             try {
                 call_user_func_array( 'wp_enqueue_' . $asset['asset']->getType(), $asset['asset']->getArgs() );
             } catch ( Exception $e ) {
-                ExceptionCatcher::error( sprintf( 'Cannot load assets of plugin: %s', $e->getMessage() ) );
+                $this->plugin()->exceptionCatcher()::error( sprintf( 'Cannot load assets of plugin: %s', $e->getMessage() ) );
             }
         }
     }
