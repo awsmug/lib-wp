@@ -96,11 +96,10 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
      * @since 1.0.0
      */
     private function message( string $message, string $type ) : string {
-        return  sprintf( '<b>%s</b> - %s: %s (in file %s)', 
+        return  sprintf( '<b>%s</b> - %s: %s', 
             $this->plugin()->info()->getName(), 
             $type,
-            $message, 
-            CallerDetective::detect(1)->file()
+            $message
         );
     }
 }
