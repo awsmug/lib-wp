@@ -4,6 +4,8 @@ namespace AWSM\LibWP\WP\Assets;
 
 use AWSM\LibTools\Patterns\SingletonTrait;
 use AWSM\LibWP\WP\Assets\Asset AS Asset;
+use AWSM\LibWP\WP\Core\Plugin;
+use AWSM\LibWP\WP\Core\PluginTrait;
 use AWSM\LibWP\WP\ExceptionCatcher;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\Hookable;
@@ -38,7 +40,7 @@ use Exception;
  */
 class Assets 
 {
-    use Hookable, SingletonTrait;
+    use Hookable, PluginTrait;    
 
     /**
      * Whether assets are already enqueues or not.
@@ -63,9 +65,10 @@ class Assets
      * 
      * @since 1.0.0
      */
-    protected function __construct() 
+    protected function __construct( Plugin $plugin ) 
     {      
         $this->setHookableHiddenMethods( ['loadAssets', 'loadAdminStyles', 'loadAdminScripts', 'loadScripts', 'loadFooterScripts'] );
+        $this->plugin = $plugin;
     }
 
     /**

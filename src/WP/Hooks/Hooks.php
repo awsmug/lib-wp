@@ -3,6 +3,8 @@
 namespace AWSM\LibWP\WP\Hooks;
 
 use AWSM\LibTools\Patterns\SingletonTrait;
+use AWSM\LibWP\WP\Core\Plugin;
+use AWSM\LibWP\WP\Core\PluginTrait;
 
 /**
  * Class hooks
@@ -35,11 +37,11 @@ use AWSM\LibTools\Patterns\SingletonTrait;
  * @since 1.0.0
  */
 class Hooks 
-{
-    use SingletonTrait;
-    
+{   
+    use PluginTrait;
+
     /**
-     * Assigned objects
+     * Assigned objects.
      * 
      * @var string
      * 
@@ -48,13 +50,25 @@ class Hooks
     protected $assignedObject;
 
     /**
-     * Hooks
+     * Hooks.
      * 
      * @var array
      * 
      * @since 1.0.0
      */
     protected $hooks = [];
+
+    /**
+     * Constructor.
+     * 
+     * @param Plugin $plugin Plugin object.
+     * 
+     * @since 1.0.0
+     */
+    public function __construct( Plugin $plugin )
+    {
+        $this->plugin = $plugin;
+    }
 
     /**
      * Add Hook. 
@@ -68,7 +82,8 @@ class Hooks
      * 
      * @since 1.0.0
      */
-    public function add( HookInterface $hook, bool $check = true ) {
+    public function add( HookInterface $hook, bool $check = true ) 
+    {
         if( ! $check ) {
             return $this;
         }
@@ -87,7 +102,8 @@ class Hooks
      * 
      * @since 1.0.0
      */
-    public function load( object $object ) {
+    public function load( object $object ) 
+    {
         $this->loadHooks( $object );
     }
 
@@ -98,7 +114,8 @@ class Hooks
      * 
      * @since 1.0.0
      */
-    private function loadHooks( object $object ) {
+    private function loadHooks( object $object ) 
+    {
         foreach( $this->hooks AS $i => $hook ) {
             if( $this->loadHook( $hook , $object) ) {
                 unset( $this->hooks[ $i ] ); // Load hook only once and remove it after successful load.
@@ -116,7 +133,8 @@ class Hooks
      * 
      * @since 1.0.0
      */
-    private function loadHook( Hook $hook, object $object ) {
+    private function loadHook( Hook $hook, object $object ) 
+    {
         // Only execute on same object/class
         if ( get_class( $object ) !== $hook->getCallbackClass() ) {
             return false;

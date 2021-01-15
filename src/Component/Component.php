@@ -4,6 +4,7 @@ namespace AWSM\LibWP\Component;
 
 use AWSM\LibFile\PhpFile;
 use AWSM\LibWP\WP\Core\Plugin;
+use AWSM\LibWP\WP\Core\PluginTrait;
 use AWSM\LibWP\WP\Hooks\Hooks;
 
 /**
@@ -15,12 +16,7 @@ use AWSM\LibWP\WP\Hooks\Hooks;
  */
 abstract class Component implements ComponentInterface 
 {
-    /**
-     * Plugin object.
-     * 
-     * @var Plugin
-     */
-    private $plugin;
+    use PluginTrait;
 
     /**
      * Component setup.
@@ -41,17 +37,6 @@ abstract class Component implements ComponentInterface
     public function __construct( Plugin $plugin )
     {
         $this->plugin = $plugin;
-    }
-
-    /**
-     * Plugin access.
-     * 
-     * @return Plugin Plugin object.
-     * 
-     * @since 1.0.0
-     */
-    public function plugin() {
-        return $this->plugin;
     }
 
     /**
@@ -95,8 +80,8 @@ abstract class Component implements ComponentInterface
             $this->setup();
         }
         
-        PhpFile::use( $this->setup->getHooksFile() )->run();
-        PhpFile::use( $this->setup->getAssetsFile() )->run();
+        PhpFile::use( $this->setup->getHooksFile() )->run( [ 'plugin' => $this->plugin() ]  );
+        PhpFile::use( $this->setup->getAssetsFile() )->run( [ 'plugin' => $this->plugin() ] );
 
         Hooks::instance()->load( $this );
     }

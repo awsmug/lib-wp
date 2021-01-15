@@ -5,5 +5,5 @@ namespace AWSM\LibWP\Examples\Plugin\Components\HelloWorld;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\Hooks;
 
-Hooks::instance()
+(new Hooks( $variables['plugin'] ) )
     ->add( new Action( 'wp_title',   array( HelloWorld::class, 'filterTitle' ) ) );
