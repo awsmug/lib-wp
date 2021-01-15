@@ -3,7 +3,7 @@
 namespace AWSM\LibWP\WP\Core;
 
 use AWSM\LibTools\Patterns\SingletonTrait;
-
+use AWSM\LibWP\WP\Assets\Assets;
 use AWSM\LibWP\WP\Exception;
 use AWSM\LibWP\WP\ExceptionCatcher;
 use AWSM\LibWP\WP\ExceptionCatcherInterface;
@@ -37,6 +37,24 @@ abstract class Plugin
      * @since 1.0.0
      */
     private $components;
+
+    /**
+     * Hooks object.
+     * 
+     * @var Hooks
+     * 
+     * @since 1.0.0
+     */
+    private $hooks;
+
+    /**
+     * Assets object.
+     * 
+     * @var Assets Assets object;
+     * 
+     * @since 1.0.0
+     */
+    private $assets;
 
     /**
      * Whether components are enqueued to actionhook or not
@@ -119,9 +137,36 @@ abstract class Plugin
         $textDomain = $this->info()->getTextDomain();
         $domainPath = $this->info()->getDomainPath();
 
+        $this->hooks  = new Hooks();
+        $this->assets = new Assets();
+
         if ( ! empty( $textDomain ) && ! empty( $domainPath ) ) {
             $this->loadTextdomain( $textDomain, $domainPath );
         }
+    }
+
+    /**
+     * Get hooks object.
+     * 
+     * @return Hooks Hooks object.
+     * 
+     * @since 1.0.0
+     */
+    public function hooks() : Hooks
+    {
+        return $this->hooks;
+    }
+
+    /**
+     * Get assets object.
+     * 
+     * @return Hooks Hooks object.
+     * 
+     * @since 1.0.0
+     */
+    public function assets() : Assets
+    {
+        return $this->assets;
     }
 
     /**

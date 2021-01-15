@@ -2,8 +2,8 @@
 
 namespace AWSM\LibWP\Examples\Plugin\Components\HelloWorld;
 
+use AWSM\LibWP\Examples\Plugin\MyPlugin;
 use AWSM\LibWP\WP\Hooks\Action;
-use AWSM\LibWP\WP\Hooks\Hooks;
 
-(new Hooks() )
+MyPlugin::instance()->hooks
     ->add( new Action( 'wp_title',   array( HelloWorld::class, 'filterTitle' ) ) );

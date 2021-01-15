@@ -15,8 +15,8 @@ use AWSM\LibWP\WP\Hooks\Hooks;
 class HelloWorld Extends Component {
 
     public function __construct()
-    {   
-        Hooks::instance()->assign( $this );
+    {
+        $this->plugin()->hooks()->load( $this );
     }
 
     /**
