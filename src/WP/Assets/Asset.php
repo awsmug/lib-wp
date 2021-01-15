@@ -54,7 +54,7 @@ abstract class Asset Extends WebAsset implements AssetInterface
      */
     public function getUrl(): string
     {
-        return WP::getUrl( $this->path );
+        return WP::getUrl( dirname( $this->getFile() ) );
     }
 
     /**
