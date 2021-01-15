@@ -137,8 +137,8 @@ abstract class Plugin
         $textDomain = $this->info()->getTextDomain();
         $domainPath = $this->info()->getDomainPath();
 
-        $this->hooks  = new Hooks();
-        $this->assets = new Assets();
+        $this->hooks  = new Hooks( $this );
+        $this->assets = new Assets( $this );
 
         if ( ! empty( $textDomain ) && ! empty( $domainPath ) ) {
             $this->loadTextdomain( $textDomain, $domainPath );
