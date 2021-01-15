@@ -58,8 +58,6 @@ class Hooks
     /**
      * Constructor.
      * 
-     * @param Plugin $plugin Plugin object.
-     * 
      * @since 1.0.0
      */
     public function __construct()
