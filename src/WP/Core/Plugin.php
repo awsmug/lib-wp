@@ -2,7 +2,6 @@
 
 namespace AWSM\LibWP\WP\Core;
 
-use AWSM\LibTools\Patterns\SingletonTrait;
 use AWSM\LibWP\WP\Assets\Assets;
 use AWSM\LibWP\WP\Exception;
 use AWSM\LibWP\WP\ExceptionCatcher;
