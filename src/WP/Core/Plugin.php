@@ -56,6 +56,15 @@ abstract class Plugin
     private $assets;
 
     /**
+     * AdminNotices object.
+     * 
+     * @var AdminNotices Assets object;
+     * 
+     * @since 1.0.0
+     */
+    private $adminNotices;
+
+    /**
      * Whether components are enqueued to actionhook or not
      * 
      * @var bool
@@ -132,13 +141,14 @@ abstract class Plugin
     private function init() 
     {
         $this->setHookableHiddenMethods( [ 'loadComponents' ] );
-        $this->exceptionCatcher = new ExceptionCatcher();
+        $this->setExceptionCatcher( new ExceptionCatcher() );
 
         $textDomain = $this->info()->getTextDomain();
         $domainPath = $this->info()->getDomainPath();
 
-        $this->hooks  = new Hooks( $this );
-        $this->assets = new Assets( $this );
+        $this->hooks        = new Hooks( $this );
+        $this->assets       = new Assets( $this );
+        $this->adminNotices = new AdminNotices( $this );
 
         if ( ! empty( $textDomain ) && ! empty( $domainPath ) ) {
             $this->loadTextdomain( $textDomain, $domainPath );
@@ -224,6 +234,18 @@ abstract class Plugin
         if( ! load_plugin_textdomain( $textDomain, false, $domainPath ) ) {
             throw new Exception( sprintf( 'Textdomain %s file not found in %s.', $textDomain, $domainPath ) );
         }
+    }
+
+    /**
+     * Admin notices.
+     * 
+     * @return AdminNotices AdminNotices object.
+     * 
+     * @since 1.0.0
+     */
+    public function adminNotices() : AdminNotices
+    {
+        return $this->adminNotices;
     }
 
     /**

@@ -17,7 +17,7 @@ use AWSM\LibWP\WP\Hooks\Hooks;
  * @since 1.0.0
  */
 class AdminNotices {
-    use HookableTrait, SingletonTrait;
+    use HookableTrait, PluginTrait;
 
     /**
      * True if admin notices are already hooked into WP.
@@ -42,9 +42,10 @@ class AdminNotices {
      * 
      * @since 1.0.0
      */
-    protected function __construct()
+    protected function __construct( Plugin $plugin )
     {
         $this->setHookableHiddenMethods( ['showNotices', 'showNotice'] );
+        $this->plugin = $plugin;
     }
 
     /**
@@ -62,7 +63,7 @@ class AdminNotices {
         $this->notices[] = [ 'message' => $message, 'type' => $type ];
 
         if ( ! $this->hooked ) {
-            Hooks::instance()->add( new Action( 'admin_notices', [ $this, 'showNotices'] ) )->load( $this );
+            $this->plugin()->hooks()->add( new Action( 'admin_notices', [ $this, 'showNotices'] ) )->load( $this );
         }
 
         $this->hooked = true;

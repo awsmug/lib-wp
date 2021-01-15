@@ -3,8 +3,9 @@
 namespace AWSM\LibWP\WP;
 
 use AWSM\LibTools\Callbacks\CallerDetective;
-use AWSM\LibWP\WP\Core\AdminNotices;
 use AWSM\LibWP\WP\Core\Location;
+use AWSM\LibWP\WP\Core\Plugin;
+use AWSM\LibWP\WP\Core\PluginTrait;
 
 /**
  * Exception catcher.
@@ -14,6 +15,19 @@ use AWSM\LibWP\WP\Core\Location;
  * @since 1.0.0
  */
 class ExceptionCatcher implements ExceptionCatcherInterface {
+    use PluginTrait;
+
+    /**
+     * Constructor.
+     * 
+     * @param Plugin $plugin Plugin object.
+     * 
+     * @since 1.0.0
+     */
+    public function __construct( Plugin $plugin ) {
+        $this->plugin = $plugin;
+    }
+
     /**
      * Catching error.
      * 
@@ -25,7 +39,7 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
         $message = sprintf( 'Error: %s (%s)', $message, self::exceptionLocation() );
 
         if( Location::admin() ) {
-            AdminNotices::instance()->add( $message, 'error' );
+            $this->plugin()->adminNotices()->add( $message, 'error' );
         }
     }
 
@@ -40,7 +54,7 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
         $message = sprintf( 'Warning: %s (%s)', $message, self::exceptionLocation() );
 
         if( Location::admin() ) {
-            AdminNotices::instance()->add( $message, 'warning' );
+            $this->plugin()->adminNotices()->add( $message, 'warning' );
         }
     }
 
@@ -55,7 +69,7 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
         $message = sprintf( 'Notice: %s (%s)', $message, self::exceptionLocation() );
 
         if( Location::admin() ) {
-            AdminNotices::instance()->add( $message, 'notice' );
+            $this->plugin()->adminNotices()->add( $message, 'notice' );
         }
     }
 
@@ -70,7 +84,7 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
         $message = sprintf( 'Info: %s (%s)', $message, self::exceptionLocation() );
 
         if( Location::admin() ) {
-            AdminNotices::instance()->add( $message, 'info' );
+            $this->plugin()->adminNotices()->add( $message, 'info' );
         }
     }
 

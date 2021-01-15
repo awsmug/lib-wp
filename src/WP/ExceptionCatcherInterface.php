@@ -2,9 +2,7 @@
 
 namespace AWSM\LibWP\WP;
 
-use AWSM\LibTools\Callbacks\CallerDetective;
-use AWSM\LibWP\WP\Core\AdminNotices;
-use AWSM\LibWP\WP\Core\Location;
+use AWSM\LibWP\WP\Core\Plugin;
 
 /**
  * Exception catcher.
@@ -14,6 +12,15 @@ use AWSM\LibWP\WP\Core\Location;
  * @since 1.0.0
  */
 interface ExceptionCatcherInterface {
+    /**
+     * Constructor.
+     * 
+     * @param Plugin $plugin Plugin object.
+     * 
+     * @since 1.0.0
+     */
+    public function __construct( Plugin $plugin );
+
     /**
      * Catching error.
      * 
