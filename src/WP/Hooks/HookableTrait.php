@@ -15,8 +15,6 @@ use Exception;
  * @since 1.0.0
  */
 trait HookableTrait {
-    use PluginTrait;
-
     /**
 	 * Hookable hidden methods.
 	 *
@@ -35,6 +33,18 @@ trait HookableTrait {
 	 */
 	protected function setHookableHiddenMethods( array $methods  ) {
 		$this->hookableHiddenMethods = $methods;
+    }
+
+    /**
+     * Check if is Hookable hidden method.
+     * 
+     * @param  string $methodName Method name.
+     * @return bool   True if method is a hookable hidden method.
+     * 
+     * @since 1.0.0
+     */
+    protected function isHookableHiddenMethod( string $methodName ) {
+        return in_array( $methodName, $this->hookableHiddenMethods );
     }
     
 	/**
@@ -58,7 +68,11 @@ trait HookableTrait {
         $reflectMethod = new \ReflectionMethod( $className , $methodName );
         
         try {
-            if ( $reflectMethod->isPrivate() && ! in_array( $methodName, $this->hookableHiddenMethods ) ) {
+            if ( ! in_array( PluginTrait::class, array_keys( ( new \ReflectionClass( get_called_class() ) )->getTraits() ) ) ) {
+                trigger_error( sprintf( 'Missing PluginTrait functions in class "%s".', get_called_class() ), E_USER_ERROR );
+            }
+
+            if ( $reflectMethod->isPrivate() && ! $this->isHookableHiddenMethod( $methodName ) ) {
                 throw new Exception( sprintf( 'Can\'t call method "%s". Called method %s is private and not set hookable. Set it hookable via setHookableHiddenMethods method in class "%s".', $className . '::' . $methodName, $className ) );
             }
 
@@ -76,7 +90,7 @@ trait HookableTrait {
                 return call_user_func( [ $class, $methodName ] );
             }
 
-        } catch ( Exception $e ) {      
+        } catch ( Exception $e ) {    
             $this->plugin()->exceptionCatcher()->error( sprintf( 'Error executing call %s: %s', $className . '::' . $methodName, $e->getMessage() ) );
         }
 	}
