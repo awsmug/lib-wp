@@ -158,7 +158,7 @@ class PluginInfo {
      */
     public function getTemplatePath() : string
     {
-        return trainlingslashit( $this->pluginData['TemplatePath'] );
+        return trailingslashit( $this->pluginData['TemplatePath'] );
     }
 
     /**
