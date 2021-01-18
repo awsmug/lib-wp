@@ -42,7 +42,7 @@ class Location {
 	 * @since 1.0.0
 	 */
 	public static function frontend() {
-		return ! self::admin() && ! self::ajax();
+		return ! self::admin() && ! self::ajax() ? true : false;
 	}
 
 	/**

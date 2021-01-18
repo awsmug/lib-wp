@@ -189,7 +189,13 @@ class Assets
             throw new Exception( 'Callback is not callable %s.', printf( $callback, true ) );
         }
 
-        if( call_user_func_array( $callback, $args ) ) {
+        if ( is_array( $args ) ) {
+            $value = call_user_func_array( $callback, $args );    
+        } else {
+            $value = call_user_func( $callback );
+        }        
+
+        if ( $value === true ) {
             return true;
         }
 
