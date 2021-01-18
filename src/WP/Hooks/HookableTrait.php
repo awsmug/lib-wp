@@ -57,12 +57,12 @@ trait HookableTrait {
         $methodName  = substr( $name, 7, strlen( $name ) );
 
         $reflectMethod = new \ReflectionMethod( $className , $methodName );
-
-        if ( $reflectMethod->isPrivate() && ! in_array( $methodName, $this->hookableHiddenMethods ) ) {
-			return;
-		}
         
         try {
+            if ( $reflectMethod->isPrivate() && ! in_array( $methodName, $this->hookableHiddenMethods ) ) {
+                throw new Exception( 'Can\'t call method "%s". Called method %s is private and not set hookable. Set it hookable via setHookableHiddenMethods method.' );
+            }
+
             if( $reflectMethod->isStatic() ) {
                 return call_user_func_array( [ $className, $methodName ], $args  );
             } else {
