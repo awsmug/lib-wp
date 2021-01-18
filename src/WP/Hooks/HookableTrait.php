@@ -2,10 +2,12 @@
 
 namespace AWSM\LibWP\WP\Hooks;
 
+use ReflectionClass;
+
+use AWSM\LibWP\WP\Exception;
+
 use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\WP\Core\PluginTrait;
-use Exception;
-use ReflectionClass;
 
 /**
  * Trait HookableTrait.
@@ -69,7 +71,7 @@ trait HookableTrait {
 
         try {
             if ( ! $this->isPluginClassInstance() && ! $this->isUsingPluginTrait() ) {
-                trigger_error( sprintf( '"%s" must use PluginTrait.', $className ), E_USER_ERROR );
+                trigger_error( sprintf( '"%s" must use "%s".', $className, PluginTrait::class ), E_USER_ERROR );
             }
 
             $reflectMethod = new \ReflectionMethod( $className , $methodName );
@@ -120,6 +122,6 @@ trait HookableTrait {
      * @since 1.0.0
      */  
     private function isUsingPluginTrait() {
-        return in_array( 'PluginTrait', ( new ReflectionClass( $this ) )->getTraits() );
+        return in_array( PluginTrait::class, ( new ReflectionClass( $this ) )->getTraits() );
     }
 }
