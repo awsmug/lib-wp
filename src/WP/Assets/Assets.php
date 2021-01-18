@@ -5,6 +5,7 @@ namespace AWSM\LibWP\WP\Assets;
 use AWSM\LibWP\WP\Assets\Asset AS Asset;
 use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\WP\Core\PluginTrait;
+use AWSM\LibWP\WP\Exception;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\HookableTrait;
 
@@ -184,10 +185,14 @@ class Assets
         $callback = array_slice( $callbackArgs, 0,1 );
         $args = array_slice( $callbackArgs, 1 );
 
-        if( is_callable( $callback ) && ! call_user_func_array( $callback, $args ) ) {
-            return false;
+        if ( ! is_callable( $callback ) ) {
+            throw new Exception( 'Callback is not callable %s.', printf( $callback, true ) );
         }
 
-        return true;
+        if( call_user_func_array( $callback, $args ) ) {
+            return true;
+        }
+
+        return false;
     }
 }
