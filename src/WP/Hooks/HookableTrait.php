@@ -62,14 +62,10 @@ trait HookableTrait {
             return;
         }
 
-        $className = get_called_class();
-        $methodName  = substr( $name, 7, strlen( $name ) );       
+        $className   = get_called_class();
+        $methodName  = substr( $name, 7, strlen( $name ) );
         
         try {
-            if ( ! in_array( PluginTrait::class, array_keys( ( new \ReflectionClass( get_called_class() ) )->getTraits() ) ) ) {
-                trigger_error( sprintf( 'Missing PluginTrait in class "%s".', get_called_class() ), E_USER_ERROR );
-            }
-
             $reflectMethod = new \ReflectionMethod( $className , $methodName );
 
             if ( $reflectMethod->isPrivate() && ! $this->isHookableHiddenMethod( $methodName ) ) {
