@@ -187,7 +187,7 @@ abstract class Plugin
      * 
      * @since 1.0.0
      */
-    public function loadTemplate( string $templateFile, array $variables ) {
+    public function loadTemplate( string $templateFile, array $variables = [] ) {
         $templateFileInTheme = get_called_class() . '/' . $templateFile;
         $templateLocation    = locate_template( $templateFileInTheme );
 
