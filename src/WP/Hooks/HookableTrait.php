@@ -60,7 +60,7 @@ trait HookableTrait {
         
         try {
             if ( $reflectMethod->isPrivate() && ! in_array( $methodName, $this->hookableHiddenMethods ) ) {
-                throw new Exception( 'Can\'t call method "%s". Called method %s is private and not set hookable. Set it hookable via setHookableHiddenMethods method.' );
+                throw new Exception( sprintf( 'Can\'t call method "%s". Called method %s is private and not set hookable. Set it hookable via setHookableHiddenMethods method in class "%s".', $methodName, $className ) );
             }
 
             if( $reflectMethod->isStatic() ) {
