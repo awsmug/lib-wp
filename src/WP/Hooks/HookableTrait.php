@@ -2,8 +2,10 @@
 
 namespace AWSM\LibWP\WP\Hooks;
 
+use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\WP\Core\PluginTrait;
 use Exception;
+use ReflectionClass;
 
 /**
  * Trait HookableTrait.
@@ -64,8 +66,12 @@ trait HookableTrait {
 
         $className   = get_called_class();
         $methodName  = substr( $name, 7, strlen( $name ) );
-        
+
         try {
+            if ( ! $this->isPluginClassInstance() && ! $this->isUsingPluginTrait() ) {
+                trigger_error( sprintf( '"%s" must use PluginTrait.', $className ), E_USER_ERROR );
+            }
+
             $reflectMethod = new \ReflectionMethod( $className , $methodName );
 
             if ( $reflectMethod->isPrivate() && ! $this->isHookableHiddenMethod( $methodName ) ) {
@@ -86,8 +92,34 @@ trait HookableTrait {
                 return call_user_func( [ $class, $methodName ] );
             }
 
-        } catch ( Exception $e ) {    
-            $this->plugin()->exceptionCatcher()->error( sprintf( 'Error executing call %s: %s', $className . '::' . $methodName, $e->getMessage() ) );
+        } catch ( Exception $e ) {
+            if ( get_parent_class( $this ) === Plugin::class ) { // Plugin class calls exceptionCatcher function internal.
+                $this->exceptionCatcher()->error( sprintf( 'Error executing call %s: %s', $className . '::' . $methodName, $e->getMessage() ) );
+            } else { // Anywhere else.
+                $this->plugin()->exceptionCatcher()->error( sprintf( 'Error executing call %s: %s', $className . '::' . $methodName, $e->getMessage() ) );
+            }            
         }
-	}
+    }
+    
+    /**
+     * Checks if trait runs in a plugin class instance.
+     * 
+     * @return bool True if is running in plugin class instance, false if not.
+     * 
+     * @since 1.0.0
+     */
+    private function isPluginClassInstance() {
+        return get_parent_class( $this ) === Plugin::class;
+    }
+
+    /**
+     * Checks if instance uses plugin trait.
+     * 
+     * @return bool True if instance uses plugin trait, false if not.
+     * 
+     * @since 1.0.0
+     */  
+    private function isUsingPluginTrait() {
+        return in_array( 'PluginTrait', ( new ReflectionClass( $this ) )->getTraits() );
+    }
 }
