@@ -75,11 +75,10 @@ trait HookableTrait {
             } else {
                 if( $hasArgs ) {
                     $this->$methodName = $args;
-                    $this->$methodName();
+                    return $this->$methodName();
                 } else {
-                    $this->$methodName();
+                    return $this->$methodName();
                 }
-                return call_user_func_array( [ $this, $methodName ], $args  );
             }            
         } catch ( Exception $e ) {      
             $this->plugin()->exceptionCatcher()->error( sprintf( 'Error executing call %s: %s', $className . '::' . $methodName, $e->getMessage() ) );
