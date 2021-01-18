@@ -122,6 +122,6 @@ trait HookableTrait {
      * @since 1.0.0
      */  
     private function isUsingPluginTrait() {
-        return in_array( PluginTrait::class, ( new ReflectionClass( $this ) )->getTraits() );
+        return in_array( PluginTrait::class, ( new ReflectionClass( $this ) )->getTraitNames() );
     }
 }
