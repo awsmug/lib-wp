@@ -182,8 +182,8 @@ class Assets
      */
     private function isEnqueueAllowed( array $callbackArgs ) : bool 
     {
-        $callback = array_slice( $callbackArgs, 0,1 );
-        $args = array_slice( $callbackArgs, 1 );
+        $callback = $callbackArgs[0];
+        $args     = $callbackArgs[1];
 
         if ( ! is_callable( $callback ) ) {
             throw new Exception( 'Callback is not callable %s.', printf( $callback, true ) );
