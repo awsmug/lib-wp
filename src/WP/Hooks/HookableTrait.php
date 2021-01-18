@@ -60,7 +60,7 @@ trait HookableTrait {
         
         try {
             if ( $reflectMethod->isPrivate() && ! in_array( $methodName, $this->hookableHiddenMethods ) ) {
-                throw new Exception( sprintf( 'Can\'t call method "%s". Called method %s is private and not set hookable. Set it hookable via setHookableHiddenMethods method in class "%s".', $methodName, $className ) );
+                throw new Exception( sprintf( 'Can\'t call method "%s". Called method %s is private and not set hookable. Set it hookable via setHookableHiddenMethods method in class "%s".', $className . '::' . $methodName, $className ) );
             }
 
             if( $reflectMethod->isStatic() ) {
@@ -69,7 +69,7 @@ trait HookableTrait {
                 return call_user_func_array( [ $this, $methodName ], $args  );
             }            
         } catch ( Exception $e ) {      
-            $this->plugin()->exceptionCatcher()->error( sprintf( 'Error executing call %s: %s', $methodName, $e->getMessage() ) );
+            $this->plugin()->exceptionCatcher()->error( sprintf( 'Error executing call %s: %s', $className . '::' . $methodName, $e->getMessage() ) );
         }
 	}
 }
