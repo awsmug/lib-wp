@@ -25,7 +25,7 @@ trait HookableTrait {
 	 *
 	 * since 1.0.0
 	 */
-	private $hookableHiddenMethods;
+	private $hookableHiddenMethods = [];
 
 	/**
 	 * Set hookable hidden methods.
