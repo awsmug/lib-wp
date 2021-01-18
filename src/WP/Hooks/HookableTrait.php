@@ -63,7 +63,7 @@ trait HookableTrait {
                 throw new Exception( sprintf( 'Can\'t call method "%s". Called method %s is private and not set hookable. Set it hookable via setHookableHiddenMethods method in class "%s".', $className . '::' . $methodName, $className ) );
             }
 
-            $hasArgs = count( $args ) === 0;
+            $hasArgs = ! count( $args ) === 0;
 
             if( $reflectMethod->isStatic() ) {
                 return call_user_func_array( [ $className, $methodName ], $args  );
