@@ -2,7 +2,6 @@
 
 namespace AWSM\LibWP\WP;
 
-use AWSM\LibTools\Callbacks\CallerDetective;
 use AWSM\LibWP\WP\Core\Location;
 use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\WP\Core\PluginTrait;
