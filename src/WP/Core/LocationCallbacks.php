@@ -20,7 +20,7 @@ class LocationCallbacks {
 	 * @since 1.0.0
 	 */
 	public static function admin() : array {
-		return [ ['Location', 'admin' ] ];
+		return [ [ Location::class, 'admin' ] ];
 	}
 
 	/**
@@ -31,7 +31,7 @@ class LocationCallbacks {
 	 * @since 1.0.0
 	 */
 	public static function ajax() : array {
-		return [ ['Location', 'ajax' ] ];
+		return [ [ Location::class, 'ajax' ] ];
 	}
 
 	/**
@@ -42,7 +42,7 @@ class LocationCallbacks {
 	 * @since 1.0.0
 	 */
 	public static function frontend() : array {
-		return [ ['Location', 'frontend' ] ];
+		return [ [ Location::class, 'frontend' ] ];
 	}
 
 	/**
@@ -53,7 +53,7 @@ class LocationCallbacks {
 	 * @since 1.0.0
 	 */
 	public static function home() : array {
-		return [ ['Location', 'home' ] ];
+		return [ [ Location::class, 'home' ] ];
 	}
 
 	/**
@@ -64,7 +64,7 @@ class LocationCallbacks {
 	 * @since 1.0.0
 	 */
 	public static function page() : array {
-		return [ ['Location', 'page' ] ];
+		return [ [ Location::class, 'page' ] ];
     }
 
 	/**
@@ -75,7 +75,7 @@ class LocationCallbacks {
 	 * @since 1.0.0
 	 */
 	public static function single() : array {
-		return [ [ 'Location', 'single' ] ];
+		return [ [ Location::class, 'single' ] ];
     }
     
     /**
@@ -87,7 +87,7 @@ class LocationCallbacks {
 	 * @since 1.0.0
 	 */
 	public static function postId( int $postId ) : bool {
-		return [ [ 'Location', 'postId' ], $postId ];
+		return [ [ Location::class, 'postId' ], $postId ];
     }
 
 	/**
@@ -98,7 +98,7 @@ class LocationCallbacks {
 	 * @since 1.0.0
 	 */
 	public static function blogHome() : array {
-		return [ [ 'Location', 'blogHome' ] ];
+		return [ [ Location::class, 'blogHome' ] ];
 	}
 
 	/**
@@ -109,7 +109,7 @@ class LocationCallbacks {
 	 * @since 1.0.0
 	 */
 	public static function blogPost() : array {
-		return [ [ 'Location', 'blogPost' ] ];
+		return [ [ Location::class, 'blogPost' ] ];
     }
     
     /**
@@ -120,6 +120,6 @@ class LocationCallbacks {
 	 * @since 1.0.0
 	 */
 	public static function postType( string $postType ) : array {
-		return [ [ 'Location', 'postId' ], $postType ];
+		return [ [ Location::class, 'postId' ], $postType ];
 	}
 }
