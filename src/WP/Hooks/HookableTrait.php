@@ -49,7 +49,7 @@ trait HookableTrait {
 	 * @since 1.0.0
 	 */
 	public function __call( $name, $args ) {
-        if( ! substr( $name, 0, 7 ) === '__hook_' ) {
+        if( substr( $name, 0, 7 ) !== '__hook_' ) {
             return;
         }
 
