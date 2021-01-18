@@ -3,7 +3,6 @@
 namespace AWSM\LibWP\WP\Hooks;
 
 use AWSM\LibWP\WP\Core\PluginTrait;
-use AWSM\LibWP\WP\ExceptionCatcher;
 use Exception;
 
 /**

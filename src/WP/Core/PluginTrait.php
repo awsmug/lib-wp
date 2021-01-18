@@ -14,7 +14,7 @@ trait PluginTrait
      * 
      * @var Plugin
      */
-    protected $plugin;
+    private $plugin;
 
     /**
      * Plugin access.
