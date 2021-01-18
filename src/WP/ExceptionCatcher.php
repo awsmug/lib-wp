@@ -40,6 +40,8 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
 
         if( Location::admin() ) {
             $this->plugin()->adminNotices()->add( $message, 'error' );
+        } else {
+            wp_die( $message );
         }
     }
 
@@ -55,6 +57,8 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
 
         if( Location::admin() ) {
             $this->plugin()->adminNotices()->add( $message, 'warning' );
+        } else {
+            wp_die( $message );
         }
     }
 
@@ -70,6 +74,8 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
 
         if( Location::admin() ) {
             $this->plugin()->adminNotices()->add( $message, 'notice' );
+        } else {
+            wp_die( $message );
         }
     }
 
@@ -85,6 +91,8 @@ class ExceptionCatcher implements ExceptionCatcherInterface {
 
         if( Location::admin() ) {
             $this->plugin()->adminNotices()->add( $message, 'info' );
+        } else {
+            wp_die( $message );
         }
     }
 
