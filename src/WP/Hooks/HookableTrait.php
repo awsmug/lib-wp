@@ -65,21 +65,18 @@ trait HookableTrait {
 
             $hasArgs = ! count( $args ) === 0;
 
-            if( $reflectMethod->isStatic() ) {
-                return call_user_func_array( [ $className, $methodName ], $args  );
-                if( $hasArgs ) {
-                    return call_user_func_array( [ $className, $methodName ], $args  );
-                } else {
-                    return call_user_func( [ $className, $methodName ] );
-                }
+            if ( $reflectMethod->isStatic() ) {
+                $class = $className;
             } else {
-                if( $hasArgs ) {
-                    $this->$methodName = $args;
-                    return $this->$methodName();
-                } else {
-                    return $this->$methodName();
-                }
-            }            
+                $class = $this;
+            }
+
+            if ( $hasArgs ) {
+                return call_user_func_array( [ $class, $methodName ], $args  );
+            } else {
+                return call_user_func( [ $class, $methodName ] );
+            }
+
         } catch ( Exception $e ) {      
             $this->plugin()->exceptionCatcher()->error( sprintf( 'Error executing call %s: %s', $className . '::' . $methodName, $e->getMessage() ) );
         }
