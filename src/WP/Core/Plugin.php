@@ -184,15 +184,22 @@ abstract class Plugin
      * 
      * @param string $templateFile Template file relative to the given template path. First lookup is made in theme directory, second in plugin dirctory template path.
      * @param array  $variables    Variable array to pass to template.
+     * @param bool   $return       True returns the content, false directly loads the content. False is default.
      * 
      * @since 1.0.0
      */
-    public function loadTemplate( string $templateFile, array $variables = [] ) {
+    public function loadTemplate( string $templateFile, array $variables = [], bool $return = false ) {
         $templateFileInTheme = get_called_class() . '/' . $templateFile;
         $templateLocation    = locate_template( $templateFileInTheme );
 
         if ( empty ( $templateLocation ) ) {
             $templateLocation = $this->info()->getPath() . $this->info()->getTemplatePath() . $templateFile;
+        }
+
+        if ( $return ) {
+            ob_start();
+            require( $templateLocation );
+            return ob_get_clean();    
         }
 
         require( $templateLocation );
