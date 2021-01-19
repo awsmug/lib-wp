@@ -242,4 +242,16 @@ class PluginInfo {
     public function getPath() {
         return dirname( $this->pluginFile->path() );
     }
+
+    /**
+     * Get plugin url.
+     * 
+     * @return string Plugin url.
+     * 
+     * @since 1.0.0
+     */
+    public function getUrl(): string
+    {
+        return WP_CONTENT_URL . substr( $this->getPath(), strlen( WP_CONTENT_DIR ), strlen( $this->getPath() ));
+    }
 }
