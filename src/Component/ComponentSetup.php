@@ -58,27 +58,48 @@ class ComponentSetup {
 
         $this->dir = $dir;
         
-        if( ! empty( $hooksFile ) ) 
-        {
-            $this->hooksFile = $this->dir . '/' . $hooksFile;
-        } else {
+        $this->setAssetsFile( $assetsFile );
+        $this->setHooksFile( $hooksFile );
+    }
+
+    /**
+     * Set hooks file.
+     * 
+     * @param string $hooksFile Hooks file.
+     * 
+     * @since 1.0.0
+     */
+    private function setHooksFile( $hooksFile ) {
+        if( empty( $hooksFile ) ) {
             $this->hooksFile = $this->dir . '/Hooks.php';
+            return;
         }
 
-        if( ! file_exists( $this->hooksFile ) ) {
+        if( ! file_exists( $hooksFile ) ) {
             throw new ComponentException( sprintf( 'Hook file "%s" does not exist', $this->hooksFile ) );
         }
 
-        if( ! empty( $assetsFile ) ) 
-        {
-            $this->assetsFile = $this->dir . '/' . $assetsFile;
-        } else {
+        $this->hooksFile = $hooksFile;
+    }
+
+    /**
+     * Set assets file.
+     * 
+     * @param string $assetsFile Assets file.
+     * 
+     * @since 1.0.0
+     */
+    private function setAssetsFile( $assetsFile ) {
+        if( empty( $assetsFile ) ) {
             $this->assetsFile = $this->dir . '/Assets.php';
+            return;
         }
 
-        if( ! file_exists( $this->assetsFile ) ) {
-            throw new ComponentException( sprintf( 'Assets file "%s" does not exist', $this->assetsFile ) );
+        if( ! file_exists( $assetsFile ) ) {
+            throw new ComponentException( sprintf( 'Assets file "%s" does not exist', $assetsFile) );
         }
+
+        $this->hooksFile = $assetsFile;
     }
 
     /**
