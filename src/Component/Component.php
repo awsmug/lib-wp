@@ -81,13 +81,11 @@ abstract class Component implements ComponentInterface
         }
         
         if( file_exists( $this->setup->getHooksFile() ) ) {
-            PhpFile::use( $this->setup->getHooksFile() )->run( [ 'plugin' => $this->plugin() ]  );
+            PhpFile::use( $this->setup->getHooksFile() )->run( [ 'component' => $this ]  );
         }
 
         if( file_exists( $this->setup->getAssetsFile() ) ) {
-            PhpFile::use( $this->setup->getAssetsFile() )->run( [ 'plugin' => $this->plugin() ] );
+            PhpFile::use( $this->setup->getAssetsFile() )->run( [ 'component' => $this ] );
         }
-
-        $this->plugin()->hooks()->load( $this );
     }
 }

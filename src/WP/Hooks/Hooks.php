@@ -87,37 +87,9 @@ class Hooks
 
         $this->hooks[] = $hook;
 
+        $this->loadHook( $hook );
+
         return $this;
-    }
-
-    /**
-     * Load Hooks of an object.
-     * 
-     * Needs to be executed in class which contains hooks to add.
-     * 
-     * @param object Referenced object.
-     * 
-     * @since 1.0.0
-     */
-    public function load( object $object ) 
-    {
-        $this->loadHooks( $object );
-    }
-
-    /**
-     * Loading all hooks of an object.
-     * 
-     * @param object Referenced object.
-     * 
-     * @since 1.0.0
-     */
-    private function loadHooks( object $object ) 
-    {
-        foreach( $this->hooks AS $i => $hook ) {
-            if( $this->loadHook( $hook , $object ) ) {
-                unset( $this->hooks[ $i ] ); // Load hook only once and remove it after successful load.
-            }
-        }
     }
 
     /**
@@ -130,25 +102,10 @@ class Hooks
      * 
      * @since 1.0.0
      */
-    private function loadHook( Hook $hook, object $object ) 
+    private function loadHook( Hook $hook ) 
     {
-        // Only execute on same object/class
-        if ( get_class( $object ) !== $hook->getCallbackClass() ) {
-            return false;
-        }
-
-        $reflectionMethod = new \ReflectionMethod( $hook->getCallbackClass(), $hook->getCallbackMethod() );
-
-        // If method is not static take object for hook callback.
-        if ( ! $reflectionMethod->isStatic() ) {
-            $callbackInstance = $object; 
-        } else {
-            $callbackInstance = $hook->getCallbackClass(); 
-        }
-
-        $hookMethod     = 'add_' . $hook->getType();
-        $callBackMethod = '__hook_' . $hook->getCallbackMethod();
-        $hookArgs       = array_merge( [ $hook->getTag() ], [ [ $callbackInstance, $callBackMethod ] ], $hook->getArgs() );
+        $hookMethod = 'add_' . $hook->getType();
+        $hookArgs   = array_merge( [ $hook->getTag() ], $hook->getCallback(), $hook->getArgs() );
 
         call_user_func_array( $hookMethod, $hookArgs );
 
