@@ -2,6 +2,7 @@
 
 namespace AWSM\LibWP\WP\Core;
 
+use AWSM\LibWP\Component\Component;
 use AWSM\LibWP\WP\Assets\Assets;
 use AWSM\LibWP\WP\Exception;
 use AWSM\LibWP\WP\ExceptionCatcher;
@@ -9,6 +10,7 @@ use AWSM\LibWP\WP\ExceptionCatcherInterface;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\HookableTrait;
 use AWSM\LibWP\WP\Hooks\Hooks;
+use ReflectionClass;
 
 /**
  * Abstract Plugin class.
@@ -140,7 +142,6 @@ abstract class Plugin
      */
     private function init() 
     {
-        $this->setHookableHiddenMethods( [ 'loadComponents' ] );
         $this->setExceptionCatcher( ExceptionCatcher::class );
 
         $textDomain = $this->info()->getTextDomain();
@@ -270,40 +271,15 @@ abstract class Plugin
             throw new CoreException( sprintf( 'Class %s does not exist.', $className ) );
         }
 
-        $this->components[] = $className;
-        $this->enqueueComponents();
+        $reflector = new ReflectionClass( $className );
+
+        if ( $reflector->getParentClass()->getName() !== Component::class ) {
+            throw new CoreException( sprintf( 'Class "%s" must be child of "%s"', $className, Component::class ) );
+        }
+
+        $this->components[ $className ] = new $className( $this );
+        $this->components[ $className ]->init();
 
         return $this;
     }
-
-    /**
-     * Enqueue components for loading.
-     * 
-     * @since 1.0.0 
-     */
-    private function enqueueComponents() 
-    {
-        if ( $this->enqueuedComponents ) {
-            return;
-        }
-
-        $this->enqueuedComponents = true;
-        
-        $this->hooks()->add( new Action( 'plugins_loaded', [ $this, 'loadComponents' ], 1 ) )->load( $this );
-    }
-
-    /**
-     * Load components. 
-     * 
-     * Will be executed in plugins_loaded on priority 1.
-     * 
-     * @since 1.0.0
-     */
-    private function loadComponents() 
-    {
-        foreach( $this->components AS $component ) {
-            ( new $component( $this ) )->init();
-        }
-    }
 }
-
