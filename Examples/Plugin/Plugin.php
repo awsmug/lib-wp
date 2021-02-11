@@ -16,7 +16,7 @@
 
 namespace AWSM\LibWP\Examples\Plugin;
 
-require '../../../vendor/autoload.php';
+require '../vendor/autoload.php';
 
 use AWSM\LibWP\WP\Exception;
 use AWSM\LibWP\WP\Core\Plugin;
