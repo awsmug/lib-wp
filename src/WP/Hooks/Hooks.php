@@ -107,8 +107,8 @@ class Hooks
         $hookMethod = 'add_' . $hook->getType();
 
         $hookArgs = [
-            '__hook_' . $hook->getTag(),
-            $hook->getCallback(),
+            $hook->getTag(),
+            [ $hook->getCallbackClass(), '__hook_' . $hook->getCallbackMethod() ],
             $hook->getPriority(),
             $hook->getAcceptedArgs()
         ];

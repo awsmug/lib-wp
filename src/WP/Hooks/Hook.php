@@ -63,7 +63,7 @@ abstract class Hook implements HookInterface {
      * 
      * @since 1.0.0
      */
-    public function __construct( string $tag, array $callback, int $priority = 10, $acceptedArgs = 1 )
+    public function __construct( string $tag, array $callback, int $priority = 10, int $acceptedArgs = 1 )
     {
         $this->tag           = $tag;
         $this->callback      = $callback;
@@ -165,6 +165,6 @@ abstract class Hook implements HookInterface {
      * @since 1.0.0
      */
     public function getAcceptedArgs() : int {
-        return $this->priority;
+        return $this->acceptedArgs;
     }
 }
