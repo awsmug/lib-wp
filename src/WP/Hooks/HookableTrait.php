@@ -2,13 +2,9 @@
 
 namespace AWSM\LibWP\WP\Hooks;
 
-use ReflectionClass;
-
 use AWSM\LibWP\WP\Exception;
 
 use AWSM\LibWP\WP\Core\Plugin;
-use AWSM\LibWP\WP\Core\PluginTrait;
-use ReflectionMethod;
 
 /**
  * Trait HookableTrait.
