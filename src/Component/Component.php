@@ -37,6 +37,7 @@ abstract class Component implements ComponentInterface
     public function __construct( Plugin $plugin )
     {
         $this->plugin = $plugin;
+        $this->init();
     }
 
     /**

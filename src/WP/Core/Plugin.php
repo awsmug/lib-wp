@@ -34,7 +34,7 @@ abstract class Plugin
     /**
      * Components
      * 
-     * @var array List of component class names.
+     * @var array|Component[] List of component class names or Components after initialization.
      * 
      * @since 1.0.0
      */
@@ -152,9 +152,10 @@ abstract class Plugin
     private function loadComponents() 
     {
         foreach( $this->components AS $index => $component ) {
+            $componentName = $component;
+
             try {
                 unset ( $this->components[ $index ] );
-                $componentName = $component;
                 $this->components[ $componentName ] = $this->loadComponent( $component );
             } catch ( Exception $e ) {
                 $this->exceptionCatcher()->error( sprintf( 'Failed to run Plugin: %s', $e->getMessage() ) );
