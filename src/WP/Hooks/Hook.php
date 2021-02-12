@@ -2,6 +2,8 @@
 
 namespace AWSM\LibWP\WP\Hooks;
 
+use stdClass;
+
 /**
  * WordPress Hooks
  * 
@@ -113,7 +115,7 @@ abstract class Hook implements HookInterface {
      * 
      * @since 1.0.0
      */
-    public function getCallbackClass() : string
+    public function getCallbackClass() : stdClass
     {
         return $this->callback[0];
     }

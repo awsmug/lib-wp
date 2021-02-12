@@ -2,6 +2,8 @@
 
 namespace AWSM\LibWP\WP\Hooks;
 
+use stdClass;
+
 /**
  * Class Hook.
  * 
@@ -33,7 +35,7 @@ interface HookInterface {
      * 
      * @since 1.0.0
      */
-    public function getCallbackClass() : string;
+    public function getCallbackClass() : stdClass;
 
     /**
      * Get callback method
