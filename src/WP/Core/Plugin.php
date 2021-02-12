@@ -126,7 +126,7 @@ abstract class Plugin
      */
     private function init() 
     {
-        if( empty( $this->exceptionCatcher() ) ) {
+        if( empty( $this->exceptionCatcher ) ) {
             $this->setExceptionCatcher( ExceptionCatcher::class );
         } else {
             $this->setExceptionCatcher( $this->exceptionCatcher );
