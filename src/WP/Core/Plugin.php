@@ -33,11 +33,20 @@ abstract class Plugin
     /**
      * Components
      * 
-     * @var array|Component[] List of component class names or Components after initialization.
+     * @var array List of component class names which have to be loaded
      * 
      * @since 1.0.0
      */
     protected $components;
+
+    /**
+     * Components
+     * 
+     * @var Component[] List of component which have been loaded.
+     * 
+     * @since 1.0.0
+     */
+    protected $loadedComponents;
 
     /**
      * Plugin information.
@@ -102,6 +111,10 @@ abstract class Plugin
             $calledClass = get_called_class();
             self::$instance = new $calledClass();
         }
+
+        if( empty( self::$instance->loadedComponents ) ) {
+            self::$instance->loadComponents();
+        }
     
         return self::$instance;
     }
@@ -114,7 +127,6 @@ abstract class Plugin
     private function __construct()
     {
         $this->init();
-        $this->loadComponents();
     }
 
     /**
@@ -182,7 +194,10 @@ abstract class Plugin
             throw new CoreException( sprintf( 'Class "%s" must be child of "%s"', $className, Component::class ) );
         }
 
-        return new $className( $this );
+        $component = new $className( $this );
+        $component->init();
+
+        return $component;
     }
 
     /**
