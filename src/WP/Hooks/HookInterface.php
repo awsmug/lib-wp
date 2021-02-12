@@ -45,11 +45,20 @@ interface HookInterface {
     public function getCallbackMethod() : string;
 
     /**
-     * Get arguments
+     * Get hook priority.
      * 
-     * @var array
+     * @return int Hook priority.
      * 
      * @since 1.0.0
      */
-    public function getArgs() : array;
+    public function getPriority() : int;
+
+    /**
+     * Get number of accepted arguments.
+     * 
+     * @return int Number of accepted arguments.
+     * 
+     * @since 1.0.0
+     */
+    public function getAcceptedArgs() : int;
 }
