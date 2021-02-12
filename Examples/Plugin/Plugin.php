@@ -18,15 +18,15 @@ namespace AWSM\LibWP\Examples\Plugin;
 
 require '../vendor/autoload.php';
 
-use AWSM\LibWP\WP\Exception;
 use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\Examples\Plugin\Components\HelloWorld\HelloWorld;
 
-class MyPlugin extends Plugin {}
-
-try {
-    MyPlugin::instance()
-        ->addComponent( HelloWorld::class );
-} catch ( Exception $e ) {
-    MyPlugin::instance()->exceptionCatcher()->error( sprintf( 'Failed to run Plugin: %s', $e->getMessage() ) );
+class MyPlugin extends Plugin {
+    protected $components = [
+        HelloWorld::class
+    ];
 }
+
+MyPlugin::instance();
+
+

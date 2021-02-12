@@ -10,6 +10,7 @@ use AWSM\LibWP\WP\ExceptionCatcherInterface;
 use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\HookableTrait;
 use AWSM\LibWP\WP\Hooks\Hooks;
+
 use ReflectionClass;
 
 /**
@@ -37,7 +38,14 @@ abstract class Plugin
      * 
      * @since 1.0.0
      */
-    private $components;
+    protected $components;
+
+    /**
+     * Plugin information.
+     * 
+     * @var string|ExceptionCatcherInterface
+     */
+    protected $exceptionCatcher;
 
     /**
      * Hooks object.
@@ -83,13 +91,6 @@ abstract class Plugin
     private $info;
 
     /**
-     * Plugin information.
-     * 
-     * @var ExceptionCatcherInterface
-     */
-    private $exceptionCatcher;
-
-    /**
      * Create an instance of plugin.
      * 
      * @return Plugin Plugin object.
@@ -101,6 +102,7 @@ abstract class Plugin
         if ( self::$instance === null ) {
             $calledClass = get_called_class();
             self::$instance = new $calledClass();
+
         }
     
         return self::$instance;
@@ -112,8 +114,74 @@ abstract class Plugin
      * @since 1.0.0
      */
     private function __construct()
-    {        
+    {
         $this->init();
+        $this->loadComponents();
+    }
+
+    /**
+     * Setting up plugin.
+     * 
+     * @since 1.0.0
+     */
+    private function init() 
+    {
+        if( empty( $this->exceptionCatcher() ) ) {
+            $this->setExceptionCatcher( ExceptionCatcher::class );
+        } else {
+            $this->setExceptionCatcher( $this->exceptionCatcher );
+        }
+
+        $textDomain = $this->info()->getTextDomain();
+        $domainPath = $this->info()->getDomainPath();
+
+        $this->hooks        = new Hooks( $this );
+        $this->assets       = new Assets( $this );
+        $this->adminNotices = new AdminNotices( $this );
+
+        if ( ! empty( $textDomain ) && ! empty( $domainPath ) ) {
+            $this->loadTextdomain( $textDomain, $domainPath );
+        }
+    }
+
+    /**
+     * Load components.
+     * 
+     * @since 1.0.0
+     */
+    private function loadComponents() 
+    {
+        foreach( $this->components AS $index => $component ) {
+            try {
+                $component[ $component ] = $this->loadComponent( $component );
+            } catch ( Exception $e ) {
+                $this->exceptionCatcher()->error( sprintf( 'Failed to run Plugin: %s', $e->getMessage() ) );
+            }
+        }
+    }
+
+    /**
+     * Add component.
+     * 
+     * The components will be added here and loaded at hook plugins_loaded on priority 1.
+     * 
+     * @throws CoreException Class does not exist. 
+     * 
+     * @since 1.0.0
+     */
+    private function loadComponent( string $className ) : Component
+    {
+        if( ! class_exists( $className ) ) {
+            throw new CoreException( sprintf( 'Class %s does not exist.', $className ) );
+        }
+
+        $reflector = new ReflectionClass( $className );
+
+        if ( $reflector->getParentClass()->getName() !== Component::class ) {
+            throw new CoreException( sprintf( 'Class "%s" must be child of "%s"', $className, Component::class ) );
+        }
+
+        return new $className( $this );
     }
 
     /**
@@ -133,27 +201,6 @@ abstract class Plugin
         }
 
         return $this->info;
-    }
-
-    /**
-     * Setting up plugin
-     * 
-     * @since 1.0.0
-     */
-    private function init() 
-    {
-        $this->setExceptionCatcher( ExceptionCatcher::class );
-
-        $textDomain = $this->info()->getTextDomain();
-        $domainPath = $this->info()->getDomainPath();
-
-        $this->hooks        = new Hooks( $this );
-        $this->assets       = new Assets( $this );
-        $this->adminNotices = new AdminNotices( $this );
-
-        if ( ! empty( $textDomain ) && ! empty( $domainPath ) ) {
-            $this->loadTextdomain( $textDomain, $domainPath );
-        }
     }
 
     /**
@@ -189,12 +236,17 @@ abstract class Plugin
      * 
      * @since 1.0.0
      */
-    public function loadTemplate( string $templateFile, array $variables = [], bool $return = false ) {
+    public function loadTemplate( string $templateFile, array $variables = [], bool $return = false ) 
+    {
         $templateFileInTheme = get_called_class() . '/' . $templateFile;
         $templateLocation    = locate_template( $templateFileInTheme );
 
         if ( empty ( $templateLocation ) ) {
             $templateLocation = $this->info()->getPath() . $this->info()->getTemplatePath() . $templateFile;
+        }
+
+        if ( ! file_exists( $templateLocation ) ) {
+            throw new Exception( sprintf( 'Could not load template "%s"', $templateLocation ) );
         }
 
         if ( $return ) {
@@ -254,32 +306,5 @@ abstract class Plugin
     public function adminNotices() : AdminNotices
     {
         return $this->adminNotices;
-    }
-
-    /**
-     * Add component.
-     * 
-     * The components will be added here and loaded at hook plugins_loaded on priority 1.
-     * 
-     * @throws CoreException Class does not exist. 
-     * 
-     * @since 1.0.0
-     */
-    public function addComponent( string $className ) : Plugin
-    {
-        if( ! class_exists( $className ) ) {
-            throw new CoreException( sprintf( 'Class %s does not exist.', $className ) );
-        }
-
-        $reflector = new ReflectionClass( $className );
-
-        if ( $reflector->getParentClass()->getName() !== Component::class ) {
-            throw new CoreException( sprintf( 'Class "%s" must be child of "%s"', $className, Component::class ) );
-        }
-
-        $this->components[ $className ] = new $className( $this );
-        $this->components[ $className ]->init();
-
-        return $this;
     }
 }
