@@ -107,11 +107,11 @@ class Hooks
         $hookMethod = 'add_' . $hook->getType();
 
         $hookArgs = [
-            $hook->getTag(),
+            '__hook_' . $hook->getTag(),
             $hook->getCallback(),
+            $hook->getPriority(),
+            $hook->getAcceptedArgs()
         ];
-
-        $hookArgs = array_merge( $hookArgs, $hook->getArgs() );
 
         call_user_func_array( $hookMethod, $hookArgs );
 

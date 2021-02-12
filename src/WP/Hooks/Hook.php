@@ -147,17 +147,24 @@ abstract class Hook implements HookInterface {
     }
 
     /**
-     * Get arguments
+     * Get hook priority.
      * 
-     * @var array
+     * @return int Hook priority.
      * 
      * @since 1.0.0
      */
-    public final function getArgs() : array 
-    {
-        return [
-            $this->priority,
-            $this->acceptedArgs
-        ];
+    public function getPriority() : int {
+        return $this->priority;
+    }
+
+    /**
+     * Get number of accepted arguments.
+     * 
+     * @return int Number of accepted arguments.
+     * 
+     * @since 1.0.0
+     */
+    public function getAcceptedArgs() : int {
+        return $this->priority;
     }
 }
