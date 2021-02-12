@@ -153,8 +153,9 @@ abstract class Plugin
     {
         foreach( $this->components AS $index => $component ) {
             try {
+                unset ( $this->components[ $index ] );
                 $componentName = $component;
-                $component[ $componentName ] = $this->loadComponent( $component );
+                $this->components[ $componentName ] = $this->loadComponent( $component );
             } catch ( Exception $e ) {
                 $this->exceptionCatcher()->error( sprintf( 'Failed to run Plugin: %s', $e->getMessage() ) );
             }
