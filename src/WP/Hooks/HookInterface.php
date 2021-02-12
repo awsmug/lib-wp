@@ -35,7 +35,7 @@ interface HookInterface {
      * 
      * @since 1.0.0
      */
-    public function getCallbackClass() : stdClass;
+    public function getCallbackClass();
 
     /**
      * Get callback method

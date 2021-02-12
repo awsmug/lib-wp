@@ -115,7 +115,7 @@ abstract class Hook implements HookInterface {
      * 
      * @since 1.0.0
      */
-    public function getCallbackClass() : stdClass
+    public function getCallbackClass()
     {
         return $this->callback[0];
     }
