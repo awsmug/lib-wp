@@ -88,7 +88,7 @@ class Assets
 
         $this->enqueuedAssets = true;
 
-        $this->plugin()->hooks()->add( new Action( 'plugins_loaded', [ $this, 'loadAssets'] ) )->load( $this );
+        $this->plugin()->hooks()->add( new Action( 'plugins_loaded', [ $this, 'loadAssets'] ) );
     }
 
     /**
@@ -109,7 +109,7 @@ class Assets
         {
             if ( array_key_exists( $hookName, $this->assets ) ) 
             {
-                $this->plugin()->hooks()->add( new Action( $hookName, [ $this, $callbackFunction ] ) )->load( $this );
+                $this->plugin()->hooks()->add( new Action( $hookName, [ $this, $callbackFunction ] ) );
             }
         }
     }
