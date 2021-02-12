@@ -105,7 +105,13 @@ class Hooks
     private function loadHook( Hook $hook ) 
     {
         $hookMethod = 'add_' . $hook->getType();
-        $hookArgs   = array_merge( [ $hook->getTag() ], $hook->getCallback(), $hook->getArgs() );
+
+        $hookArgs = [
+            $hook->getTag(),
+            $hook->getCallback(),
+        ];
+
+        $hookArgs = array_merge( $hookArgs, $hook->getArgs() );
 
         call_user_func_array( $hookMethod, $hookArgs );
 
