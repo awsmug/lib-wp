@@ -7,7 +7,6 @@ use AWSM\LibWP\WP\Assets\Assets;
 use AWSM\LibWP\WP\Exception;
 use AWSM\LibWP\WP\ExceptionCatcher;
 use AWSM\LibWP\WP\ExceptionCatcherInterface;
-use AWSM\LibWP\WP\Hooks\Action;
 use AWSM\LibWP\WP\Hooks\HookableTrait;
 use AWSM\LibWP\WP\Hooks\Hooks;
 
@@ -102,7 +101,6 @@ abstract class Plugin
         if ( self::$instance === null ) {
             $calledClass = get_called_class();
             self::$instance = new $calledClass();
-
         }
     
         return self::$instance;
