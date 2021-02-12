@@ -23,7 +23,7 @@ trait PluginTrait
      * 
      * @since 1.0.0
      */
-    public function plugin() 
+    public function plugin() : Plugin
     {
         return $this->plugin;
     }

@@ -8,6 +8,7 @@ use AWSM\LibWP\WP\Exception;
 
 use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\WP\Core\PluginTrait;
+use ReflectionMethod;
 
 /**
  * Trait HookableTrait.
@@ -70,10 +71,6 @@ trait HookableTrait {
         $methodName  = substr( $name, 7, strlen( $name ) );
 
         try {
-            if ( ! $this->isPluginClassInstance() && ! $this->isUsingPluginTrait() ) {
-                trigger_error( sprintf( '"%s" must use "%s".', $className, PluginTrait::class ), E_USER_ERROR );
-            }
-
             $reflectMethod = new \ReflectionMethod( $className , $methodName );
 
             if ( $reflectMethod->isPrivate() && ! $this->isHookableHiddenMethod( $methodName ) ) {
@@ -101,27 +98,5 @@ trait HookableTrait {
                 $this->plugin()->exceptionCatcher()->error( sprintf( 'Error executing call %s: %s', $className . '::' . $methodName, $e->getMessage() ) );
             }            
         }
-    }
-    
-    /**
-     * Checks if trait runs in a plugin class instance.
-     * 
-     * @return bool True if is running in plugin class instance, false if not.
-     * 
-     * @since 1.0.0
-     */
-    private function isPluginClassInstance() {
-        return get_parent_class( $this ) === Plugin::class;
-    }
-
-    /**
-     * Checks if instance uses plugin trait.
-     * 
-     * @return bool True if instance uses plugin trait, false if not.
-     * 
-     * @since 1.0.0
-     */  
-    private function isUsingPluginTrait() {
-        return in_array( PluginTrait::class, ( new ReflectionClass( $this ) )->getTraitNames() );
     }
 }
