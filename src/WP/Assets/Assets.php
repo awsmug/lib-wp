@@ -183,13 +183,17 @@ class Assets
     private function isEnqueueAllowed( array $callbackArgs ) : bool 
     {
         $callback = $callbackArgs[0];
-        $args     = $callbackArgs[1];
+
+        $args = array();
+        if ( isset( $callbackArgs[1] ) ) {
+            $args  = $callbackArgs[1];
+        }
 
         if ( ! is_callable( $callback ) ) {
             throw new Exception( 'Callback is not callable %s.', printf( $callback, true ) );
         }
 
-        if ( is_array( $args ) ) {
+        if ( ! empty( $args ) ) {
             $value = call_user_func_array( $callback, $args );    
         } else {
             $value = call_user_func( $callback );
