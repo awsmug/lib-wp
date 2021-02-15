@@ -61,7 +61,7 @@ class AdminNotices {
         $this->notices[] = [ 'message' => $message, 'type' => $type ];
 
         if ( ! $this->hooked ) {
-            $this->plugin()->hooks()->add( new Action( 'admin_notices', [ $this, 'showNotices'] ) )->load( $this );
+            $this->plugin()->hooks()->add( new Action( 'admin_notices', [ $this, 'showNotices'] ) );
         }
 
         $this->hooked = true;

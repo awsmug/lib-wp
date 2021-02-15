@@ -21,11 +21,7 @@ use AWSM\LibWP\WP\Core\PluginTrait;
  * 
  * To load the scripts it is necessary to assign the hooks to a class.
  * 
- * class Settings {
- *   public function __construct() {
- *     Hooks::load( $this );
- *   }
- * 
+ * class Settings extends Component { 
  *   public function filterTitle() {
  *     return 'Das ist mein Seitentitel';
  *   }
