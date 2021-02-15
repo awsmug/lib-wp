@@ -184,10 +184,6 @@ abstract class Plugin
      */
     private function loadComponent( string $className ) : Component
     {
-        if( ! class_exists( $className ) ) {
-            throw new CoreException( sprintf( 'Class %s does not exist.', $className ) );
-        }
-
         $reflector = new ReflectionClass( $className );
 
         if ( $reflector->getParentClass()->getName() !== Component::class ) {
