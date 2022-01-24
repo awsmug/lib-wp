@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name: My Plugin
- * Description: A wonderfull plugin.
+ * Description: A wonderful plugin.
  * Author: Sven Wagener
  * Author URI: https://sven-wagener.com
  * Version: 1.2.3
