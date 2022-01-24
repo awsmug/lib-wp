@@ -8,7 +8,7 @@ final class PluginInfoTest extends TestCase {
                 $pi = new PluginInfo( dirname( __FILE__ ) . '/Assets/Plugin.php' );
 
                 $this->assertEquals('My Plugin', $pi->getName() );
-                $this->assertEquals('A wonderfull plugin.', $pi->getDescription() );
+                $this->assertEquals('A wonderful plugin.', $pi->getDescription() );
                 $this->assertEquals('Sven Wagener', $pi->getAuthor() );
                 $this->assertEquals('https://sven-wagener.com', $pi->getAuthorURI() );
                 $this->assertEquals('1.2.3', $pi->getVersion() );
