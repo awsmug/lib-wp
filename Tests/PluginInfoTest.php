@@ -3,8 +3,6 @@
 use AWSM\LibWP\WP\Core\PluginInfo;
 use PHPUnit\Framework\TestCase;
 
-require 'Assets/WPPluginFunctions.php';
-
 final class PluginInfoTest extends TestCase {
 	public function testFunction(): void {
         $pi = new PluginInfo( dirname( __FILE__ ) . '/Assets/Plugin.php' );

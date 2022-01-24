@@ -8,7 +8,7 @@ We also put a little magic in this for less effort on programming.
 
 At first the Lib WP have to be added by requiring it with composer.
 
-```composer require awsm/lib-wp:dev-develop```
+```composer require awsm/lib-wp```
 
 After that the main plugin file have to be created.
 
@@ -49,7 +49,7 @@ The minumum PHP version which is needed for the Plugin.
 
 namespace AWSM\LibWP\Examples\Plugin;
 
-require '../../../vendor/autoload.php';
+require dirname( __DIR__ ) . '/vendor/autoload.php';
 
 use AWSM\LibWP\WP\Exception;
 use AWSM\LibWP\WP\Core\Plugin;
