@@ -16,7 +16,7 @@
 
 namespace AWSM\LibWP\Examples\Plugin;
 
-require '../vendor/autoload.php';
+require dirname( dirname(__FILE__) ) . '/vendor/autoload.php';
 
 use AWSM\LibWP\WP\Core\Plugin;
 use AWSM\LibWP\Examples\Plugin\Components\HelloWorld\HelloWorld;
